@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>EthicsPoint — Related Cases Prototype</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-size: 13px; color: #1f2937; background: #f3f4f6; }
+  button { font-family: inherit; }
+
+  /* ==== Layout ==== */
+  .app { display: flex; min-height: 100vh; }
+  .sidebar { width: 232px; background: #3F4856; color: #d8dde4; flex-shrink: 0; padding-bottom: 24px; }
+  .content { flex: 1; min-width: 0; }
+
+  /* ==== Sidebar ==== */
+  .sidebar-hd { padding: 14px 16px; display: flex; align-items: center; gap: 10px; }
+  .sidebar-hd .badge { width: 30px; height: 30px; background: #d9534f; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; font-weight: 700; font-size: 16px; flex-shrink: 0; }
+  .sidebar-hd .lbl { font-size: 12px; line-height: 1.2; color: #fff; }
+  .sidebar-hd .lbl b { display: block; font-weight: 600; font-size: 13px; }
+  .menu-trigger { background: transparent; border: 0; color: #fff; font-size: 18px; padding: 4px; cursor: pointer; margin-right: 4px; }
+
+  .nav { padding-top: 6px; }
+  .nav-row { display: flex; align-items: center; padding: 9px 16px; cursor: pointer; gap: 10px; color: #d8dde4; font-size: 13px; }
+  .nav-row:hover { background: rgba(255,255,255,0.04); }
+  .nav-row .icn { width: 16px; opacity: 0.85; }
+  .nav-row.parent { font-weight: 500; color: #fff; }
+  .nav-sub { display: block; }
+  .nav-sub .nav-row { padding-left: 36px; font-size: 12.5px; }
+  .nav-sub .nav-row.active-case { background: rgba(255,255,255,0.06); color: #fff; }
+  .nav-sub-sub { background: rgba(0,0,0,0.18); padding: 2px 0; }
+  .nav-sub-sub .nav-row { padding: 8px 16px 8px 56px; font-size: 12.5px; color: #c8cdd4; justify-content: space-between; }
+  .nav-sub-sub .nav-row.active { background: rgba(255,255,255,0.10); color: #fff; box-shadow: inset 3px 0 0 #fff; }
+  .nav-badge { background: rgba(255,255,255,0.16); border-radius: 10px; padding: 1px 8px; font-size: 11px; }
+  .nav-divider { margin: 8px 16px; border-top: 1px solid rgba(255,255,255,0.08); }
+
+  /* ==== Topbar ==== */
+  .topbar { background: #fff; height: 56px; display: flex; align-items: center; padding: 0 20px; border-bottom: 1px solid #e5e7eb; gap: 16px; }
+  .crumb { font-weight: 600; font-size: 13px; color: #1f2937; letter-spacing: 0.4px; }
+  .search { margin-left: auto; position: relative; width: 280px; }
+  .search input { width: 100%; padding: 7px 30px 7px 12px; border: 1px solid #d1d5db; border-radius: 4px; font-size: 13px; }
+  .search .ic { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+  .avatar { width: 32px; height: 32px; border-radius: 50%; background: #6b7280; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; }
+  .app-grid { width: 28px; height: 28px; background: #2563eb; color: #fff; border-radius: 4px; display: grid; grid-template-columns: repeat(3, 1fr); grid-template-rows: repeat(3, 1fr); gap: 2px; padding: 4px; }
+  .app-grid span { background: #fff; border-radius: 1px; }
+
+  /* ==== Case sub-header ==== */
+  .case-bar { background: #e5e7eb; padding: 10px 24px; display: flex; align-items: center; justify-content: space-between; }
+  .case-bar .left { display: flex; align-items: center; gap: 16px; font-size: 13px; color: #374151; }
+  .case-bar .star { color: #9ca3af; }
+  .case-bar .case-title { font-weight: 600; color: #1f2937; }
+  .case-bar .link { color: #2563eb; font-size: 13px; cursor: pointer; }
+  .case-bar .link:hover { text-decoration: underline; }
+  .gear { color: #6b7280; margin-left: 12px; cursor: pointer; }
+
+  .case-meta { background: #fff; padding: 14px 24px; display: flex; gap: 36px; flex-wrap: wrap; border-bottom: 1px solid #e5e7eb; }
+  .meta-item .label { font-size: 11.5px; color: #6b7280; font-weight: 500; }
+  .meta-item .value { font-size: 13px; color: #1f2937; font-weight: 600; margin-top: 4px; }
+  .meta-item .pencil { color: #2563eb; font-size: 11px; margin-left: 6px; cursor: pointer; }
+  .alert-green::before { content: "⚑"; color: #16a34a; margin-right: 4px; }
+
+  /* ==== Sections ==== */
+  .panel { background: #fff; margin: 16px 24px; border: 1px solid #e5e7eb; border-radius: 4px; }
+  .panel-hd { padding: 10px 14px; background: #fafafa; border-bottom: 1px solid #e5e7eb; display: flex; align-items: center; gap: 8px; font-weight: 600; font-size: 13px; cursor: pointer; }
+  .panel-bd { padding: 18px 20px; }
+  .field { margin-top: 12px; }
+  .field .lbl { color: #6b7280; font-weight: 600; font-size: 12px; }
+  .field .val { font-size: 13px; margin-top: 2px; }
+  h3.sub { font-size: 15px; font-weight: 600; margin-top: 18px; color: #111827; }
+
+  /* ==== Suggested (AI) section ==== */
+  .suggested { background: #eff4ff; border: 1px solid #d6e3ff; border-radius: 8px; margin: 16px 24px; padding: 16px 18px; }
+  .sug-hd { display: flex; align-items: center; gap: 14px; padding-bottom: 12px; }
+  .sug-title { font-weight: 700; font-size: 15px; display: flex; align-items: center; gap: 8px; color: #1f2937; }
+  .ai-sparkle { display: inline-flex; align-items: center; justify-content: center; }
+  .ai-sparkle svg { width: 16px; height: 16px; }
+  .resuggest { color: #2563eb; font-size: 13px; cursor: pointer; display: flex; align-items: center; gap: 6px; font-weight: 500; }
+  .resuggest:hover { text-decoration: underline; }
+  .resuggest.disabled { color: #9ca3af; cursor: default; }
+  .resuggest.disabled:hover { text-decoration: none; }
+
+  /* ==== Tables ==== */
+  .data-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 4px; overflow: hidden; }
+  .data-table thead th { padding: 10px 10px; text-align: left; font-size: 12.5px; font-weight: 600; color: #374151; border-bottom: 1px solid #e5e7eb; background: #fff; }
+  .data-table tbody td { padding: 12px 10px; border-bottom: 1px solid #f1f3f5; font-size: 12.5px; color: #1f2937; vertical-align: middle; }
+  .data-table tbody tr:last-child td { border-bottom: none; }
+  .data-table tbody tr:hover { background: #fafbfc; }
+  .data-table .col-action { text-align: center; width: 86px; }
+  .data-table .col-case { white-space: nowrap; }
+  .data-table .col-score { width: 92px; }
+  .data-table input[type="checkbox"] { vertical-align: middle; margin-right: 8px; cursor: pointer; }
+
+  .match { display: inline-block; padding: 3px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; min-width: 50px; text-align: center; }
+  .match.high { background: #d4f5d4; color: #1f7a1f; }
+  .match.med { background: #fff0c2; color: #8a5a00; }
+  .match.low { background: #ffd9d9; color: #b62020; }
+
+  .case-link { color: #2563eb; cursor: pointer; font-weight: 500; }
+  .case-link.hover-target { border-bottom: 1px dotted transparent; }
+  .case-link.hover-target:hover { border-bottom-color: #2563eb; }
+
+  .reason-cell { display: flex; align-items: flex-start; gap: 6px; color: #1f2937; }
+  .reason-cell.muted { color: #9ca3af; }
+
+  .actions { display: inline-flex; gap: 14px; align-items: center; }
+  .icon-btn { background: none; border: 0; cursor: pointer; padding: 2px; color: #6b7280; display: inline-flex; align-items: center; justify-content: center; }
+  .icon-btn:hover { color: #1f2937; }
+  .icon-btn.accept:hover { color: #16a34a; }
+  .icon-btn.reject:hover { color: #dc2626; }
+  .icon-btn svg { width: 18px; height: 18px; }
+
+  .table-foot { display: flex; justify-content: space-between; align-items: center; padding: 10px 4px 0 4px; font-size: 12px; color: #6b7280; }
+  .table-foot .info { display: flex; align-items: center; gap: 6px; }
+  .pager { display: inline-flex; gap: 8px; align-items: center; }
+  .pager span { padding: 2px 6px; cursor: pointer; }
+
+  /* ==== Related Cases bottom section ==== */
+  .related-hd { padding: 16px 24px 12px 24px; display: flex; justify-content: space-between; align-items: center; }
+  .related-hd h2 { font-size: 16px; font-weight: 600; color: #1f2937; }
+  .btn { background: #fff; border: 1px solid #2563eb; color: #2563eb; padding: 7px 14px; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500; }
+  .btn:hover { background: #eff4ff; }
+  .related-table-wrap { margin: 0 24px 32px 24px; }
+
+  /* ==== Loading spinner ==== */
+  .spin-wrap { display: flex; justify-content: center; align-items: center; padding: 60px 0; background: #fff; border-radius: 4px; }
+  .spinner { width: 48px; height: 48px; border-radius: 50%; background: conic-gradient(from 0deg, #2563eb 0deg, #2563eb 90deg, #d1d5db 90deg, #d1d5db 360deg); animation: spin 1s linear infinite; position: relative; }
+  .spinner::after { content: ""; position: absolute; inset: 8px; background: #475569; border-radius: 50%; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ==== Toast ==== */
+  .toast { position: fixed; top: 96px; left: 50%; transform: translateX(-50%); background: #2563eb; color: #fff; padding: 12px 16px; border-radius: 4px; display: flex; align-items: flex-start; gap: 16px; width: 320px; box-shadow: 0 4px 18px rgba(0,0,0,0.18); z-index: 1000; font-weight: 500; font-size: 13.5px; line-height: 1.35; animation: toast-in 0.25s ease; }
+  .toast .close-x { cursor: pointer; opacity: 0.95; padding-left: 4px; font-weight: 400; font-size: 18px; line-height: 1; }
+  @keyframes toast-in { from { transform: translate(-50%, -16px); opacity: 0; } to { transform: translate(-50%, 0); opacity: 1; } }
+  @keyframes toast-out { from { transform: translate(-50%, 0); opacity: 1; } to { transform: translate(-50%, -16px); opacity: 0; } }
+
+  /* ==== Popover ==== */
+  .popover { position: fixed; background: #fff; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.18); padding: 14px 16px; width: 240px; z-index: 1100; pointer-events: none; border: 1px solid #e5e7eb; }
+  .popover h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; color: #1f2937; }
+  .popover p { font-size: 12.5px; line-height: 1.42; color: #374151; }
+
+  /* ==== Views ==== */
+  .view { display: none; }
+  .view.active { display: block; }
+
+  /* ==== Misc ==== */
+  .from-ai { display: inline-flex; align-items: center; gap: 6px; }
+  .pencil-edit { color: #2563eb; cursor: pointer; opacity: 0.8; }
+  .pencil-edit:hover { opacity: 1; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="sidebar">
+    <div class="sidebar-hd">
+      <button class="menu-trigger" title="menu">≡</button>
+      <div class="badge">!</div>
+      <div class="lbl"><b>Incident Management</b>EthicsPoint</div>
+    </div>
+    <div class="nav">
+      <div class="nav-row parent"><span class="icn">🏠</span> Home</div>
+      <div class="nav-row parent"><span class="icn">📁</span> Cases <span style="margin-left:auto;">⌃</span></div>
+      <div class="nav-sub">
+        <div class="nav-row">All Cases</div>
+        <div class="nav-row">Cases by Tier</div>
+        <div class="nav-row">Tier - Mobile Tier</div>
+        <div class="nav-row active-case">Case 20231117-81</div>
+        <div class="nav-sub-sub">
+          <div class="nav-row" id="nav-general"><span>General Case Info</span></div>
+          <div class="nav-row"><span>Case Details</span></div>
+          <div class="nav-row"><span>Follow-ups</span><span class="nav-badge">1</span></div>
+          <div class="nav-row"><span>Assignments &amp; Access</span></div>
+          <div class="nav-row"><span>Info Contributors</span></div>
+          <div class="nav-row"><span>Participants</span><span class="nav-badge">2</span></div>
+          <div class="nav-row"><span>Attachments</span><span class="nav-badge">2</span></div>
+          <div class="nav-row"><span>Synopsis</span></div>
+          <div class="nav-row"><span>Tasks</span><span class="nav-badge">1</span></div>
+          <div class="nav-row"><span>Case Notes</span></div>
+          <div class="nav-row" id="nav-related"><span>Related Cases</span><span class="nav-badge" id="related-badge">1</span></div>
+          <div class="nav-row"><span>History</span></div>
+        </div>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-row parent"><span class="icn">＋</span> Open New Case</div>
+      <div class="nav-row parent"><span class="icn">📋</span> Assignments</div>
+      <div class="nav-row parent"><span class="icn">📈</span> Analytics</div>
+      <div class="nav-row parent"><span class="icn">🔍</span> Advanced Search</div>
+      <div class="nav-row parent"><span class="icn">🔒</span> Admin</div>
+    </div>
+  </aside>
+
+  <!-- ============ MAIN CONTENT ============ -->
+  <main class="content">
+
+    <div class="topbar">
+      <div class="crumb">CASE</div>
+      <div class="search">
+        <input placeholder="Search Cases">
+        <span class="ic">🔍</span>
+      </div>
+      <div class="avatar">DS</div>
+      <div class="app-grid">
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+
+    <!-- Shared case header (both views) -->
+    <div class="case-bar">
+      <div class="left">
+        <span class="star">☆</span>
+        <span class="case-title">Case 20231117-81 · Accounting and Auditing</span>
+        <span>🔗 315182648601</span>
+      </div>
+      <div>
+        <span class="link">View Status Transition</span>
+        <span class="gear">⚙</span>
+      </div>
+    </div>
+
+    <div class="case-meta">
+      <div class="meta-item"><div class="label">Opened</div><div class="value">11/17/2023</div></div>
+      <div class="meta-item"><div class="label">Days Open</div><div class="value">87</div></div>
+      <div class="meta-item"><div class="label">Last modified</div><div class="value">04/20/2026</div></div>
+      <div class="meta-item"><div class="label">Date closed</div><div class="value">02/13/2024 8:08 AM</div></div>
+      <div class="meta-item"><div class="label">Intake Method</div><div class="value">Mobile Intake</div></div>
+      <div class="meta-item"><div class="label">Status</div><div class="value">Closed <span class="pencil">✎</span></div></div>
+      <div class="meta-item"><div class="label">Alert Status</div><div class="value alert-green">Green <span class="pencil">✎</span></div></div>
+    </div>
+
+    <!-- ============ VIEW: CASE INFO HOME ============ -->
+    <div class="view active" id="view-case-info">
+      <div class="panel">
+        <div class="panel-hd">⌄ General Case Info <span class="pencil-edit" style="margin-left:6px;">✎</span></div>
+        <div class="panel-bd">
+          <h3 class="sub">General Case Info</h3>
+          <div class="field"><div class="lbl">Case number:</div><div class="val">20231117-81</div></div>
+          <div class="field"><div class="lbl">Language:</div><div class="val">English</div></div>
+          <div class="field"><div class="lbl">Assigned tier:</div><div class="val">Mobile Tier</div></div>
+          <h3 class="sub">Issue <span class="pencil-edit">✎</span></h3>
+          <div class="field"><div class="lbl">Primary issue:</div><div class="val">Accounting and Auditing</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-hd">⌄ Case Details <span class="pencil-edit" style="margin-left:6px;">✎</span></div>
+        <div class="panel-bd">
+          <h3 class="sub">Reported tier information</h3>
+          <div class="field"><div class="lbl">Case type:</div><div class="val">Mobile</div></div>
+          <div class="field"><div class="lbl">Intake method:</div><div class="val">Mobile Intake</div></div>
+          <h3 class="sub">Reporter Information</h3>
+          <div class="field"><div class="lbl">Reporter anonymous:</div><div class="val">Yes</div></div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-hd">⌄ Assignments &amp; Access</div>
+        <div class="panel-bd">
+          <div class="field"><div class="lbl">Case assignee(s):</div><div class="val">Noelle Hartman (Primary), Curtis Curtis</div></div>
+          <div class="field"><div class="lbl">Restricted access:</div><div class="val">None</div></div>
+        </div>
+      </div>
+
+      <p style="text-align:center; padding: 24px; color:#6b7280; font-size:12.5px;">⬇ Click <b>Related Cases</b> in the left sidebar to see the prototype interaction.</p>
+    </div>
+
+    <!-- ============ VIEW: RELATED CASES ============ -->
+    <div class="view" id="view-related">
+
+      <div class="suggested">
+        <div class="sug-hd">
+          <div class="sug-title">⌄ <span class="ai-sparkle" id="sparkle1"></span> Suggested related cases</div>
+          <div class="resuggest" id="resuggest"><span style="font-size:15px;">↻</span> Re-suggest cases <span style="opacity:0.7;">ⓘ</span></div>
+        </div>
+        <div id="sug-table-host">
+          <!-- table or spinner injected here -->
+        </div>
+      </div>
+
+      <div class="related-hd">
+        <h2>Related cases</h2>
+        <button class="btn">＋ Add a case</button>
+      </div>
+      <div class="related-table-wrap">
+        <table class="data-table" id="related-table">
+          <thead>
+            <tr>
+              <th>Case number</th>
+              <th>Reason for relation</th>
+              <th>Opened date</th>
+              <th>Status</th>
+              <th>Primary issue type</th>
+              <th>Assignees</th>
+            </tr>
+          </thead>
+          <tbody id="related-tbody"></tbody>
+        </table>
+        <div class="table-foot" style="padding: 12px 4px 0 4px;">
+          <span></span>
+          <span class="pager">Page 1 of 100 (1000 items) <span>«</span> <span>‹</span> <span>›</span> <span>»</span></span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- Hover popover (Case Summary) -->
+<div class="popover" id="popover" style="display:none;">
+  <h4>Case Summary</h4>
+  <p id="popover-text">A complaint was received alleging inappropriate and disrespectful conduct by the respondent toward the complainant. A complaint was received alleging</p>
+</div>
+
+<!-- Re-usable AI sparkle SVG template -->
+<svg width="0" height="0" style="position:absolute;">
+  <defs>
+    <symbol id="ai-icon" viewBox="0 0 24 24">
+      <path fill="#5b6cf5" d="M12 2l1.6 4.4L18 8l-4.4 1.6L12 14l-1.6-4.4L6 8l4.4-1.6L12 2zm7 10l1 2.6 2.6 1-2.6 1L19 19l-1-2.4-2.6-1 2.6-1L19 12zM5 14l.9 2.3 2.3.9-2.3.9L5 20.4l-.9-2.3-2.3-.9 2.3-.9L5 14z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<script>
+/* ============== DATA ============== */
+const initialSuggested = [
+  { id: '555555', score: 92, klass: 'high', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'In progress', issue: 'Harassment', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '888888', score: 92, klass: 'high', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Retaliation', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '777777', score: 60, klass: 'med', reason: 'This case involves an individual also referenced lso referenced…', opened: '04/28/2027', status: 'In progress', issue: 'Conflict of Interest', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '666666', score: 60, klass: 'med', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Theft', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '444444', score: 60, klass: 'med', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Bribery', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123434', score: 60, klass: 'med', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Insider Trading', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123435', score: 20, klass: 'low', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'In Progress', issue: 'Accounting', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123436', score: 20, klass: 'low', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Conflict of Interest', assignees: 'Noelle hartman, Curtis Curtis…' },
+];
+
+const initialRelated = [
+  { id: '123434', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Retaliation', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123434', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'In progress', issue: 'Conflict of Interest', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123434', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Theft', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123434', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Bribery', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123434', reason: 'This case involves an individual also referenced in related…', opened: '04/28/2027', status: 'Closed', issue: 'Insider Trading', assignees: 'Noelle hartman, Curtis Curtis…' },
+  { id: '123434', reason: '--', opened: '04/28/2027', status: 'In progress', issue: 'Accounting', assignees: 'Noelle hartman, Curtis Curtis…' },
+];
+
+let suggested = JSON.parse(JSON.stringify(initialSuggested));
+let related = JSON.parse(JSON.stringify(initialRelated));
+let relatedHasLoaded = false;
+
+/* ============== DOM helpers ============== */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => Array.from(el.querySelectorAll(s));
+
+function aiSparkleSVG(size = 14) {
+  return `<svg width="${size}" height="${size}"><use href="#ai-icon"/></svg>`;
+}
+
+/* ============== Navigation ============== */
+$('#sparkle1').innerHTML = aiSparkleSVG(16);
+
+$('#nav-related').addEventListener('click', () => {
+  // Switch view
+  $$('.view').forEach(v => v.classList.remove('active'));
+  $('#view-related').classList.add('active');
+  $$('.nav-sub-sub .nav-row').forEach(r => r.classList.remove('active'));
+  $('#nav-related').classList.add('active');
+
+  // Render related cases (already loaded)
+  renderRelated();
+
+  // Show spinner in suggested area, then load
+  showSuggestedLoading();
+  setTimeout(() => {
+    renderSuggested();
+    relatedHasLoaded = true;
+  }, 1500);
+});
+
+$('#nav-general').addEventListener('click', () => {
+  $$('.view').forEach(v => v.classList.remove('active'));
+  $('#view-case-info').classList.add('active');
+  $$('.nav-sub-sub .nav-row').forEach(r => r.classList.remove('active'));
+});
+
+/* ============== Suggested render ============== */
+function showSuggestedLoading() {
+  $('#sug-table-host').innerHTML = `
+    <div class="spin-wrap"><div class="spinner"></div></div>
+    <div class="table-foot" style="padding-top:14px;">
+      <span class="info">ⓘ Content is AI-generated. Please review for accuracy.</span>
+      <span class="pager" style="color:#9ca3af;">Page 1 of 100 (1000 items) <span>«</span> <span>‹</span> <span>›</span> <span>»</span></span>
+    </div>
+  `;
+  $('#resuggest').classList.add('disabled');
+}
+
+function renderSuggested() {
+  $('#resuggest').classList.remove('disabled');
+
+  if (suggested.length === 0) {
+    $('#sug-table-host').innerHTML = `
+      <div style="padding: 40px; text-align:center; color:#6b7280; background:#fff; border-radius:4px;">
+        No suggestions remaining. Click <b>Re-suggest cases</b> to refresh.
+      </div>
+      <div class="table-foot" style="padding-top:14px;">
+        <span class="info">ⓘ Content is AI-generated. Please review for accuracy.</span>
+        <span class="pager">Page 1 of 100 (1000 items) <span>«</span> <span>‹</span> <span>›</span> <span>»</span></span>
+      </div>
+    `;
+    return;
+  }
+
+  const rows = suggested.map(c => `
+    <tr data-id="${c.id}">
+      <td class="col-case"><input type="checkbox"><span class="case-link hover-target" data-case-id="${c.id}">Case ${c.id}</span></td>
+      <td class="col-score"><span class="match ${c.klass}">${c.score}%</span></td>
+      <td><div class="reason-cell"><span class="ai-sparkle">${aiSparkleSVG(14)}</span><span>${c.reason}</span></div></td>
+      <td>${c.opened}</td>
+      <td>${c.status}</td>
+      <td>${c.issue}</td>
+      <td>${c.assignees}</td>
+      <td class="col-action">
+        <span class="actions">
+          <button class="icon-btn reject" title="Reject" data-action="reject" data-id="${c.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
+          </button>
+          <button class="icon-btn accept" title="Accept" data-action="accept" data-id="${c.id}">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><polyline points="5 12 10 17 19 7"/></svg>
+          </button>
+        </span>
+      </td>
+    </tr>
+  `).join('');
+
+  $('#sug-table-host').innerHTML = `
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th class="col-case"><input type="checkbox"> Case number</th>
+          <th class="col-score">Match score</th>
+          <th>Reason for relation</th>
+          <th>Opened date</th>
+          <th>Status</th>
+          <th>Primary issue type</th>
+          <th>Assignees</th>
+          <th class="col-action">Action</th>
+        </tr>
+      </thead>
+      <tbody>${rows}</tbody>
+    </table>
+    <div class="table-foot" style="padding-top:14px;">
+      <span class="info">ⓘ Content is AI-generated. Please review for accuracy.</span>
+      <span class="pager">Page 1 of 100 (1000 items) <span>«</span> <span>‹</span> <span>›</span> <span>»</span></span>
+    </div>
+  `;
+
+  // Wire up actions + hover
+  $$('[data-action="accept"]').forEach(b => b.addEventListener('click', onAccept));
+  $$('[data-action="reject"]').forEach(b => b.addEventListener('click', onReject));
+  attachHover();
+}
+
+/* ============== Related render ============== */
+function renderRelated() {
+  $('#related-tbody').innerHTML = related.map(c => `
+    <tr>
+      <td class="col-case">${c.fromAI ? `<span class="from-ai">${aiSparkleSVG(13)}<span>Case ${c.id}</span></span>` : `Case ${c.id}`}</td>
+      <td><div class="reason-cell ${c.reason === '--' ? 'muted' : ''}"><span>${c.reason}</span>${c.reason !== '--' ? '<span class="pencil-edit">✎</span>' : ''}</div></td>
+      <td>${c.opened}</td>
+      <td>${c.status}</td>
+      <td>${c.issue}</td>
+      <td>${c.assignees}</td>
+    </tr>
+  `).join('');
+  $('#related-badge').textContent = related.length;
+}
+
+/* ============== Accept / Reject ============== */
+function onAccept(e) {
+  const id = e.currentTarget.dataset.id;
+  const idx = suggested.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  const [moved] = suggested.splice(idx, 1);
+  related.unshift({
+    id: moved.id,
+    reason: moved.reason,
+    opened: moved.opened,
+    status: moved.status,
+    issue: moved.issue,
+    assignees: moved.assignees,
+    fromAI: true,
+  });
+  hidePopover();
+  renderSuggested();
+  renderRelated();
+  showToast(`Case #${id} was accepted and added to Related Cases`);
+}
+
+function onReject(e) {
+  const id = e.currentTarget.dataset.id;
+  const idx = suggested.findIndex(c => c.id === id);
+  if (idx === -1) return;
+  suggested.splice(idx, 1);
+  hidePopover();
+  renderSuggested();
+}
+
+/* ============== Re-suggest ============== */
+$('#resuggest').addEventListener('click', () => {
+  if ($('#resuggest').classList.contains('disabled')) return;
+  showSuggestedLoading();
+  setTimeout(() => {
+    suggested = JSON.parse(JSON.stringify(initialSuggested))
+      .filter(c => !related.some(r => r.id === c.id && r.fromAI));
+    renderSuggested();
+  }, 1200);
+});
+
+/* ============== Hover popover ============== */
+const popover = $('#popover');
+function attachHover() {
+  $$('.hover-target').forEach(el => {
+    el.addEventListener('mouseenter', (e) => {
+      const rect = e.target.getBoundingClientRect();
+      const desiredLeft = rect.right + 12;
+      const viewportW = window.innerWidth;
+      const popoverW = 240 + 20;
+      const left = (desiredLeft + popoverW > viewportW)
+        ? (rect.left - popoverW)
+        : desiredLeft;
+      popover.style.display = 'block';
+      popover.style.left = left + 'px';
+      popover.style.top = (rect.top - 10) + 'px';
+    });
+    el.addEventListener('mouseleave', hidePopover);
+  });
+}
+function hidePopover() { popover.style.display = 'none'; }
+
+/* ============== Toast ============== */
+let toastTimer = null;
+function showToast(msg) {
+  const old = $('.toast');
+  if (old) old.remove();
+  if (toastTimer) clearTimeout(toastTimer);
+
+  const t = document.createElement('div');
+  t.className = 'toast';
+  t.innerHTML = `<span>${msg}</span><span class="close-x" title="Dismiss">✕</span>`;
+  t.querySelector('.close-x').addEventListener('click', () => dismissToast(t));
+  document.body.appendChild(t);
+
+  toastTimer = setTimeout(() => dismissToast(t), 3000);
+}
+function dismissToast(t) {
+  if (!t || !t.parentNode) return;
+  t.style.animation = 'toast-out 0.25s ease forwards';
+  setTimeout(() => { if (t.parentNode) t.parentNode.removeChild(t); }, 250);
+}
+
+/* ============== Initial render ============== */
+renderRelated(); // pre-render related table for badge
+</script>
+</body>
+</html>
