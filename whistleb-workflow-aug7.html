@@ -1,0 +1,2856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WhistleB - Workflow Management</title>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/brands.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Barlow', sans-serif;
+      background: #f5f7fa;
+      color: #08090b;
+      line-height: 1.5;
+    }
+
+    /* Header */
+    .header {
+      background: white;
+      border-bottom: 1px solid #e6ecf9;
+      padding: 0 24px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .logo {
+      font-size: 18px;
+      font-weight: 600;
+      color: #054bc5;
+    }
+
+    .logo-divider {
+      width: 1px;
+      height: 38px;
+      background: #e6ecf9;
+    }
+
+    .org-name {
+      font-size: 24px;
+      font-weight: 500;
+      color: #08090b;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .setup-btn {
+      background: #054bc5;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+    }
+
+    .setup-btn:hover {
+      background: #043a8f;
+    }
+
+    .avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #054bc5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: #054bc5;
+      background: white;
+    }
+
+    /* Main Container */
+    .container {
+      display: flex;
+      height: calc(100vh - 70px);
+    }
+
+    /* Sidebar Navigation */
+    .sidebar {
+      width: 276px;
+      background: white;
+      border-right: 1px solid #e6ecf9;
+      border-bottom: 1px solid #e6ecf9;
+      overflow-y: auto;
+      padding: 8px 0;
+    }
+
+    .nav-item {
+      padding: 8px 16px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #08090b;
+      cursor: pointer;
+      font-size: 14px;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'Barlow', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .nav-item:hover {
+      background: #f5f7fa;
+    }
+
+    .nav-item.active {
+      background: #e6ecf9;
+      border-left: 2px solid #054bc5;
+      color: #054bc5;
+      padding-left: 14px;
+    }
+
+    .nav-item i {
+      width: 16px;
+      font-size: 16px;
+    }
+
+    .nav-section-title {
+      padding: 12px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #acb1be;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+    }
+
+    .nav-section {
+      margin-bottom: 8px;
+    }
+
+    .nav-sub-item {
+      padding: 8px 16px 8px 32px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #6d7280;
+      cursor: pointer;
+      font-size: 13px;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: 'Barlow', sans-serif;
+      transition: background 0.2s;
+    }
+
+    .nav-sub-item:hover {
+      background: #f5f7fa;
+      color: #08090b;
+    }
+
+    .nav-sub-item.active {
+      background: #e6ecf9;
+      border-left: 2px solid #054bc5;
+      color: #054bc5;
+      padding-left: 30px;
+    }
+
+    /* Main Content */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .page-header {
+      background: white;
+      border-bottom: 1px solid #e6ecf9;
+      padding: 24px;
+    }
+
+    .page-title {
+      font-size: 24px;
+      font-weight: 500;
+      color: #08090b;
+      margin: 0;
+    }
+
+    .page-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 24px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    /* Notification Banner */
+    .notification {
+      background: #ddf7fb;
+      border: 1px solid #60dbed;
+      border-radius: 8px;
+      padding: 16px;
+      display: flex;
+      gap: 10px;
+      margin-bottom: 24px;
+      color: #1e616a;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .notification i {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Workflow Card */
+    .workflow-card {
+      background: white;
+      border: 1px solid #e6ecf9;
+      border-radius: 12px;
+      margin-bottom: 24px;
+      overflow: hidden;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .workflow-card-header {
+      background: white;
+      border-bottom: 1px solid #e6ecf9;
+      padding: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .workflow-card-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #08090b;
+      margin: 0;
+    }
+
+
+
+    .workflow-card-body {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .step-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .step-number {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      border: 1px solid #cdd2df;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 24px;
+      color: #08090b;
+      background: white;
+      flex-shrink: 0;
+    }
+
+    .step-item {
+      flex: 1;
+      background: white;
+      border: 1px solid #e6ecf9;
+      border-radius: 8px;
+      padding: 12px 16px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+    }
+
+    .step-info {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex: 1;
+    }
+
+    .step-icon {
+      color: #08090b;
+      font-size: 16px;
+      width: 16px;
+      text-align: center;
+    }
+
+    .step-name {
+      color: #08090b;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .step-controls {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .step-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #acb1be;
+      font-size: 16px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.2s;
+    }
+
+    .step-btn:hover {
+      color: #054bc5;
+    }
+
+    .checkbox-toggle {
+      width: 36px;
+      height: 20px;
+      appearance: none;
+      background: #acb1be;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      position: relative;
+      transition: background 0.3s;
+      padding: 2px;
+    }
+
+    .checkbox-toggle:checked {
+      background: #054bc5;
+    }
+
+    .checkbox-toggle::after {
+      content: '';
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background: white;
+      border-radius: 12px;
+      top: 2px;
+      left: 2px;
+      transition: left 0.3s;
+    }
+
+    .checkbox-toggle:checked::after {
+      left: 18px;
+    }
+
+    .add-step-btn {
+      background: none;
+      border: 1px solid #e6ecf9;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #054bc5;
+      font-family: 'Barlow', sans-serif;
+      margin-top: 8px;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      align-self: flex-start;
+    }
+
+    .add-step-btn:hover {
+      background: #f5f7fa;
+    }
+
+    .configure-btn {
+      background: #054bc5;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      font-family: 'Barlow', sans-serif;
+      margin-top: 12px;
+      transition: background 0.2s;
+    }
+
+    .configure-btn:hover {
+      background: #043a8f;
+    }
+
+    /* Channel Config Modal */
+    .channel-config {
+      background: white;
+      border: 1px solid #e6ecf9;
+      border-radius: 12px;
+      padding: 24px;
+      margin-top: 24px;
+      display: none;
+    }
+
+    .channel-config.active {
+      display: block;
+    }
+
+    .channel-config h2 {
+      font-size: 18px;
+      font-weight: 500;
+      color: #08090b;
+      margin: 0 0 16px 0;
+    }
+
+    .channel-rules {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .channel-rule-card {
+      background: #f5f7fa;
+      border: 1px solid #e6ecf9;
+      border-radius: 8px;
+      padding: 16px;
+    }
+
+    .channel-rule-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: #08090b;
+      margin: 0 0 12px 0;
+    }
+
+    .channel-rule-checkboxes {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .rule-checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      color: #08090b;
+    }
+
+    .rule-checkbox-label input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .close-channel-btn {
+      background: #f5f7fa;
+      color: #08090b;
+      border: 1px solid #e6ecf9;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: 'Barlow', sans-serif;
+      margin-top: 12px;
+    }
+
+    .close-channel-btn:hover {
+      background: #e6ecf9;
+    }
+
+    .multi-select-wrapper {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .multi-select-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 8px 16px;
+      background: white;
+      border: 1px solid #525660;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: 'Barlow', sans-serif;
+      font-size: 14px;
+      min-height: 36px;
+      transition: border-color 0.2s;
+      position: relative;
+      z-index: 10;
+    }
+
+    .multi-select-button:hover {
+      border-color: #054bc5;
+    }
+
+    .multi-select-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      flex: 1;
+      align-items: center;
+    }
+
+    .multi-select-chip {
+      background: white;
+      border: 1px solid #e6ecf9;
+      border-radius: 4px;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      color: #08090b;
+    }
+
+    .multi-select-chip i {
+      cursor: pointer;
+      font-size: 10px;
+      color: #acb1be;
+    }
+
+    .multi-select-chip i:hover {
+      color: #08090b;
+    }
+
+    .multi-select-icons {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .multi-select-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: white;
+      border: 1px solid #e6ecf9;
+      border-radius: 12px;
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
+      max-height: 250px;
+      overflow-y: auto;
+      z-index: 1001;
+      display: none;
+    }
+
+    .multi-select-dropdown.active {
+      display: block;
+    }
+
+    .multi-select-list-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      height: 36px;
+      cursor: pointer;
+      border-bottom: 1px solid #f5f7fa;
+      transition: background 0.2s;
+    }
+
+    .multi-select-list-item:last-child {
+      border-bottom: none;
+    }
+
+    .multi-select-list-item:hover {
+      background: #f5f7fa;
+    }
+
+    .multi-select-checkbox {
+      width: 16px;
+      height: 16px;
+      border: 1px solid #525660;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      background: white;
+    }
+
+    .multi-select-checkbox.checked {
+      background: #054bc5;
+      border-color: #054bc5;
+      color: white;
+      font-size: 10px;
+    }
+
+    .multi-select-label {
+      flex: 1;
+      font-size: 14px;
+      color: #08090b;
+      cursor: pointer;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* Templates Page */
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 24px;
+    }
+
+    .template-card {
+      background: white;
+      border: 1px solid #e6ecf9;
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .template-card:hover {
+      border-color: #054bc5;
+      box-shadow: 0 8px 16px rgba(5, 75, 197, 0.1);
+    }
+
+    .template-icon {
+      font-size: 32px;
+      color: #054bc5;
+      margin-bottom: 12px;
+    }
+
+    .template-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: #08090b;
+      margin: 0 0 8px 0;
+    }
+
+    .template-description {
+      font-size: 14px;
+      color: #acb1be;
+      margin: 0;
+    }
+
+    /* Footer */
+    .sidebar-footer {
+      border-top: 1px solid #e6ecf9;
+      padding: 16px 24px;
+      margin-top: auto;
+      text-align: center;
+      font-size: 12px;
+      color: #acb1be;
+    }
+
+    .footer-logo {
+      font-weight: 600;
+      color: #054bc5;
+      margin-bottom: 8px;
+    }
+
+    /* Scrollbar */
+    .sidebar::-webkit-scrollbar,
+    .page-body::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sidebar::-webkit-scrollbar-track,
+    .page-body::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    .sidebar::-webkit-scrollbar-thumb,
+    .page-body::-webkit-scrollbar-thumb {
+      background: #e6ecf9;
+      border-radius: 4px;
+    }
+
+    input, select {
+      font-family: 'Barlow', sans-serif;
+    }
+
+    input:focus, select:focus {
+      outline: none;
+      border-color: #054bc5;
+      box-shadow: 0 0 0 2px rgba(5, 75, 197, 0.1);
+    }
+
+    .sidebar::-webkit-scrollbar-thumb:hover,
+    .page-body::-webkit-scrollbar-thumb:hover {
+      background: #cdd2df;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="header-left">
+      <div class="logo">WhistleB NAVEX</div>
+      <div class="logo-divider"></div>
+      <div class="org-name">Organization name</div>
+    </div>
+    <div class="header-right">
+      <button class="setup-btn">Setup assistant</button>
+      <div class="avatar">AB</div>
+    </div>
+  </div>
+
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Main Navigation -->
+      <div id="main-navigation" style="display: flex; flex-direction: column; flex: 1;">
+        <div class="nav-section">
+          <button class="nav-item" id="nav-dashboard" onclick="navigateTo('dashboard')">
+            <i class="fas fa-chart-line"></i>
+            <span>Dashboard</span>
+          </button>
+          <button class="nav-item" id="nav-statistics" onclick="navigateTo('statistics')">
+            <i class="fas fa-chart-bar"></i>
+            <span>Statistics</span>
+          </button>
+          <button class="nav-item" id="nav-cases" onclick="navigateTo('cases')">
+            <i class="fas fa-briefcase"></i>
+            <span>Cases</span>
+          </button>
+          <button class="nav-item" id="nav-export" onclick="navigateTo('export')">
+            <i class="fas fa-download"></i>
+            <span>Export Reports</span>
+          </button>
+          <button class="nav-item" id="nav-admin" onclick="navigateTo('admin')">
+            <i class="fas fa-lock"></i>
+            <span>System Admin</span>
+          </button>
+        </div>
+
+        <div class="nav-section-title">System Admin</div>
+        <div class="nav-section">
+          <div class="nav-sub-item" style="cursor: default;">Security information</div>
+          <div class="nav-sub-item" style="cursor: default;">Secondary password</div>
+          <div class="nav-sub-item" style="cursor: default;">Encryption key</div>
+          <button class="nav-sub-item" id="nav-reporting-channels" onclick="navigateTo('reporting-channels')">Reporting channels</button>
+          <button class="nav-sub-item" id="nav-workflow" onclick="navigateTo('workflow')">Workflow</button>
+          <button class="nav-sub-item" id="nav-settings" onclick="navigateTo('settings')">Settings</button>
+          <div class="nav-sub-item" style="cursor: default;">Users</div>
+          <div class="nav-sub-item" style="cursor: default;">Teams</div>
+        </div>
+      </div>
+
+      <!-- Case Navigation (Hidden by default) -->
+      <div id="case-navigation" style="display: none; flex-direction: column; flex: 1;">
+        <div style="padding: 16px; border-bottom: 1px solid #e6ecf9;">
+          <p id="case-nav-title" style="color: #08090b; font-size: 14px; font-weight: 500; margin: 0;">Case #961</p>
+          <p style="color: #6d7280; font-size: 12px; margin: 4px 0 0 0;">Case from Channel 1</p>
+        </div>
+
+        <div style="flex: 1; padding: 8px 0;">
+          <button onclick="navigateTo('case-detail')" style="width: 100%; padding: 12px 16px; background: #e6ecf9; border: none; border-left: 2px solid #054bc5; color: #054bc5; text-align: left; cursor: pointer; font-family: 'Barlow', sans-serif; font-size: 14px;">
+            Case properties
+          </button>
+          <button style="width: 100%; padding: 12px 16px; background: white; border: none; color: #08090b; text-align: left; cursor: pointer; font-family: 'Barlow', sans-serif; font-size: 14px;">
+            Summary and notes
+          </button>
+          <button style="width: 100%; padding: 12px 16px; background: white; border: none; color: #08090b; text-align: left; cursor: pointer; font-family: 'Barlow', sans-serif; font-size: 14px;">
+            Files and Folders
+          </button>
+          <button style="width: 100%; padding: 12px 16px; background: white; border: none; color: #08090b; text-align: left; cursor: pointer; font-family: 'Barlow', sans-serif; font-size: 14px;">
+            Discussions
+          </button>
+          <button style="width: 100%; padding: 12px 16px; background: white; border: none; color: #08090b; text-align: left; cursor: pointer; font-family: 'Barlow', sans-serif; font-size: 14px;">
+            Case log
+          </button>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="footer-logo">NAVEX</div>
+        <div>Privacy Statement | Terms of Use</div>
+      </div>
+    </div>
+
+    <!-- Content Area -->
+    <div class="content">
+      <!-- Workflow Page -->
+      <div id="workflow" class="page active">
+        <div class="page-header">
+          <p class="page-title">Workflow</p>
+        </div>
+        <div class="page-body">
+          <div class="notification">
+            <i class="fas fa-info-circle"></i>
+            <div>
+              The workflow steps created here will show up when managing cases. The case managers can follow the workflow and select the completion date for each step. You have the option to add, remove, or edit steps as needed.
+            </div>
+          </div>
+
+          <div id="workflow-container"></div>
+
+          <button class="configure-btn" onclick="toggleChannelConfig()">
+            <i class="fas fa-globe"></i>
+            Configure channel-specific rules
+          </button>
+
+          <div id="channel-config" class="channel-config">
+            <h2>Compliance rules by reporting channel</h2>
+            <div class="channel-rules" id="channel-rules"></div>
+            <button class="close-channel-btn" onclick="toggleChannelConfig()">Done</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Templates Page -->
+      <div id="templates" class="page">
+        <div class="page-header">
+          <p class="page-title">Workflow Templates</p>
+        </div>
+        <div class="page-body">
+          <div class="template-grid">
+            <div class="template-card" onclick="loadTemplate('standard')">
+              <div class="template-icon">⚙️</div>
+              <p class="template-title">Standard Workflow</p>
+              <p class="template-description">Received → In Progress → Closed</p>
+            </div>
+            <div class="template-card" onclick="loadTemplate('detailed')">
+              <div class="template-icon">📋</div>
+              <p class="template-title">Detailed Investigation</p>
+              <p class="template-description">Received → Under Review → Investigation → Resolution → Closed</p>
+            </div>
+            <div class="template-card" onclick="loadTemplate('compliance')">
+              <div class="template-icon">✓</div>
+              <p class="template-title">Compliance Heavy</p>
+              <p class="template-description">Includes EU compliance checkpoints</p>
+            </div>
+            <div class="template-card" onclick="loadTemplate('simple')">
+              <div class="template-icon">→</div>
+              <p class="template-title">Simple Linear</p>
+              <p class="template-description">Minimal workflow: Open → Closed</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Approval Rules Page -->
+      <div id="approvals" class="page">
+        <div class="page-header">
+          <p class="page-title">Approval Rules</p>
+        </div>
+        <div class="page-body">
+          <p style="color: #acb1be; margin-bottom: 24px;">Configure who must approve each workflow step</p>
+          
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <p class="workflow-card-title">Open Phase - Four-Eye Approval</p>
+            </div>
+            <div class="workflow-card-body">
+              <div style="padding: 12px; background: #f5f7fa; border-radius: 8px; border-left: 3px solid #054bc5;">
+                <p style="margin: 0; font-size: 14px; color: #08090b; font-weight: 500;">Two approvers required</p>
+                <p style="margin: 0; font-size: 13px; color: #acb1be; margin-top: 4px;">Received → In Progress transitions require 2 independent reviewers</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="workflow-card">
+            <div class="workflow-card-header">
+              <p class="workflow-card-title">Closed Phase - Manager Approval</p>
+            </div>
+            <div class="workflow-card-body">
+              <div style="padding: 12px; background: #f5f7fa; border-radius: 8px; border-left: 3px solid #054bc5;">
+                <p style="margin: 0; font-size: 14px; color: #08090b; font-weight: 500;">One approver required</p>
+                <p style="margin: 0; font-size: 13px; color: #acb1be; margin-top: 4px;">Case manager must approve final closure</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Edit Step Page -->
+      <div id="edit-step" class="page">
+        <div class="page-header">
+          <button onclick="navigateBack()" style="background: none; border: none; cursor: pointer; color: #054bc5; font-size: 14px; margin-bottom: 12px; font-family: 'Barlow', sans-serif;">
+            <i class="fas fa-arrow-left"></i> Back to Workflow
+          </button>
+          <p class="page-title">Edit Step</p>
+        </div>
+        <div class="page-body">
+          <div style="max-width: 700px;">
+            <!-- Step Details -->
+            <div class="workflow-card">
+              <div class="workflow-card-header">
+                <p class="workflow-card-title">Step Details</p>
+              </div>
+              <div class="workflow-card-body" style="gap: 20px;">
+                <div>
+                  <label style="display: block; font-size: 14px; font-weight: 500; color: #08090b; margin-bottom: 8px;">Step name</label>
+                  <input id="edit-step-name" type="text" style="width: 100%; padding: 12px; border: 1px solid #e6ecf9; border-radius: 8px; font-family: 'Barlow', sans-serif; font-size: 14px;">
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 14px; font-weight: 500; color: #08090b; margin-bottom: 8px;">Description</label>
+                  <textarea id="edit-step-description" style="width: 100%; padding: 12px; border: 1px solid #e6ecf9; border-radius: 8px; font-family: 'Barlow', sans-serif; font-size: 14px; min-height: 100px; resize: vertical;"></textarea>
+                  <p id="description-readonly-note" style="font-size: 12px; color: #acb1be; margin-top: 8px; display: none;">Default statuses have predefined descriptions and cannot be changed.</p>
+                </div>
+
+                <!-- Required Toggle -->
+                <div id="required-section" style="display: none;">
+                  <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px;">
+                    <input id="edit-step-required" type="checkbox" style="width: 18px; height: 18px;">
+                    <span>Required for all reporting channels</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- Investigator Notifications & Reminders -->
+            <div class="workflow-card">
+              <div class="workflow-card-header">
+                <p class="workflow-card-title">Investigator Notifications & Reminders</p>
+              </div>
+              <div class="workflow-card-body" style="gap: 16px;">
+                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px;">
+                  <input id="edit-investigator-notify" type="checkbox" style="width: 18px; height: 18px;">
+                  <span id="investigator-notify-label">Notify investigator when case enters this step</span>
+                </label>
+
+                <div id="investigator-section" style="display: none; padding: 16px; background: #f5f7fa; border-radius: 8px; border-left: 3px solid #054bc5;">
+                  <!-- Recipients -->
+                  <div style="margin-bottom: 16px;">
+                    <p style="font-size: 13px; font-weight: 500; color: #08090b; margin: 0 0 12px 0;">Who should be notified:</p>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px;">
+                        <input class="investigator-recipient" type="checkbox" value="channelTeams" style="width: 16px; height: 16px;">
+                        <span>Case channel teams</span>
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px;">
+                        <input class="investigator-recipient" type="checkbox" value="assignedTeams" style="width: 16px; height: 16px;">
+                        <span>Assigned teams</span>
+                      </label>
+                      <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 13px;">
+                        <input class="investigator-recipient" type="checkbox" value="assignedIndividuals" style="width: 16px; height: 16px;">
+                        <span>Assigned individuals</span>
+                      </label>
+                    </div>
+                    <p style="font-size: 12px; color: #acb1be; margin: 8px 0 0 0;">Specific team and individual assignments are configured per reporting channel.</p>
+                  </div>
+
+                  <!-- Custom Message -->
+                  <div style="margin-bottom: 16px;">
+                    <label style="display: block; font-size: 13px; font-weight: 500; color: #08090b; margin-bottom: 8px;">Custom message (optional)</label>
+                    <textarea id="edit-investigator-message" style="width: 100%; padding: 12px; border: 1px solid #e6ecf9; border-radius: 8px; font-family: 'Barlow', sans-serif; font-size: 13px; min-height: 80px; resize: vertical;" placeholder="Leave blank to use default notification"></textarea>
+                  </div>
+
+                  <!-- Reminders -->
+                  <div>
+                    <p style="font-size: 13px; font-weight: 500; color: #08090b; margin: 0 0 12px 0;">Reminders</p>
+                    <p id="investigator-remind-label" style="font-size: 12px; color: #acb1be; margin: 0 0 12px 0;">Set reminders to notify investigators before deadlines</p>
+                    <div id="reminders-list" style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 12px;"></div>
+                    <button onclick="addReminder()" style="background: white; color: #054bc5; border: 1px solid #e6ecf9; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif;">
+                      <i class="fas fa-plus"></i> Add reminder
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Reporter Notifications -->
+            <div id="reporter-notifications" class="workflow-card">
+              <div class="workflow-card-header">
+                <p class="workflow-card-title">Reporter Notifications</p>
+              </div>
+              <div class="workflow-card-body" style="gap: 16px;">
+                <label style="display: flex; align-items: center; gap: 12px; cursor: pointer; font-size: 14px;">
+                  <input id="edit-reporter-notify" type="checkbox" style="width: 18px; height: 18px;">
+                  <span>Send automatic message to reporter</span>
+                </label>
+                <div id="reporter-message-section" style="display: none;">
+                  <label style="display: block; font-size: 13px; font-weight: 500; color: #08090b; margin-bottom: 8px;">Message to reporter</label>
+                  <textarea id="edit-reporter-message" style="width: 100%; padding: 12px; border: 1px solid #e6ecf9; border-radius: 8px; font-family: 'Barlow', sans-serif; font-size: 14px; min-height: 100px; resize: vertical; background: white;" placeholder="Enter the message the reporter will receive"></textarea>
+                  <p style="font-size: 12px; color: #acb1be; margin-top: 8px;">This message will be sent to the reporter when the case reaches this step.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Approval Requirements (only for Closed and Deleted steps) -->
+            <div id="approval-section" class="workflow-card" style="display: none;">
+              <div class="workflow-card-header">
+                <p class="workflow-card-title">Approval Requirements</p>
+              </div>
+              <div class="workflow-card-body" style="gap: 16px;">
+                <p style="font-size: 13px; color: #acb1be; margin: 0;">Define which roles can approve at each level. These approval options will be available when configuring individual reporting channels. Add up to 3 approval levels.</p>
+                
+                <div id="approvals-list" style="display: flex; flex-direction: column; gap: 16px;"></div>
+                
+                <button id="add-approval-btn" onclick="addApprovalLevel()" style="align-self: flex-start; background: white; color: #054bc5; border: 1px solid #e6ecf9; padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif;">
+                  <i class="fas fa-plus"></i> Add approval level
+                </button>
+              </div>
+            </div>
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+              <button onclick="saveStepEdit()" class="setup-btn">Save changes</button>
+              <button onclick="navigateBack()" style="background: white; color: #08090b; border: 1px solid #e6ecf9; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: 'Barlow', sans-serif;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Page (Placeholder) -->
+      <div id="dashboard" class="page">
+        <div class="page-header">
+          <p class="page-title">Dashboard</p>
+        </div>
+        <div class="page-body">
+          <p style="color: #acb1be;">Dashboard content coming soon...</p>
+        </div>
+      </div>
+
+      <!-- Other Pages (Placeholders) -->
+      <div id="statistics" class="page">
+        <div class="page-header"><p class="page-title">Statistics</p></div>
+        <div class="page-body"><p style="color: #acb1be;">Statistics content coming soon...</p></div>
+      </div>
+
+      <div id="cases" class="page">
+        <div class="page-header">
+          <p class="page-title">Cases</p>
+          <div style="display: flex; gap: 16px; margin-top: 16px;">
+            <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;">Column chooser</button>
+            <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px; border-radius: 8px; cursor: pointer; font-size: 13px; width: 36px; height: 36px;"><i class="fas fa-filter"></i></button>
+            <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;">Advanced search</button>
+            <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;"><i class="fas fa-plus"></i> Add case</button>
+            <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;"><i class="fas fa-download"></i> Export</button>
+          </div>
+        </div>
+        <div class="page-body" style="padding: 24px;">
+          <!-- Tabs -->
+          <div style="display: flex; gap: 0; border-bottom: 2px solid #cdd2df; margin-bottom: 24px;">
+            <div style="padding: 16px; border-bottom: 2px solid #525660; color: #08090b; font-weight: 500; cursor: pointer;">Open</div>
+            <div style="padding: 16px; border-bottom: 2px solid transparent; color: #08090b; cursor: pointer;">Closed</div>
+            <div style="padding: 16px; border-bottom: 2px solid transparent; color: #08090b; cursor: pointer;">Deleted</div>
+          </div>
+
+          <!-- Cases Table -->
+          <div style="border: 1px solid #e6ecf9; border-radius: 12px; overflow: hidden;">
+            <table style="width: 100%; border-collapse: collapse; font-family: 'Barlow', sans-serif; font-size: 14px;">
+              <thead style="background: white;">
+                <tr style="border-bottom: 1px solid #dde5f5;">
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b; width: 60px;">#</th>
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b;">Name</th>
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b;">Status</th>
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b;">Assigned Team</th>
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b;">Received</th>
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b;">Latest Update</th>
+                  <th style="padding: 16px; text-align: left; font-weight: 500; color: #08090b;">Response Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr style="background: #f5f7fa; border-bottom: 1px solid #e6ecf9; cursor: pointer;" onclick="openCaseDetail(961, 'Potential Policy Violation – HR')">
+                  <td style="padding: 16px; color: #08090b;">961</td>
+                  <td style="padding: 16px; color: #08090b;">Potential Policy Violation – HR</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Received</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 1</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unread</span></td>
+                </tr>
+                <tr style="background: white; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">960</td>
+                  <td style="padding: 16px; color: #08090b;">Alleged Harassment – Finance Department</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Received</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 1</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unread</span></td>
+                </tr>
+                <tr style="background: #f5f7fa; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">959</td>
+                  <td style="padding: 16px; color: #08090b;">Conflict of Interest – Vendor Relationship</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Received</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 2</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unread</span></td>
+                </tr>
+                <tr style="background: white; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">958</td>
+                  <td style="padding: 16px; color: #08090b;">Financial Discrepancy – Expense Report</td>
+                  <td style="padding: 16px;"><span style="background: #c1f5c3; color: #2b5c30; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">In Progress</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 2, Team 3</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #c1f5c3; color: #2b5c30; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Awaiting Reporter</span></td>
+                </tr>
+                <tr style="background: #f5f7fa; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">957</td>
+                  <td style="padding: 16px; color: #08090b;">Workplace Safety Concern – Facilities</td>
+                  <td style="padding: 16px;"><span style="background: #abf3fe; color: #1e616a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Custom Status</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 2, Team 3</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #abf3fe; color: #1e616a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unanswered</span></td>
+                </tr>
+                <tr style="background: white; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">956</td>
+                  <td style="padding: 16px; color: #08090b;">Code of Conduct Violation – Hotline</td>
+                  <td style="padding: 16px;"><span style="background: #c1f5c3; color: #2b5c30; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">In Progress</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 2</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #abf3fe; color: #1e616a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unanswered</span></td>
+                </tr>
+                <tr style="background: #f5f7fa; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">955</td>
+                  <td style="padding: 16px; color: #08090b;">Discrimination Allegation – Management</td>
+                  <td style="padding: 16px;"><span style="background: #c1f5c3; color: #2b5c30; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">In Progress</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 4</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #abf3fe; color: #1e616a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unanswered</span></td>
+                </tr>
+                <tr style="background: white; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">954</td>
+                  <td style="padding: 16px; color: #08090b;">Data Privacy Concern – IT Security</td>
+                  <td style="padding: 16px;"><span style="background: #cdd2df; color: #525660; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Pending Close</span></td>
+                  <td style="padding: 16px; color: #08090b;"></td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #ffe1a5; color: #71551a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unread</span></td>
+                </tr>
+                <tr style="background: #f5f7fa; border-bottom: 1px solid #e6ecf9;">
+                  <td style="padding: 16px; color: #08090b;">953</td>
+                  <td style="padding: 16px; color: #08090b;">Billing Error Report – Accounting</td>
+                  <td style="padding: 16px;"><span style="background: #c1f5c3; color: #2b5c30; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">In Progress</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 1</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #abf3fe; color: #1e616a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Unanswered</span></td>
+                </tr>
+                <tr style="background: white;">
+                  <td style="padding: 16px; color: #08090b;">952</td>
+                  <td style="padding: 16px; color: #08090b;">Retaliation Concern – Employee Relations</td>
+                  <td style="padding: 16px;"><span style="background: #abf3fe; color: #1e616a; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Custom Status</span></td>
+                  <td style="padding: 16px; color: #08090b;">Team 2</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px; color: #08090b;">4/20/2026</td>
+                  <td style="padding: 16px;"><span style="background: #c1f5c3; color: #2b5c30; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: 500;">Awaiting Reporter</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination -->
+          <div style="display: flex; justify-content: flex-end; align-items: center; gap: 16px; margin-top: 24px; color: #6d7280; font-size: 12px;">
+            <span>Page 1 of 100 (1000 items)</span>
+            <button style="background: none; border: none; cursor: pointer; color: #6d7280; font-size: 16px;"><i class="fas fa-chevron-left"></i></button>
+            <button style="background: none; border: none; cursor: pointer; color: #6d7280; font-size: 16px;"><i class="fas fa-chevron-right"></i></button>
+          </div>
+        </div>
+      </div>
+
+    <!-- Approval Modal -->
+    <div id="approvalModal" style="display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0, 0, 0, 0.5); z-index: 1000; flex-items: center; justify-content: center;">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: white; border-radius: 12px; padding: 32px; box-shadow: 0px 20px 25px rgba(0, 0, 0, 0.1); max-width: 400px; width: 90%;">
+        <h2 style="color: #08090b; font-size: 18px; font-weight: 500; margin: 0 0 12px 0;">Approval Required</h2>
+        <p style="color: #6d7280; font-size: 14px; line-height: 1.5; margin: 0 0 24px 0;">A second level approver is required in order to move this case to closed status. Submit this case for approval and your approver will review it.</p>
+        
+        <div style="display: flex; gap: 12px;">
+          <button onclick="closeApprovalModal()" style="flex: 1; background: white; border: 1px solid #054bc5; color: #054bc5; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: 'Barlow', sans-serif; font-weight: 500;">
+            Cancel
+          </button>
+          <button onclick="submitForApproval()" style="flex: 1; background: #054bc5; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: 'Barlow', sans-serif; font-weight: 500;">
+            Submit for Approval
+          </button>
+        </div>
+      </div>
+    </div>
+      <div id="case-detail" class="page">
+        <div class="page-header">
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 20px;">
+            <button onclick="navigateTo('cases')" style="background: none; border: none; color: #054bc5; cursor: pointer; font-size: 13px; padding: 0; font-family: 'Barlow', sans-serif;">
+              <i class="fas fa-chevron-left"></i> Back to Case List
+            </button>
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+            <div>
+              <p class="page-title" id="caseDetailTitle" style="margin: 0;">Investigation – Case #961</p>
+              <p style="color: #6d7280; font-size: 13px; margin-top: 6px;">Case from Channel 1</p>
+            </div>
+            <div style="display: flex; gap: 12px;">
+              <button style="background: white; border: 1px solid #054bc5; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;">
+                <i class="fas fa-print"></i> Print Report
+              </button>
+              <button id="mainActionButton" onclick="handleMainAction()" style="background: #054bc5; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;">
+                Begin Investigation
+              </button>
+            </div>
+          </div>
+
+          <!-- Progress Stepper -->
+          <div style="display: flex; align-items: flex-start; justify-content: center; gap: 60px; padding: 20px 24px; background: white;">
+            <!-- Step 1 -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+              <div id="step1-circle" style="width: 48px; height: 48px; border-radius: 50%; background: #054bc5; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0;">1</div>
+              <p style="color: #08090b; font-size: 13px; font-weight: 500; text-align: center; margin: 0; width: 80px;">Received</p>
+            </div>
+
+            <!-- Line -->
+            <div style="margin-top: 24px; width: 80px; height: 2px; background: #e6ecf9;"></div>
+
+            <!-- Step 2 -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+              <div id="step2-circle" style="width: 48px; height: 48px; border-radius: 50%; background: #e6ecf9; color: #08090b; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0;">2</div>
+              <p style="color: #6d7280; font-size: 13px; font-weight: 500; text-align: center; margin: 0; width: 80px;">Open</p>
+            </div>
+
+            <!-- Line -->
+            <div style="margin-top: 24px; width: 80px; height: 2px; background: #e6ecf9;"></div>
+
+            <!-- Step 3 -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px;">
+              <div id="step3-circle" style="width: 48px; height: 48px; border-radius: 50%; background: #e6ecf9; color: #08090b; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 18px; flex-shrink: 0;">3</div>
+              <p style="color: #6d7280; font-size: 13px; font-weight: 500; text-align: center; margin: 0; width: 80px;">Closed</p>
+            </div>
+          </div>
+        </div>
+        <div class="page-body" style="padding: 24px;">
+          <!-- 7-Day Acknowledgment Notification -->
+          <div id="acknowledgmentNotification" style="background: #ffe7e8; border: 1px solid #ff748a; border-radius: 8px; padding: 16px; display: flex; gap: 10px; margin-bottom: 24px;">
+            <i class="fas fa-exclamation-circle" style="color: #852d3a; font-size: 16px; flex-shrink: 0; margin-top: 2px;"></i>
+            <p style="color: #852d3a; font-size: 14px; line-height: 1.5; margin: 0;">This case requires acknowledgment within 7 days. Click "Begin Investigation" to send an acknowledgment email to the reporter.</p>
+          </div>
+
+          <!-- Two Column Layout -->
+          <div style="display: grid; grid-template-columns: 451px 1fr; gap: 24px;">
+            <!-- Left Column - Input Fields (EXACT from Figma) -->
+            <div style="display: flex; flex-direction: column; gap: 24px;">
+              <!-- Status -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Status</label>
+                <select id="statusSelect" style="width: 100%; padding: 10px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; box-sizing: border-box; min-height: 36px; line-height: 1.5;">
+                  <option>Received</option>
+                </select>
+              </div>
+
+              <!-- Case Name -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Case Name</label>
+                <input type="text" value="Bribery at Berlin Headquarters" style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+              </div>
+
+              <!-- Owner -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Owner</label>
+                <input type="text" placeholder="" style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+              </div>
+
+              <!-- Assigned Team -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Assigned Team</label>
+                <input type="text" value="Germany HR" style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+              </div>
+
+              <!-- Issue (REQUIRED) -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Issue <span style="color: #e3094c; font-weight: bold;">*</span></label>
+                <select style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+                  <option>Bribery</option>
+                </select>
+              </div>
+
+              <!-- Location (REQUIRED) -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Location <span style="color: #e3094c; font-weight: bold;">*</span></label>
+                <select style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+                  <option>Germany</option>
+                </select>
+              </div>
+
+              <!-- Divider Line -->
+              <div style="height: 1px; background: #e6ecf9; margin: 8px 0;"></div>
+
+              <!-- Categories Section Label -->
+              <div style="display: flex; gap: 8px; align-items: center; margin-top: 8px;">
+                <i class="fas fa-th" style="font-size: 16px; color: #08090b;"></i>
+                <h3 style="font-size: 16px; color: #08090b; font-weight: 500; margin: 0;">Categories</h3>
+              </div>
+
+              <!-- Risk -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Risk</label>
+                <select style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+                  <option>Low</option>
+                </select>
+              </div>
+
+              <!-- Group Categories Section Label -->
+              <div style="display: flex; gap: 8px; align-items: center; margin-top: 8px;">
+                <i class="fas fa-layer-group" style="font-size: 16px; color: #08090b;"></i>
+                <h3 style="font-size: 16px; color: #08090b; font-weight: 500; margin: 0;">Group Categories</h3>
+              </div>
+
+              <!-- Severity -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Severity</label>
+                <select style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+                  <option>High</option>
+                  <option>Medium</option>
+                  <option>Low</option>
+                </select>
+              </div>
+
+              <!-- Divider Line -->
+              <div style="height: 1px; background: #e6ecf9; margin: 8px 0;"></div>
+
+              <!-- Outcome (REQUIRED) -->
+              <div>
+                <label style="display: block; font-size: 14px; color: #08090b; font-weight: 500; margin-bottom: 4px;">Outcome <span style="color: #e3094c; font-weight: bold;">*</span></label>
+                <select style="width: 100%; padding: 12px 16px; border: 1px solid #6d7280; border-radius: 6px; background: white; color: #08090b; font-family: 'Barlow', sans-serif; font-size: 14px; height: auto; min-height: 36px; line-height: 1.5; box-sizing: border-box;">
+                  <option>Substantiated</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Right Column - Case Details Card (EXACT from Figma) -->
+            <div style="border: 1px solid #e6ecf9; border-radius: 12px; overflow: hidden; background: white; display: flex; flex-direction: column; box-shadow: 0px 8px 8px rgba(0,0,0,0.04);">
+              <!-- Card Header -->
+              <div style="padding: 16px; border-bottom: 1px solid #e6ecf9; background: white;">
+                <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                  <div style="display: flex; gap: 10px; align-items: flex-start; flex: 1;">
+                    <i class="fas fa-envelope" style="font-size: 16px; color: #08090b; margin-top: 4px;"></i>
+                    <div>
+                      <p style="color: #08090b; font-size: 14px; margin: 0;">Message Received 01/01/2026</p>
+                      <p style="color: #08090b; font-size: 14px; margin: 0;">English</p>
+                      <i class="fas fa-info-circle" style="font-size: 16px; color: #08090b; margin-top: 4px;"></i>
+                    </div>
+                  </div>
+                  <span style="background: #abf3fe; color: #1e616a; padding: 2px 8px; border-radius: 4px; font-size: 14px; font-weight: 500; white-space: nowrap;">Reporter</span>
+                </div>
+              </div>
+
+              <!-- Card Content -->
+              <div style="padding: 16px; flex: 1; overflow-y: auto; border-bottom: 1px solid #e6ecf9;">
+                <div style="font-size: 14px; line-height: 1.5; color: #08090b;">
+                  <div style="margin-bottom: 16px;">
+                    <p style="font-weight: 500; margin: 0 0 4px 0;">What is your concern?</p>
+                    <p style="margin: 0;">Misrepresentation of funds</p>
+                  </div>
+                  <div style="margin-bottom: 16px;">
+                    <p style="font-weight: 500; margin: 0 0 4px 0;">When did this happen?</p>
+                    <p style="margin: 0;">April 2026</p>
+                  </div>
+                  <div style="margin-bottom: 16px;">
+                    <p style="font-weight: 500; margin: 0 0 4px 0;">Where did this happen?</p>
+                    <p style="margin: 0;">Berlin Headquarters</p>
+                  </div>
+                  <div style="margin-bottom: 16px;">
+                    <p style="font-weight: 500; margin: 0 0 4px 0;">Details of this case?</p>
+                    <p style="margin: 0;">I work with Sarah Mitchell in the Compliance team. She instructed me to reclassify $2.3M in customer refunds as "pending disputes" rather than actual reversals in the monthly close. Sarah's manager, Derek Chen, signed off on this in the April 10 standup. I also heard through colleagues that our VP of Finance, James Rodriguez, may have been aware. I'm concerned this misrepresents our financial position to investors. Derek can be reached at 214-555-0147 if you need more details.</p>
+                  </div>
+                  <div style="border-top: 1px solid #e6ecf9; padding-top: 16px;">
+                    <p style="font-weight: 500; margin: 0 0 8px 0;">Attachments</p>
+                    <p style="color: #054bc5; cursor: pointer; margin: 0;"><i class="fas fa-file-word"></i> Document Name.docx</p>
+                    <p style="color: #054bc5; cursor: pointer; margin: 8px 0 0 0;"><i class="fas fa-file-pdf"></i> Document Name.pdf</p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Card Footer with Buttons -->
+              <div style="padding: 16px; display: flex; gap: 10px; justify-content: flex-end; border-top: 1px solid #e6ecf9;">
+                <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: 'Barlow', sans-serif; height: 36px;">
+                  Machine Transcription
+                </button>
+                <button style="border: 1px solid #054bc5; background: white; color: #054bc5; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: 'Barlow', sans-serif; height: 36px;">
+                  Machine Translation
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="export" class="page">
+        <div class="page-header"><p class="page-title">Export Reports</p></div>
+        <div class="page-body"><p style="color: #acb1be;">Export Reports content coming soon...</p></div>
+      </div>
+
+      <!-- Reporting Channels Page -->
+      <div id="reporting-channels" class="page">
+        <div class="page-header">
+          <p class="page-title">Manage Reporting Channels</p>
+          <p style="color: #acb1be; margin-top: 8px; font-size: 14px; font-weight: normal;">Reporting channels are the intake points reporters use to raise a concern. Channels are grouped under a landing page — the public page a reporter opens first, then selects the channel that applies to them.</p>
+        </div>
+        <div class="page-body">
+          <div style="max-width: 1000px;">
+            <!-- Landing Page Section -->
+            <div class="workflow-card">
+              <div class="workflow-card-header">
+                <div style="display: flex; align-items: center; gap: 12px; flex: 1;">
+                  <i class="fas fa-globe" style="font-size: 20px; color: #054bc5;"></i>
+                  <div>
+                    <p class="workflow-card-title" style="margin: 0;">Corporate (Global)</p>
+                    <p style="margin: 4px 0 0 0; font-size: 12px; color: #acb1be;">Primary landing page for employees and partners worldwide.</p>
+                  </div>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                  <span style="background: #d4f5ea; color: #059669; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: 500;">Published</span>
+                  <span style="background: #f5f7fa; color: #6d7280; padding: 4px 8px; border-radius: 4px; font-size: 11px;">1 channel</span>
+                </div>
+              </div>
+              <div class="workflow-card-body" style="gap: 0; padding: 0;">
+                <!-- Channel Row -->
+                <div style="padding: 16px; border-bottom: 1px solid #e6ecf9; display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+                  <div style="flex: 1;">
+                    <p style="margin: 0; color: #08090b; font-size: 14px; font-weight: 500;">France</p>
+                    <p style="margin: 4px 0 0 0; color: #acb1be; font-size: 12px;">Europe • 7 questions • 3 languages</p>
+                    <p style="margin: 8px 0 0 0; color: #054bc5; font-size: 12px; text-decoration: none;">trial.whistleb.com/en/message/france</p>
+                  </div>
+                  <div style="display: flex; gap: 8px;">
+                    <button style="background: #f5f7fa; border: 1px solid #e6ecf9; padding: 8px 12px; border-radius: 8px; cursor: pointer; color: #08090b; font-size: 13px;">
+                      <i class="fas fa-th"></i>
+                    </button>
+                    <button onclick="currentChannel='france'; navigateTo('edit-channel')" style="background: #054bc5; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; font-weight: 500;">
+                      <i class="fas fa-edit"></i> Edit channel
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Add Channel Button -->
+                <div style="padding: 16px;">
+                  <button style="background: none; border: none; color: #054bc5; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; display: flex; align-items: center; gap: 8px;">
+                    <i class="fas fa-plus"></i> Add channel to Corporate (Global)
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- New Landing Page Button -->
+            <div style="margin-top: 24px;">
+              <button style="background: white; border: 1px solid #e6ecf9; color: #054bc5; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 13px; font-family: 'Barlow', sans-serif; display: flex; align-items: center; gap: 8px;">
+                <i class="fas fa-plus"></i> New landing page
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="admin" class="page">
+        <div class="page-header"><p class="page-title">System Admin</p></div>
+        <div class="page-body"><p style="color: #acb1be;">System Admin content coming soon...</p></div>
+      </div>
+
+      <div id="settings" class="page">
+        <div class="page-header"><p class="page-title">Settings</p></div>
+        <div class="page-body"><p style="color: #acb1be;">Settings content coming soon...</p></div>
+      </div>
+
+      <!-- Edit Channel Page -->
+      <div id="edit-channel" class="page">
+        <div class="page-header">
+          <button onclick="navigateTo('reporting-channels')" style="background: none; border: none; cursor: pointer; color: #054bc5; font-size: 14px; margin-bottom: 12px; font-family: 'Barlow', sans-serif;">
+            <i class="fas fa-arrow-left"></i> Back to Reporting Channels
+          </button>
+          <p class="page-title">Edit Channel: France</p>
+          
+          <!-- Progress Stepper -->
+          <div style="margin-top: 16px; display: flex; align-items: center; gap: 16px;">
+            <!-- Step 1 -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #e6ecf9; border: 1px solid #d1d5db; display: flex; align-items: center; justify-content: center; color: #6d7280; font-size: 12px; font-weight: 600;">1</div>
+              <p style="font-size: 11px; color: #6d7280; margin: 0; white-space: nowrap;">Questions</p>
+            </div>
+            
+            <!-- Connector -->
+            <div style="flex: 1; height: 1px; background: #e6ecf9; margin-bottom: 20px;"></div>
+            
+            <!-- Step 2 (Active) -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #054bc5; display: flex; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: 600;">2</div>
+              <p style="font-size: 11px; color: #054bc5; margin: 0; white-space: nowrap; font-weight: 600;">Workflow and routing rules</p>
+            </div>
+            
+            <!-- Connector -->
+            <div style="flex: 1; height: 1px; background: #e6ecf9; margin-bottom: 20px;"></div>
+            
+            <!-- Step 3 -->
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 6px;">
+              <div style="width: 32px; height: 32px; border-radius: 50%; background: #e6ecf9; border: 1px solid #d1d5db; display: flex; align-items: center; justify-content: center; color: #6d7280; font-size: 12px; font-weight: 600;">3</div>
+              <p style="font-size: 11px; color: #6d7280; margin: 0; white-space: nowrap;">Branding and publish</p>
+            </div>
+          </div>
+        </div>
+        <div class="page-body">
+          <div style="max-width: 900px;">
+            <!-- Workflow Configuration Section -->
+            <div class="workflow-card">
+              <div class="workflow-card-header">
+                <p class="workflow-card-title">Workflow Steps</p>
+              </div>
+              <div class="workflow-card-body" style="gap: 0; padding: 0;">
+                <p style="padding: 16px; color: #acb1be; font-size: 13px; margin: 0; border-bottom: 1px solid #e6ecf9;">Configure which workflow steps are available for cases in this channel.</p>
+                
+                <div id="channel-workflow-steps" style="padding: 16px; display: flex; flex-direction: column; gap: 16px;"></div>
+              </div>
+            </div>
+
+            <!-- Routing Rules Section (Placeholder for now) -->
+            <div class="workflow-card" style="margin-top: 24px;">
+              <div class="workflow-card-header">
+                <p class="workflow-card-title">Routing Rules (Step 2 of 3)</p>
+              </div>
+              <div class="workflow-card-body" style="gap: 16px;">
+                <p style="font-size: 13px; color: #acb1be; margin: 0;">Configure routing rules for this channel coming next...</p>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 12px; margin-top: 24px;">
+              <button onclick="saveChannelConfig()" class="setup-btn">Save changes</button>
+              <button onclick="navigateTo('reporting-channels')" style="background: white; color: #08090b; border: 1px solid #e6ecf9; padding: 10px 16px; border-radius: 8px; cursor: pointer; font-size: 14px; font-family: 'Barlow', sans-serif;">Cancel</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Data Model
+    const workflows = {
+      received: {
+        label: "Received",
+        steps: [
+          { id: "1", name: "Received", description: "Case has been received and logged into the system", isDefault: true, enabled: true, required: true, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] } }
+        ],
+        requireAll: false
+      },
+      open: {
+        label: "Open",
+        steps: [
+          { id: "2", name: "In Progress", description: "Case is currently being investigated", isDefault: true, enabled: true, required: true, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] } },
+          { id: "3", name: "Hold", description: "Case is on hold pending additional information", isDefault: false, enabled: true, required: false, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] } },
+          { id: "3b", name: "Escalation", description: "Case has been escalated to higher authority", isDefault: false, enabled: true, required: false, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] } }
+        ],
+        requireAll: false
+      },
+      closed: {
+        label: "Closed",
+        steps: [
+          { id: "4", name: "Closed", description: "Case has been resolved and closed", isDefault: true, enabled: true, required: true, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] }, approvals: [{ level: 1, roles: ["manager", "supervisor"] }, { level: 2, roles: ["executive_approval"] }] },
+          { id: "5", name: "Permanently Closed", description: "Case has been permanently closed and cannot be reopened", isDefault: true, enabled: true, required: true, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] }, approvals: [] }
+        ],
+        requireAll: false
+      },
+      deleted: {
+        label: "Deleted",
+        steps: [
+          { id: "6", name: "Deleted", description: "Case has been deleted", isDefault: true, enabled: true, required: false, notifications: { investigator: true, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] }, approvals: [{ level: 1, roles: ["supervisor", "manager"] }, { level: 2, roles: ["compliance_officer", "executive_approval"] }] }
+        ],
+        requireAll: false
+      },
+      compliance: {
+        label: "Compliance",
+        steps: [
+          { id: "7", name: "7 Day Acknowledgement", description: "Acknowledge case within 7 days", isDefault: true, enabled: true, required: true, notifications: { investigator: false, investigatorRecipients: [], investigatorMessage: "", reporter: true, reporterMessage: "Thank you for submitting your case. We have received it and will acknowledge receipt within 7 days.", reminders: [] } },
+          { id: "8", name: "90 day follow-up", description: "Follow up on case within 90 days", isDefault: true, enabled: true, required: true, notifications: { investigator: false, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: true, reporterMessage: "We are following up on your case.", reminders: [{ days: 3, type: "investigator" }, { days: 7, type: "investigator" }, { days: 30, type: "investigator" }] } },
+          { id: "9", name: "PII Redaction", description: "Redact personally identifiable information", isDefault: true, enabled: true, required: false, notifications: { investigator: false, investigatorRecipients: ["assignedTeams"], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [{ days: 3, type: "investigator" }, { days: 27, type: "investigator" }] } }
+        ],
+        requireAll: false
+      }
+    };
+
+    let currentEditStep = null;
+    let currentEditSection = null;
+
+    // Available roles/permissions for approvals
+    const availableRoles = [
+      { id: "assigned_team_anyone", name: "Anyone on the assigned team", isTeamOption: true },
+      { id: "channel_team_anyone", name: "Anyone in the channel team", isTeamOption: true },
+      { id: "investigator", name: "Investigator" },
+      { id: "supervisor", name: "Supervisor" },
+      { id: "manager", name: "Manager" },
+      { id: "compliance_officer", name: "Compliance Officer" },
+      { id: "legal_review", name: "Legal Review" },
+      { id: "executive_approval", name: "Executive Approval" },
+      { id: "case_owner", name: "Case Owner" },
+      { id: "department_head", name: "Department Head" }
+    ];
+
+    const channels = [
+      { id: "france", name: "France" },
+      { id: "asia", name: "Asia" },
+      { id: "default", name: "Default (all regions)" }
+    ];
+
+    const channelCompliance = {
+      france: ["7", "8", "9"],
+      asia: ["9"],
+      default: []
+    };
+
+    // Channel-specific workflow configuration
+    let currentChannel = "france";
+    const channelWorkflows = {
+      france: {
+        enabledSteps: {},  // { stepId: true/false }
+        approvers: {}      // { stepId: { levelIdx: "person/group name" } }
+      }
+    };
+
+    // Navigation
+    function renderChannelWorkflow() {
+      const container = document.getElementById("channel-workflow-steps");
+      if (!container) return;
+      
+      // Ensure channel config exists
+      if (!channelWorkflows[currentChannel]) {
+        channelWorkflows[currentChannel] = { enabledSteps: {}, approvers: {} };
+      }
+      
+      const channelConfig = channelWorkflows[currentChannel];
+      container.innerHTML = "";
+      
+      Object.entries(workflows).forEach(([section, workflow]) => {
+        const sectionDiv = document.createElement("div");
+        sectionDiv.style.cssText = "display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px;";
+        
+        const sectionHeader = document.createElement("div");
+        sectionHeader.style.cssText = "display: flex; align-items: center; justify-content: space-between;";
+        
+        const sectionLabel = document.createElement("p");
+        sectionLabel.textContent = workflow.label;
+        sectionLabel.style.cssText = "font-size: 12px; font-weight: 600; color: #08090b; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;";
+        
+        const requirementsLabel = document.createElement("p");
+        requirementsLabel.textContent = section === "compliance" ? "Adjust optional compliance steps below" : "Toggle custom steps to set as required or optional for this channel • Drag to reorder";
+        requirementsLabel.style.cssText = "font-size: 11px; color: #6d7280; margin: 0;";
+        
+        sectionHeader.appendChild(sectionLabel);
+        sectionHeader.appendChild(requirementsLabel);
+        sectionDiv.appendChild(sectionHeader);
+        
+        workflow.steps.forEach(step => {
+          const isRequired = step.required === true;
+          const isDefault = step.isDefault === true;
+          const stepRequiredForChannel = channelConfig.enabledSteps[step.id] !== false; // Default to true
+          
+          const stepCard = document.createElement("div");
+          stepCard.style.cssText = "display: flex; flex-direction: column; gap: 16px; padding: 16px; background: #f5f7fa; border-radius: 8px;";
+          
+          const stepHeaderRow = document.createElement("div");
+          stepHeaderRow.style.cssText = "display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;";
+          
+          const leftSection = document.createElement("div");
+          leftSection.style.cssText = "display: flex; align-items: flex-start; gap: 12px; flex: 1;";
+          
+          // Only show drag handle for custom steps
+          if (!isDefault) {
+            const dragHandle = document.createElement("button");
+            dragHandle.style.cssText = "background: none; border: none; cursor: grab; color: #acb1be; padding: 0; flex-shrink: 0; margin-top: 2px;";
+            dragHandle.innerHTML = '<i class="fas fa-grip-vertical" style="font-size: 14px;"></i>';
+            dragHandle.title = "Drag to reorder within this section";
+            dragHandle.draggable = true;
+            leftSection.appendChild(dragHandle);
+          }
+          
+          const info = document.createElement("div");
+          info.style.cssText = "flex: 1;";
+          
+          const name = document.createElement("p");
+          name.textContent = step.name;
+          name.style.cssText = "margin: 0; color: #08090b; font-size: 13px; font-weight: 500;";
+          
+          const desc = document.createElement("p");
+          desc.textContent = step.description;
+          desc.style.cssText = "margin: 4px 0 0 0; color: #acb1be; font-size: 12px;";
+          
+          info.appendChild(name);
+          info.appendChild(desc);
+          
+          // Show appropriate badge
+          if (isDefault && section !== "compliance") {
+            const defaultBadge = document.createElement("span");
+            defaultBadge.textContent = "Required";
+            defaultBadge.style.cssText = "display: inline-block; background: #dbeafe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-top: 6px;";
+            info.appendChild(defaultBadge);
+          } else if (section === "compliance" && isRequired) {
+            const requiredBadge = document.createElement("span");
+            requiredBadge.textContent = "Required";
+            requiredBadge.style.cssText = "display: inline-block; background: #dbeafe; color: #0369a1; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-top: 6px;";
+            info.appendChild(requiredBadge);
+          } else if (!isDefault && !isRequired) {
+            const statusLabel = document.createElement("span");
+            statusLabel.className = "custom-step-status";
+            statusLabel.textContent = stepRequiredForChannel ? "Required for this channel" : "Optional for this channel";
+            statusLabel.style.cssText = "display: inline-block; background: " + (stepRequiredForChannel ? "#dbeafe" : "#fef3c7") + "; color: " + (stepRequiredForChannel ? "#0369a1" : "#92400e") + "; padding: 2px 6px; border-radius: 3px; font-size: 11px; margin-top: 6px;";
+            info.appendChild(statusLabel);
+          }
+          
+          leftSection.appendChild(info);
+          stepHeaderRow.appendChild(leftSection);
+          
+          // Show toggle for custom steps and optional compliance steps only
+          if ((!isDefault && !isRequired) || (section === "compliance" && !isRequired)) {
+            const buttonGroupContainer = document.createElement("div");
+            buttonGroupContainer.style.cssText = "display: flex; gap: 0; flex-shrink: 0; border-radius: 8px; overflow: hidden;";
+            
+            // Optional button
+            const optionalBtn = document.createElement("button");
+            optionalBtn.textContent = "Optional";
+            optionalBtn.style.cssText = `
+              flex: 0 0 auto;
+              padding: 0 12px;
+              height: 36px;
+              border: 1.5px solid #054bc5;
+              background: ${!stepRequiredForChannel ? "#e6ecf9" : "white"};
+              color: #054bc5;
+              font-family: 'Barlow', sans-serif;
+              font-weight: 500;
+              font-size: 14px;
+              cursor: pointer;
+              border-right: none;
+              border-radius: 6px 0 0 6px;
+              transition: background 0.2s, color 0.2s;
+            `;
+            
+            // Required button
+            const requiredBtn = document.createElement("button");
+            requiredBtn.textContent = "Required";
+            requiredBtn.style.cssText = `
+              flex: 0 0 auto;
+              padding: 0 12px;
+              height: 36px;
+              border: 1.5px solid #054bc5;
+              background: ${stepRequiredForChannel ? "#e6ecf9" : "white"};
+              color: #054bc5;
+              font-family: 'Barlow', sans-serif;
+              font-weight: 500;
+              font-size: 14px;
+              cursor: pointer;
+              border-left: 0.5px solid #054bc5;
+              border-radius: 0 6px 6px 0;
+              transition: background 0.2s, color 0.2s;
+            `;
+            
+            // Handle Optional button click
+            optionalBtn.onclick = () => {
+              channelConfig.enabledSteps[step.id] = false;
+              optionalBtn.style.background = "#e6ecf9";
+              optionalBtn.style.borderRight = "none";
+              requiredBtn.style.background = "white";
+              requiredBtn.style.borderLeft = "0.5px solid #054bc5";
+              
+              // Update status label
+              const statusLabel = info.querySelector(".custom-step-status");
+              if (statusLabel) {
+                statusLabel.textContent = "Optional for this channel";
+                statusLabel.style.background = "#fef3c7";
+                statusLabel.style.color = "#92400e";
+              }
+            };
+            
+            // Handle Required button click
+            requiredBtn.onclick = () => {
+              channelConfig.enabledSteps[step.id] = true;
+              optionalBtn.style.background = "white";
+              optionalBtn.style.borderRight = "none";
+              requiredBtn.style.background = "#e6ecf9";
+              requiredBtn.style.borderLeft = "0.5px solid #054bc5";
+              
+              // Update status label
+              const statusLabel = info.querySelector(".custom-step-status");
+              if (statusLabel) {
+                statusLabel.textContent = "Required for this channel";
+                statusLabel.style.background = "#dbeafe";
+                statusLabel.style.color = "#0369a1";
+              }
+            };
+            
+            buttonGroupContainer.appendChild(optionalBtn);
+            buttonGroupContainer.appendChild(requiredBtn);
+            stepHeaderRow.appendChild(buttonGroupContainer);
+          }
+          
+          stepCard.appendChild(stepHeaderRow);
+          
+          // Add approval configuration for closed/deleted steps with approvals
+          if ((section === "closed" || section === "deleted") && step.approvals && step.approvals.length > 0) {
+            const approvalsRow = document.createElement("div");
+            approvalsRow.style.cssText = "border-top: 1px solid #e6ecf9; padding-top: 16px; margin-top: 0;";
+            
+            const approvalsLabel = document.createElement("p");
+            approvalsLabel.textContent = "Approvers for this step";
+            approvalsLabel.style.cssText = "font-size: 12px; font-weight: 600; color: #08090b; margin: 0 0 12px 0;";
+            approvalsRow.appendChild(approvalsLabel);
+            
+            const approvalsContainer = document.createElement("div");
+            approvalsContainer.style.cssText = "display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px;";
+            
+            step.approvals.forEach((approval, levelIdx) => {
+              const levelDiv = document.createElement("div");
+              levelDiv.style.cssText = "display: flex; flex-direction: column; gap: 8px; padding: 12px; background: white; border-radius: 6px; border: 1px solid #e6ecf9;";
+              
+              const levelTitle = document.createElement("p");
+              levelTitle.textContent = `Level ${levelIdx + 1}`;
+              levelTitle.style.cssText = "font-size: 12px; font-weight: 600; color: #08090b; margin: 0;";
+              
+              const rolesInfo = document.createElement("p");
+              const roleNames = approval.roles.map(roleId => {
+                const role = availableRoles.find(r => r.id === roleId);
+                return role ? role.name : roleId;
+              }).join(", ");
+              rolesInfo.textContent = roleNames || "Any role";
+              rolesInfo.style.cssText = "font-size: 11px; color: #6d7280; margin: 0; padding: 8px; background: #f9fafb; border-radius: 4px; border-left: 2px solid #054bc5;";
+              
+              const assigneeLabel = document.createElement("label");
+              assigneeLabel.textContent = "Assign person or group";
+              assigneeLabel.style.cssText = "font-size: 12px; font-weight: 500; color: #08090b;";
+              
+              const assigneeContainer = document.createElement("div");
+              assigneeContainer.className = "multi-select-wrapper";
+              assigneeContainer.style.cssText = "position: relative;";
+              
+              const assigneeButton = document.createElement("div");
+              assigneeButton.className = "multi-select-button";
+              assigneeButton.style.cssText = "width: 100%;";
+              
+              const assigneeChips = document.createElement("div");
+              assigneeChips.className = "multi-select-chips";
+              assigneeChips.style.cssText = "flex: 1;";
+              
+              const assigneeIcons = document.createElement("div");
+              assigneeIcons.className = "multi-select-icons";
+              assigneeIcons.innerHTML = '<i class="fas fa-chevron-down" style="font-size: 8px; color: #08090b;"></i>';
+              
+              assigneeButton.appendChild(assigneeChips);
+              assigneeButton.appendChild(assigneeIcons);
+              
+              const assigneeDropdown = document.createElement("div");
+              assigneeDropdown.className = "multi-select-dropdown";
+              
+              // Mock approver options (in real app, would be from actual people/groups)
+              const approverOptions = [
+                { id: "john_smith", name: "John Smith" },
+                { id: "jane_doe", name: "Jane Doe" },
+                { id: "finance_team", name: "Finance Team" },
+                { id: "compliance_team", name: "Compliance Team" },
+                { id: "leadership", name: "Leadership Group" }
+              ];
+              
+              approverOptions.forEach(option => {
+                const item = document.createElement("div");
+                item.className = "multi-select-list-item";
+                
+                const checkbox = document.createElement("div");
+                checkbox.className = "multi-select-checkbox";
+                
+                const optionLabel = document.createElement("span");
+                optionLabel.className = "multi-select-label";
+                optionLabel.textContent = option.name;
+                
+                item.appendChild(checkbox);
+                item.appendChild(optionLabel);
+                
+                item.onclick = () => {
+                  const isSelected = assigneeChips.querySelector(`[data-approver-id="${option.id}"]`);
+                  if (isSelected) {
+                    isSelected.remove();
+                    checkbox.classList.remove("checked");
+                  } else {
+                    const chip = document.createElement("div");
+                    chip.className = "multi-select-chip";
+                    chip.setAttribute("data-approver-id", option.id);
+                    chip.innerHTML = `<span>${option.name}</span><i class="fas fa-times"></i>`;
+                    chip.querySelector('i').onclick = (e) => {
+                      e.stopPropagation();
+                      chip.remove();
+                      checkbox.classList.remove("checked");
+                    };
+                    assigneeChips.appendChild(chip);
+                    checkbox.classList.add("checked");
+                    checkbox.innerHTML = '<i class="fas fa-check"></i>';
+                  }
+                };
+                
+                assigneeDropdown.appendChild(item);
+              });
+              
+              assigneeButton.onclick = (e) => {
+                e.stopPropagation();
+                document.querySelectorAll('.multi-select-dropdown.active').forEach(d => {
+                  if (d !== assigneeDropdown) d.classList.remove("active");
+                });
+                assigneeDropdown.classList.toggle("active");
+              };
+              
+              assigneeContainer.appendChild(assigneeLabel);
+              assigneeContainer.appendChild(assigneeButton);
+              assigneeContainer.appendChild(assigneeDropdown);
+              
+              levelDiv.appendChild(levelTitle);
+              levelDiv.appendChild(rolesInfo);
+              levelDiv.appendChild(assigneeContainer);
+              
+              approvalsContainer.appendChild(levelDiv);
+            });
+            
+            approvalsRow.appendChild(approvalsContainer);
+            stepCard.appendChild(approvalsRow);
+          }
+          
+          sectionDiv.appendChild(stepCard);
+        });
+        
+        container.appendChild(sectionDiv);
+      });
+      
+      // Close dropdowns when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.multi-select-wrapper')) {
+          document.querySelectorAll('.multi-select-dropdown.active').forEach(d => {
+            d.classList.remove("active");
+          });
+        }
+      });
+    }
+
+    function saveChannelConfig() {
+      // Ensure channel config exists
+      if (!channelWorkflows[currentChannel]) {
+        channelWorkflows[currentChannel] = { enabledSteps: {}, approvers: {} };
+      }
+      navigateTo('reporting-channels');
+    }
+    function navigateTo(page) {
+      // Hide all pages
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      
+      // Show selected page
+      const selectedPage = document.getElementById(page);
+      if (selectedPage) {
+        selectedPage.classList.add('active');
+      }
+
+      // Handle sidebar navigation visibility
+      const mainNav = document.getElementById('main-navigation');
+      const caseNav = document.getElementById('case-navigation');
+      
+      if (page === 'case-detail') {
+        // Hide main nav, show case nav
+        if (mainNav) mainNav.style.display = 'none';
+        if (caseNav) caseNav.style.display = 'flex';
+      } else {
+        // Show main nav, hide case nav
+        if (mainNav) mainNav.style.display = 'flex';
+        if (caseNav) caseNav.style.display = 'none';
+      }
+
+      // Remove active class from all nav items and sub-items
+      document.querySelectorAll('.nav-item, .nav-sub-item').forEach(item => {
+        item.classList.remove('active');
+      });
+      
+      // Determine which nav item should be active based on page hierarchy
+      let activeNavId;
+      if (page === 'workflow' || page === 'edit-step') {
+        activeNavId = 'nav-workflow';
+      } else if (page === 'reporting-channels' || page === 'edit-channel') {
+        activeNavId = 'nav-reporting-channels';
+      } else if (page === 'case-detail') {
+        activeNavId = 'nav-cases'; // Keep Cases nav active when viewing case detail
+      } else {
+        activeNavId = 'nav-' + page;
+      }
+      
+      // Set active state
+      const navItem = document.getElementById(activeNavId);
+      if (navItem) {
+        navItem.classList.add('active');
+      }
+
+      // Render workflow if on workflow page
+      if (page === 'workflow') {
+        renderWorkflows();
+      }
+      
+      // Render channel workflow if on edit-channel page
+      if (page === 'edit-channel') {
+        renderChannelWorkflow();
+      }
+    }
+
+    // Case Detail Functions
+    // Case Detail State
+    let currentCaseStep = 1; // 1 = Received, 2 = Open, 3 = Closed
+    let caseAwaitingApproval = false;
+
+    function openCaseDetail(caseId, caseName) {
+      // Update the case detail page with the specific case info
+      document.getElementById('caseDetailTitle').textContent = `Investigation – Case #${caseId}`;
+      
+      // Update case navigation title
+      const caseNavTitle = document.getElementById('case-nav-title');
+      if (caseNavTitle) {
+        caseNavTitle.textContent = `Case #${caseId}`;
+      }
+      
+      // Reset to Step 1 (Received)
+      currentCaseStep = 1;
+      caseAwaitingApproval = false;
+      
+      // Reset button to enabled state
+      const mainButton = document.getElementById('mainActionButton');
+      if (mainButton) {
+        mainButton.disabled = false;
+        mainButton.style.opacity = '1';
+        mainButton.style.cursor = 'pointer';
+      }
+      
+      updateCaseDetailUI();
+      
+      // Show acknowledgment notification
+      const notificationDiv = document.getElementById('acknowledgmentNotification');
+      if (notificationDiv) {
+        notificationDiv.style.display = 'flex';
+      }
+      
+      // Reset Owner field
+      const ownerInput = document.querySelector('input[placeholder=""]');
+      if (ownerInput) {
+        ownerInput.value = '';
+      }
+      
+      // Navigate to case detail page
+      navigateTo('case-detail');
+    }
+
+    function updateCaseDetailUI() {
+      const statusSelect = document.getElementById('statusSelect');
+      const mainButton = document.getElementById('mainActionButton');
+      const step1 = document.getElementById('step1-circle');
+      const step2 = document.getElementById('step2-circle');
+      const step3 = document.getElementById('step3-circle');
+      
+      // Update progress stepper
+      [step1, step2, step3].forEach(el => {
+        if (el) {
+          el.style.background = '#e6ecf9';
+          el.style.color = '#08090b';
+        }
+      });
+      
+      if (currentCaseStep === 1 && step1) {
+        step1.style.background = '#054bc5';
+        step1.style.color = 'white';
+      } else if (currentCaseStep === 2 && step2) {
+        step2.style.background = '#054bc5';
+        step2.style.color = 'white';
+      } else if (currentCaseStep === 3 && step3) {
+        step3.style.background = '#054bc5';
+        step3.style.color = 'white';
+      }
+      
+      // Update status dropdown options
+      if (statusSelect && !caseAwaitingApproval) {
+        statusSelect.innerHTML = '';
+        if (currentCaseStep === 1) {
+          // Step 1: Only Received
+          statusSelect.innerHTML = '<option>Received</option>';
+          statusSelect.value = 'Received';
+        } else if (currentCaseStep === 2) {
+          // Step 2: In Progress, Hold, Escalation
+          statusSelect.innerHTML = '<option>In Progress</option><option>Hold</option><option>Escalation</option>';
+          statusSelect.value = 'In Progress';
+        }
+      }
+      
+      // Update button text
+      if (mainButton && !caseAwaitingApproval) {
+        if (currentCaseStep === 1) {
+          mainButton.textContent = 'Begin Investigation';
+        } else if (currentCaseStep === 2) {
+          mainButton.textContent = 'Close';
+        }
+      }
+    }
+
+    function handleMainAction() {
+      if (currentCaseStep === 1) {
+        // Move from Step 1 to Step 2
+        currentCaseStep = 2;
+        updateCaseDetailUI();
+        
+        // Hide acknowledgment notification
+        const notificationDiv = document.getElementById('acknowledgmentNotification');
+        if (notificationDiv) {
+          notificationDiv.style.display = 'none';
+        }
+        
+        // Populate owner field
+        const ownerInput = document.querySelector('input[placeholder=""]');
+        if (ownerInput) {
+          ownerInput.value = 'Janelle Thomas';
+        }
+        
+        showToast('Email sent to reporter • Status changed to In Progress');
+      } else if (currentCaseStep === 2) {
+        // Show approval modal before closing
+        openApprovalModal();
+      }
+    }
+
+    function openApprovalModal() {
+      const modal = document.getElementById('approvalModal');
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    }
+
+    function closeApprovalModal() {
+      const modal = document.getElementById('approvalModal');
+      if (modal) {
+        modal.style.display = 'none';
+      }
+    }
+
+    function submitForApproval() {
+      // Close the modal
+      closeApprovalModal();
+      
+      // Set case to pending approval state
+      caseAwaitingApproval = true;
+      
+      // Update button to show pending state
+      const mainButton = document.getElementById('mainActionButton');
+      if (mainButton) {
+        mainButton.textContent = 'Pending Approval';
+        mainButton.disabled = true;
+        mainButton.style.opacity = '0.6';
+        mainButton.style.cursor = 'not-allowed';
+      }
+      
+      // Update status to show "Pending Close" or similar
+      const statusSelect = document.getElementById('statusSelect');
+      if (statusSelect) {
+        statusSelect.innerHTML = '<option>In Progress</option><option>Hold</option><option>Escalation</option><option disabled>Pending Close (Awaiting Approval)</option>';
+        statusSelect.value = 'In Progress';
+      }
+      
+      showToast('Case submitted for approval');
+    }
+
+    function beginInvestigation() {
+      handleMainAction();
+    }
+
+    function showToast(message) {
+      // Create toast element
+      const toast = document.createElement('div');
+      toast.style.cssText = `
+        position: fixed;
+        bottom: 24px;
+        right: 24px;
+        background: #10b981;
+        color: white;
+        padding: 16px 24px;
+        border-radius: 8px;
+        font-family: 'Barlow', sans-serif;
+        font-size: 14px;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        animation: slideIn 0.3s ease-in-out;
+      `;
+      toast.textContent = message;
+      
+      // Add animation
+      const style = document.createElement('style');
+      style.textContent = `
+        @keyframes slideIn {
+          from {
+            transform: translateX(400px);
+            opacity: 0;
+          }
+          to {
+            transform: translateX(0);
+            opacity: 1;
+          }
+        }
+      `;
+      if (!document.querySelector('style[data-toast-animation]')) {
+        style.setAttribute('data-toast-animation', 'true');
+        document.head.appendChild(style);
+      }
+      
+      document.body.appendChild(toast);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        toast.remove();
+      }, 3000);
+    }
+
+    // Workflow Rendering
+    function renderWorkflows() {
+      const container = document.getElementById("workflow-container");
+      container.innerHTML = "";
+      
+      Object.entries(workflows).forEach(([key, workflow]) => {
+        const card = document.createElement("div");
+        card.className = "workflow-card";
+        
+        const header = document.createElement("div");
+        header.className = "workflow-card-header";
+        
+        const title = document.createElement("p");
+        title.className = "workflow-card-title";
+        title.textContent = workflow.label;
+        
+        header.appendChild(title);
+        
+        const body = document.createElement("div");
+        body.className = "workflow-card-body";
+        
+        // Add clarifying label
+        const helpText = document.createElement("p");
+        helpText.style.cssText = "font-size: 12px; color: #6d7280; margin: 0 0 12px 0; padding: 0 0 12px 0; border-bottom: 1px solid #e6ecf9;";
+        helpText.textContent = "Toggle to enable or disable optional steps for all reporting channels";
+        body.appendChild(helpText);
+        
+        workflow.steps.forEach((step, idx) => {
+          const row = document.createElement("div");
+          row.className = "step-row";
+          row.style.cssText = "flex-direction: column; gap: 8px; align-items: stretch;";
+          
+          // Step header with number and title
+          const stepHeader = document.createElement("div");
+          stepHeader.style.cssText = "display: flex; gap: 12px; align-items: center;";
+          
+          const number = document.createElement("div");
+          number.className = "step-number";
+          number.textContent = idx + 1;
+          number.style.cssText = "flex-shrink: 0;";
+          
+          const itemBox = document.createElement("div");
+          itemBox.className = "step-item";
+          itemBox.style.cssText = "gap: 0; padding: 12px 16px; justify-content: space-between;";
+          
+          const info = document.createElement("div");
+          info.style.cssText = "display: flex; flex-direction: column; gap: 6px; flex: 1;";
+          
+          const label = document.createElement("p");
+          label.textContent = step.name;
+          label.style.cssText = "margin: 0; color: #08090b; font-size: 14px; font-weight: 500;";
+          
+          const description = document.createElement("p");
+          description.textContent = step.description;
+          description.style.cssText = "margin: 0; color: #acb1be; font-size: 12px;";
+          
+          info.appendChild(label);
+          info.appendChild(description);
+          
+          // Add Required badge if step is required and enabled
+          if (step.required && step.enabled) {
+            const badge = document.createElement("span");
+            badge.textContent = "Required";
+            badge.style.cssText = "display: inline-block; background: #e6ecf9; color: #054bc5; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; width: fit-content; margin-top: 4px;";
+            info.appendChild(badge);
+          }
+          
+          const controls = document.createElement("div");
+          controls.style.cssText = "display: flex; gap: 16px; align-items: center; flex-shrink: 0;";
+          
+          const editBtn = document.createElement("button");
+          editBtn.style.cssText = "background: none; border: none; cursor: pointer; color: #acb1be; padding: 0;";
+          editBtn.innerHTML = '<i class="fas fa-edit" style="font-size: 16px;"></i>';
+          editBtn.onclick = () => openEditStep(key, step);
+          
+          controls.appendChild(editBtn);
+          
+          // Only show toggle for steps that are not required defaults, OR for all compliance steps
+          if (!(step.required && step.isDefault) || key === "compliance") {
+            const toggle = document.createElement("input");
+            toggle.type = "checkbox";
+            toggle.className = "checkbox-toggle";
+            toggle.checked = step.enabled;
+            toggle.onchange = () => toggleStep(key, step.id, toggle.checked);
+            
+            controls.appendChild(toggle);
+          }
+          
+          itemBox.appendChild(info);
+          itemBox.appendChild(controls);
+          
+          stepHeader.appendChild(number);
+          stepHeader.appendChild(itemBox);
+          
+          row.appendChild(stepHeader);
+          body.appendChild(row);
+        });
+        
+        // Add step button (for Open, Closed, Deleted, and Compliance - not for Received since it only has one step)
+        const showAddButton = (key !== "received" && (key === "open" || key === "closed" || key === "deleted" || key === "compliance"));
+        if (showAddButton) {
+          const addBtn = document.createElement("button");
+          addBtn.className = "add-step-btn";
+          addBtn.innerHTML = '<i class="fas fa-plus"></i>Add step';
+          addBtn.onclick = () => addCustomStep(key);
+          body.appendChild(addBtn);
+        }
+        
+        card.appendChild(header);
+        card.appendChild(body);
+        container.appendChild(card);
+      });
+    }
+
+    function openEditStep(section, step) {
+      currentEditSection = section;
+      currentEditStep = step;
+      
+      document.getElementById("edit-step-name").value = step.name;
+      document.getElementById("edit-step-description").value = step.description;
+      
+      // Show/hide required toggle
+      const requiredSection = document.getElementById("required-section");
+      const requiredCheckbox = document.getElementById("edit-step-required");
+      const showRequired = (!step.isDefault) || (section === "compliance");
+      if (showRequired) {
+        requiredSection.style.display = "block";
+        requiredCheckbox.checked = step.required !== false;
+      } else {
+        requiredSection.style.display = "none";
+      }
+      
+      const descriptionField = document.getElementById("edit-step-description");
+      const readonlyNote = document.getElementById("description-readonly-note");
+      
+      if (step.isDefault) {
+        descriptionField.disabled = true;
+        descriptionField.style.backgroundColor = "#f5f7fa";
+        descriptionField.style.color = "#acb1be";
+        descriptionField.style.cursor = "not-allowed";
+        readonlyNote.style.display = "block";
+      } else {
+        descriptionField.disabled = false;
+        descriptionField.style.backgroundColor = "white";
+        descriptionField.style.color = "#08090b";
+        descriptionField.style.cursor = "auto";
+        readonlyNote.style.display = "none";
+      }
+      
+      // Load notification settings
+      const notifications = step.notifications || { investigator: false, investigatorRecipients: [], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] };
+      
+      // Determine if this is a compliance step
+      const stepNameLower = step.name.toLowerCase();
+      const is7DayAck = stepNameLower.includes("7 day") && stepNameLower.includes("acknowled");
+      const is90Day = stepNameLower.includes("90") && stepNameLower.includes("follow");
+      const isPiiRedaction = stepNameLower.includes("pii") && stepNameLower.includes("redact");
+      const isComplianceStep = is7DayAck || is90Day || isPiiRedaction;
+      
+      // Set up notification UI based on step type
+      if (is7DayAck) {
+        // 7-Day Acknowledgement: Investigator notifications that case needs acknowledgment
+        document.getElementById("investigator-notify-label").textContent = "Notify teams that acknowledgment is needed";
+        document.querySelector('.workflow-card:nth-child(2) .workflow-card-title').textContent = "Acknowledgment Notifications";
+        document.getElementById("investigator-remind-label").textContent = "Remind investigators that a case is awaiting acknowledgment";
+        
+        document.getElementById("edit-investigator-notify").checked = notifications.investigator;
+        document.querySelectorAll('.investigator-recipient').forEach(checkbox => {
+          checkbox.checked = (notifications.investigatorRecipients || []).includes(checkbox.value);
+        });
+        document.getElementById("edit-investigator-message").value = notifications.investigatorMessage || "";
+        
+        document.getElementById("investigator-section").style.display = notifications.investigator ? "block" : "none";
+        document.getElementById("reporter-notifications").style.display = "none";
+        
+        renderReminders(notifications.reminders || []);
+        
+      } else if (is90Day) {
+        // 90-Day Follow-up: Optional auto-reporter notification + investigator notifications
+        document.getElementById("reporter-notifications").style.display = "block";
+        document.querySelector('.workflow-card:nth-child(3) .workflow-card-title').textContent = "Reporter Auto-Notification (Optional)";
+        document.getElementById("edit-reporter-notify").checked = notifications.reporter;
+        document.getElementById("edit-reporter-message").value = notifications.reporterMessage || "We are following up on your case.";
+        document.getElementById("reporter-message-section").style.display = notifications.reporter ? "block" : "none";
+        
+        document.getElementById("investigator-notify-label").textContent = "Send reminder about upcoming 90-day deadline";
+        document.querySelector('.workflow-card:nth-child(2) .workflow-card-title').textContent = "Deadline Reminders";
+        document.getElementById("investigator-remind-label").textContent = "Set reminders to notify investigators of cases approaching the 90-day deadline";
+        
+        document.getElementById("edit-investigator-notify").checked = notifications.investigator;
+        document.querySelectorAll('.investigator-recipient').forEach(checkbox => {
+          checkbox.checked = (notifications.investigatorRecipients || []).includes(checkbox.value);
+        });
+        document.getElementById("investigator-section").style.display = notifications.investigator ? "block" : "none";
+        
+        renderReminders(notifications.reminders || []);
+        
+      } else if (isPiiRedaction) {
+        // PII Redaction: Just reminders, no reporter notifications
+        document.getElementById("reporter-notifications").style.display = "none";
+        document.getElementById("investigator-notify-label").textContent = "Send reminders for PII redaction";
+        document.querySelector('.workflow-card:nth-child(2) .workflow-card-title').textContent = "Redaction Reminders";
+        document.getElementById("investigator-remind-label").textContent = "Set reminders to notify investigators of cases needing PII redaction";
+        
+        document.getElementById("edit-investigator-notify").checked = notifications.investigator;
+        document.querySelectorAll('.investigator-recipient').forEach(checkbox => {
+          checkbox.checked = (notifications.investigatorRecipients || []).includes(checkbox.value);
+        });
+        document.getElementById("investigator-section").style.display = notifications.investigator ? "block" : "none";
+        
+        renderReminders(notifications.reminders || []);
+        
+      } else {
+        // Regular steps
+        document.getElementById("investigator-notify-label").textContent = "Notify investigator when case enters this step";
+        document.querySelector('.workflow-card:nth-child(2) .workflow-card-title').textContent = "Investigator Notifications & Reminders";
+        document.getElementById("investigator-remind-label").textContent = "Set reminders to notify investigators before deadlines";
+        document.getElementById("reporter-notifications").style.display = "block";
+        
+        document.getElementById("edit-investigator-notify").checked = notifications.investigator;
+        document.querySelectorAll('.investigator-recipient').forEach(checkbox => {
+          checkbox.checked = (notifications.investigatorRecipients || []).includes(checkbox.value);
+        });
+        document.getElementById("edit-investigator-message").value = notifications.investigatorMessage || "";
+        document.getElementById("edit-reporter-notify").checked = notifications.reporter;
+        document.getElementById("edit-reporter-message").value = notifications.reporterMessage || "";
+        
+        document.getElementById("investigator-section").style.display = notifications.investigator ? "block" : "none";
+        document.getElementById("reporter-message-section").style.display = notifications.reporter ? "block" : "none";
+        
+        renderReminders(notifications.reminders || []);
+      }
+      
+      // Setup toggle visibility for sections
+      document.getElementById("edit-investigator-notify").onchange = function() {
+        document.getElementById("investigator-section").style.display = this.checked ? "block" : "none";
+      };
+      
+      document.getElementById("edit-reporter-notify").onchange = function() {
+        document.getElementById("reporter-message-section").style.display = this.checked ? "block" : "none";
+      };
+      
+      // Show/hide approval section (only for Closed and Deleted steps)
+      const approvalSection = document.getElementById("approval-section");
+      const isClosedOrDeleted = (section === "closed" && stepNameLower.includes("closed")) || (section === "deleted");
+      
+      if (isClosedOrDeleted) {
+        approvalSection.style.display = "block";
+        const approvals = step.approvals || [];
+        renderApprovals(approvals);
+      } else {
+        approvalSection.style.display = "none";
+      }
+      
+      // Hide all pages and show edit-step
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('edit-step').classList.add('active');
+      
+      // Update nav active state
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+    }
+
+    function saveStepEdit() {
+      if (!currentEditStep || !currentEditSection) return;
+      
+      const newName = document.getElementById("edit-step-name").value.trim();
+      if (!newName) {
+        alert("Step name cannot be empty");
+        return;
+      }
+      
+      currentEditStep.name = newName;
+      
+      // Only update description if it's not a default status
+      if (!currentEditStep.isDefault) {
+        currentEditStep.description = document.getElementById("edit-step-description").value;
+      }
+      
+      // Save required flag if applicable
+      const requiredSection = document.getElementById("required-section");
+      if (requiredSection.style.display !== "none") {
+        currentEditStep.required = document.getElementById("edit-step-required").checked;
+      }
+      
+      // Get selected recipient types
+      const selectedRecipients = Array.from(document.querySelectorAll('.investigator-recipient:checked')).map(cb => cb.value);
+      
+      // Save notification settings
+      currentEditStep.notifications = {
+        investigator: document.getElementById("edit-investigator-notify").checked,
+        investigatorRecipients: selectedRecipients,
+        investigatorMessage: document.getElementById("edit-investigator-message").value,
+        reporter: document.getElementById("edit-reporter-notify").checked,
+        reporterMessage: document.getElementById("edit-reporter-message").value,
+        reminders: currentEditStep.notifications?.reminders || []
+      };
+      
+      // Approvals are already saved in renderApprovals
+      
+      navigateToWorkflow();
+    }
+
+    function renderReminders(reminders) {
+      const list = document.getElementById("reminders-list");
+      list.innerHTML = "";
+      
+      if (currentEditStep) {
+        currentEditStep.notifications = currentEditStep.notifications || {};
+        currentEditStep.notifications.reminders = reminders;
+      }
+      
+      reminders.forEach((reminder, idx) => {
+        const row = document.createElement("div");
+        row.style.cssText = "display: flex; gap: 12px; align-items: center; padding: 12px; background: #f5f7fa; border-radius: 8px;";
+        
+        const input = document.createElement("input");
+        input.type = "number";
+        input.min = "1";
+        input.value = reminder.days;
+        input.style.cssText = "width: 80px; padding: 8px; border: 1px solid #e6ecf9; border-radius: 4px; font-family: 'Barlow', sans-serif;";
+        input.onchange = () => {
+          reminders[idx].days = parseInt(input.value) || 1;
+        };
+        
+        const label = document.createElement("span");
+        label.textContent = "days before";
+        label.style.cssText = "font-size: 13px; color: #08090b;";
+        
+        const removeBtn = document.createElement("button");
+        removeBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        removeBtn.style.cssText = "background: none; border: none; cursor: pointer; color: #acb1be; margin-left: auto;";
+        removeBtn.onclick = () => {
+          reminders.splice(idx, 1);
+          renderReminders(reminders);
+        };
+        
+        row.appendChild(input);
+        row.appendChild(label);
+        row.appendChild(removeBtn);
+        list.appendChild(row);
+      });
+    }
+
+    function renderApprovals(approvals) {
+      const list = document.getElementById("approvals-list");
+      list.innerHTML = "";
+      
+      if (currentEditStep) {
+        currentEditStep.approvals = approvals;
+      }
+      
+      approvals.forEach((approval, idx) => {
+        const card = document.createElement("div");
+        card.style.cssText = "padding: 16px; background: #f5f7fa; border-radius: 8px; border-left: 3px solid #054bc5;";
+        
+        const header = document.createElement("div");
+        header.style.cssText = "display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;";
+        
+        const levelTitle = document.createElement("p");
+        levelTitle.textContent = `Approval Level ${idx + 1}`;
+        levelTitle.style.cssText = "margin: 0; font-size: 13px; font-weight: 500; color: #08090b;";
+        
+        const removeBtn = document.createElement("button");
+        removeBtn.innerHTML = '<i class="fas fa-trash"></i>';
+        removeBtn.style.cssText = "background: none; border: none; cursor: pointer; color: #acb1be; font-size: 14px;";
+        removeBtn.onclick = () => {
+          approvals.splice(idx, 1);
+          renderApprovals(approvals);
+          updateAddApprovalButton();
+        };
+        
+        header.appendChild(levelTitle);
+        header.appendChild(removeBtn);
+        
+        // Create multi-select dropdown
+        const wrapper = document.createElement("div");
+        wrapper.className = "multi-select-wrapper";
+        
+        const label = document.createElement("label");
+        label.textContent = "Who can approve";
+        label.style.cssText = "font-size: 12px; font-weight: 500; color: #08090b;";
+        
+        const button = document.createElement("div");
+        button.className = "multi-select-button";
+        
+        const chipsContainer = document.createElement("div");
+        chipsContainer.className = "multi-select-chips";
+        
+        // Render selected role chips
+        const selectedRoles = approval.roles || [];
+        selectedRoles.forEach(roleId => {
+          const role = availableRoles.find(r => r.id === roleId);
+          if (role) {
+            const chip = document.createElement("div");
+            chip.className = "multi-select-chip";
+            chip.innerHTML = `<span>${role.name}</span><i class="fas fa-times"></i>`;
+            chip.querySelector('i').onclick = (e) => {
+              e.stopPropagation();
+              approval.roles = approval.roles.filter(r => r !== roleId);
+              renderApprovals(approvals);
+            };
+            chipsContainer.appendChild(chip);
+          }
+        });
+        
+        // Add chevron icon
+        const iconsContainer = document.createElement("div");
+        iconsContainer.className = "multi-select-icons";
+        iconsContainer.innerHTML = '<i class="fas fa-chevron-down" style="font-size: 8px; color: #08090b;"></i>';
+        
+        button.appendChild(chipsContainer);
+        button.appendChild(iconsContainer);
+        
+        // Create dropdown
+        const dropdown = document.createElement("div");
+        dropdown.className = "multi-select-dropdown";
+        
+        availableRoles.forEach((role, roleIdx) => {
+          // Add separator after team options
+          if (roleIdx === 2) {
+            const separator = document.createElement("div");
+            separator.style.cssText = "height: 1px; background: #e6ecf9; margin: 4px 0;";
+            dropdown.appendChild(separator);
+          }
+          
+          const item = document.createElement("div");
+          item.className = "multi-select-list-item";
+          
+          const checkbox = document.createElement("div");
+          checkbox.className = "multi-select-checkbox";
+          if (selectedRoles.includes(role.id)) {
+            checkbox.classList.add("checked");
+            checkbox.innerHTML = '<i class="fas fa-check"></i>';
+          }
+          
+          const roleLabel = document.createElement("span");
+          roleLabel.className = "multi-select-label";
+          roleLabel.textContent = role.name;
+          
+          item.appendChild(checkbox);
+          item.appendChild(roleLabel);
+          
+          item.onclick = () => {
+            const isSelected = selectedRoles.includes(role.id);
+            if (isSelected) {
+              approval.roles = approval.roles.filter(r => r !== role.id);
+            } else {
+              approval.roles.push(role.id);
+            }
+            renderApprovals(approvals);
+          };
+          
+          dropdown.appendChild(item);
+        });
+        
+        // Toggle dropdown
+        button.onclick = (e) => {
+          e.stopPropagation();
+          // Close other dropdowns
+          document.querySelectorAll('.multi-select-dropdown.active').forEach(d => {
+            if (d !== dropdown) d.classList.remove("active");
+          });
+          dropdown.classList.toggle("active");
+        };
+        
+        wrapper.appendChild(label);
+        wrapper.appendChild(button);
+        wrapper.appendChild(dropdown);
+        
+        card.appendChild(header);
+        card.appendChild(wrapper);
+        list.appendChild(card);
+      });
+      
+      updateAddApprovalButton();
+    }
+
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('.multi-select-wrapper')) {
+        document.querySelectorAll('.multi-select-dropdown.active').forEach(d => {
+          d.classList.remove("active");
+        });
+      }
+    });
+
+    function addApprovalLevel() {
+      if (!currentEditStep) return;
+      const approvals = currentEditStep.approvals || [];
+      if (approvals.length < 3) {
+        approvals.push({ level: approvals.length + 1, roles: [] });
+        renderApprovals(approvals);
+      }
+    }
+
+    function updateAddApprovalButton() {
+      const addBtn = document.getElementById("add-approval-btn");
+      if (currentEditStep && currentEditStep.approvals && currentEditStep.approvals.length >= 3) {
+        addBtn.style.display = "none";
+      } else {
+        addBtn.style.display = "inline-block";
+      }
+    }
+
+    function navigateBack() {
+      navigateToWorkflow();
+    }
+
+    function navigateToWorkflow() {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('workflow').classList.add('active');
+      renderWorkflows();
+      
+      // Update nav active state
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      document.querySelector('[onclick="navigateTo(\'workflow\')"]')?.classList.add('active');
+    }
+
+    function toggleStep(section, stepId, enabled) {
+      const step = workflows[section].steps.find(s => s.id === stepId);
+      if (step) step.enabled = enabled;
+      renderWorkflows();
+    }
+
+    function removeStep(section, stepId) {
+      workflows[section].steps = workflows[section].steps.filter(s => s.id !== stepId);
+      renderWorkflows();
+    }
+
+    function addCustomStep(section) {
+      const name = prompt(`Add custom step to ${workflows[section].label}:`);
+      if (name && name.trim()) {
+        const newId = Math.random().toString(36).substr(2, 9);
+        const newStep = {
+          id: newId,
+          name: name.trim(),
+          description: "",
+          isDefault: false,
+          enabled: true,
+          required: false,
+          notifications: { investigator: false, investigatorRecipients: [], investigatorMessage: "", reporter: false, reporterMessage: "", reminders: [] }
+        };
+        
+        // Add approvals field for closed and deleted sections
+        if (section === "closed" || section === "deleted") {
+          newStep.approvals = [];
+        }
+        
+        workflows[section].steps.push(newStep);
+        renderWorkflows();
+      }
+    }
+
+    // Channel Configuration
+    function toggleChannelConfig() {
+      const configDiv = document.getElementById("channel-config");
+      configDiv.classList.toggle("active");
+      if (configDiv.classList.contains("active")) {
+        renderChannelRules();
+      }
+    }
+
+    function renderChannelRules() {
+      const rulesDiv = document.getElementById("channel-rules");
+      rulesDiv.innerHTML = "";
+      
+      channels.forEach(channel => {
+        const card = document.createElement("div");
+        card.className = "channel-rule-card";
+        
+        const title = document.createElement("p");
+        title.className = "channel-rule-title";
+        title.textContent = channel.name;
+        
+        const checkboxes = document.createElement("div");
+        checkboxes.className = "channel-rule-checkboxes";
+        
+        workflows.compliance.steps.forEach(step => {
+          const label = document.createElement("label");
+          label.className = "rule-checkbox-label";
+          
+          const input = document.createElement("input");
+          input.type = "checkbox";
+          input.checked = (channelCompliance[channel.id] || []).includes(step.id);
+          input.onchange = () => updateChannelCompliance(channel.id, step.id, input.checked);
+          
+          const text = document.createElement("span");
+          text.textContent = step.name;
+          
+          label.appendChild(input);
+          label.appendChild(text);
+          checkboxes.appendChild(label);
+        });
+        
+        card.appendChild(title);
+        card.appendChild(checkboxes);
+        rulesDiv.appendChild(card);
+      });
+    }
+
+    function updateChannelCompliance(channelId, stepId, enabled) {
+      if (!channelCompliance[channelId]) {
+        channelCompliance[channelId] = [];
+      }
+      
+      if (enabled) {
+        if (!channelCompliance[channelId].includes(stepId)) {
+          channelCompliance[channelId].push(stepId);
+        }
+      } else {
+        channelCompliance[channelId] = channelCompliance[channelId].filter(id => id !== stepId);
+      }
+    }
+
+    function loadTemplate(templateName) {
+      alert(`Loading template: ${templateName}`);
+      // Template loading logic here
+    }
+
+    // Initial render
+    renderWorkflows();
+  </script>
+</body>
+</html>
