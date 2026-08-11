@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhistleB - Roles & Permissions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        
+        .layout {
+            display: flex;
+            height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 200px;
+            background: white;
+            border-right: 1px solid #e0e0e0;
+            overflow-y: auto;
+            padding: 1rem 0;
+        }
+        
+        .sidebar-logo {
+            padding: 1.5rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-logo span {
+            color: #d85a30;
+            font-size: 12px;
+            margin-left: 4px;
+        }
+        
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .nav-item {
+            padding: 0.75rem 1rem;
+            cursor: pointer;
+            color: #666;
+            font-size: 14px;
+            border-left: 3px solid transparent;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .nav-item:hover {
+            background: #f9f9f9;
+            color: #333;
+        }
+        
+        .nav-item.active {
+            background: #f0f0f0;
+            border-left-color: #0052cc;
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .nav-item-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+        }
+        
+        .nav-group-title {
+            padding: 0.5rem 1rem;
+            font-size: 12px;
+            font-weight: 600;
+            color: #999;
+            text-transform: uppercase;
+            margin-top: 1rem;
+        }
+        
+        .nav-item-nested {
+            padding-left: 2.5rem;
+            font-size: 13px;
+        }
+        
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 1rem;
+            border-top: 1px solid #f0f0f0;
+            text-align: center;
+            font-size: 12px;
+            color: #d85a30;
+        }
+        
+        .sidebar-footer a {
+            color: #d85a30;
+            text-decoration: none;
+            display: block;
+            margin: 0.25rem 0;
+        }
+        
+        /* Main content */
+        .main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        
+        .header {
+            background: white;
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        
+        .header-title {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .header-org {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .header-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        .btn-setup {
+            background: #0052cc;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #ccc;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .content {
+            flex: 1;
+            overflow-y: auto;
+            padding: 2rem;
+        }
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: 400;
+            margin-bottom: 2rem;
+        }
+        
+        /* Manage Users Page */
+        .user-details-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+        
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-label {
+            display: block;
+            font-size: 13px;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-label .required {
+            color: #d32f2f;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        
+        .badge-pending {
+            display: inline-block;
+            background: #fff3cd;
+            color: #856404;
+            padding: 0.25rem 0.75rem;
+            border-radius: 3px;
+            font-size: 12px;
+            margin-top: 0.5rem;
+        }
+        
+        .teams-section {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #d0d0d0;
+            border-radius: 4px;
+            font-size: 13px;
+            margin-bottom: 1rem;
+        }
+        
+        .team-item {
+            padding: 0.75rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .team-item:last-child {
+            border-bottom: none;
+        }
+        
+        .team-name {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 13px;
+        }
+        
+        .team-icon {
+            width: 20px;
+            height: 20px;
+            background: #e0e0e0;
+            border-radius: 50%;
+        }
+        
+        .remove-link {
+            color: #0052cc;
+            cursor: pointer;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        
+        /* Collapsible Permissions */
+        .permissions-section {
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .permissions-header {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 500;
+            font-size: 14px;
+        }
+        
+        .permissions-header:hover {
+            background: #f9f9f9;
+        }
+        
+        .toggle-icon {
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .permissions-body {
+            display: none;
+            padding: 1.5rem;
+        }
+        
+        .permissions-body.open {
+            display: block;
+        }
+        
+        .permission-item {
+            display: flex;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: #f9f9f9;
+            border-radius: 4px;
+        }
+        
+        .permission-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .permission-checkbox {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        
+        .permission-radio {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
+            margin-top: 2px;
+            cursor: pointer;
+        }
+        
+        .permission-info {
+            flex: 1;
+        }
+        
+        .permission-name {
+            font-weight: 500;
+            font-size: 13px;
+            margin-bottom: 0.25rem;
+        }
+        
+        .permission-desc {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        /* Roles and Permissions Page */
+        .permission-table {
+            background: white;
+            border-radius: 4px;
+            margin-bottom: 2rem;
+            overflow: hidden;
+        }
+        
+        .table-header {
+            padding: 1rem;
+            background: #f9f9f9;
+            border-bottom: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .table-title {
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .table-toggle {
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+        }
+        
+        .table-content {
+            display: none;
+            overflow-x: auto;
+        }
+        
+        .table-content.open {
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+        
+        thead {
+            background: #f9f9f9;
+        }
+        
+        th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 1px solid #e0e0e0;
+            color: #333;
+            vertical-align: middle;
+            height: 60px;
+        }
+        
+        th.role-col {
+            text-align: center;
+        }
+        
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+            height: 60px;
+        }
+        
+        tr:hover {
+            background: #fafafa;
+        }
+        
+        .checkmark {
+            color: #0052cc;
+            font-size: 16px;
+            text-align: center;
+        }
+        
+        .permission-col {
+            width: 50%;
+        }
+        
+        .role-col {
+            width: 120px;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        td.checkmark {
+            width: 120px;
+            text-align: center;
+            padding: 1rem;
+        }
+        
+        .role-label {
+            font-weight: 500;
+        }
+        
+        /* Tabs for channels */
+        .channel-tabs {
+            display: flex;
+            gap: 2rem;
+            border-bottom: 1px solid #e0e0e0;
+            margin: 1.5rem 0;
+            background: white;
+            padding: 0 1.5rem;
+        }
+        
+        .channel-tab {
+            padding: 1rem 0;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            color: #666;
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .channel-tab.active {
+            border-bottom-color: #333;
+            color: #333;
+        }
+        
+        .channel-content {
+            display: none;
+        }
+        
+        .channel-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="layout">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="sidebar-logo">WhistleB<span>NAVEX</span></div>
+            
+            <div class="sidebar-nav">
+                <div class="nav-item" onclick="navigateTo('cases')">
+                    <span style="font-size: 18px;">📁</span> Cases
+                </div>
+                <div class="nav-item" onclick="navigateTo('export')">
+                    <span style="font-size: 18px;">📄</span> Export reports
+                </div>
+                
+                <!-- System Admin Collapsible Section -->
+                <div class="nav-item" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleNavSection(this)">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 18px;">🔒</span> System admin
+                    </div>
+                    <span style="font-size: 18px;">▲</span>
+                </div>
+                <div class="nav-section" style="display: block;">
+                    <div class="nav-item nav-item-nested" onclick="navigateTo('security')">
+                        Security information
+                    </div>
+                    <div class="nav-item nav-item-nested" onclick="navigateTo('password')">
+                        Secondary password
+                    </div>
+                    <div class="nav-item nav-item-nested" onclick="navigateTo('encryption')">
+                        Encryption key
+                    </div>
+                    <div class="nav-item nav-item-nested" onclick="navigateTo('channels')">
+                        Reporting channels
+                    </div>
+                    <div class="nav-item nav-item-nested" onclick="navigateTo('sso')">
+                        Single sign-on (SSO)
+                    </div>
+                    <div class="nav-item nav-item-nested" onclick="navigateTo('roles')" id="roles-nav-item" style="background: #e8f0fe;">
+                        Roles and Permissions
+                    </div>
+                </div>
+                
+                <!-- Settings Collapsible Section -->
+                <div class="nav-item" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleNavSection(this)">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 18px;">⚙️</span> Settings
+                    </div>
+                    <span style="font-size: 18px;">▼</span>
+                </div>
+                <div class="nav-section" style="display: none;"></div>
+                
+                <div class="nav-item" onclick="navigateTo('users-list')">
+                    <span style="font-size: 18px;">👥</span> Users
+                </div>
+                <div class="nav-item nav-item-nested" onclick="navigateTo('teams')" style="padding-left: 2.5rem;">
+                    Teams
+                </div>
+                
+                <!-- Resources Collapsible Section -->
+                <div class="nav-item" style="display: flex; justify-content: space-between; align-items: center; cursor: pointer;" onclick="toggleNavSection(this)">
+                    <div style="display: flex; align-items: center; gap: 0.75rem;">
+                        <span style="font-size: 18px;">📁</span> Resources
+                    </div>
+                    <span style="font-size: 18px;">▼</span>
+                </div>
+                <div class="nav-section" style="display: none;"></div>
+            </div>
+            
+            <div class="sidebar-footer">
+                <strong style="color: #d85a30;">NAVEX</strong>
+                <a href="#">Privacy statement | Terms of use</a>
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main">
+            <div class="header">
+                <div class="header-left">
+                    <div>
+                        <div class="header-title">WhistleB<span style="color: #d85a30; font-size: 11px; margin-left: 4px;">NAVEX</span></div>
+                    </div>
+                    <div class="header-org">Organization Name</div>
+                </div>
+                <div class="header-right">
+                    <button class="btn-setup">Setup assistant</button>
+                    <div class="user-avatar">AB</div>
+                </div>
+            </div>
+            
+            <div class="content">
+                <!-- Users List Page -->
+                <div id="users-list-page" class="page">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                        <div class="page-title" style="margin: 0;">User management and user logs</div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button class="btn-setup" style="background: #0052cc;">+ Add user</button>
+                            <button style="padding: 0.5rem 1rem; border: 1px solid #d0d0d0; background: white; border-radius: 4px; cursor: pointer; color: #0052cc; font-weight: 500;">⟳</button>
+                            <button style="padding: 0.5rem 1rem; border: 1px solid #d0d0d0; background: white; border-radius: 4px; cursor: pointer; color: #0052cc; font-weight: 500;">📋</button>
+                        </div>
+                    </div>
+                    
+                    <!-- User Permissions Description -->
+                    <div style="margin-bottom: 2rem; padding: 0;">
+                        <div style="font-size: 13px; color: #666; line-height: 1.6;">
+                            User permissions give users access to the different sections of the Case Management Tool. The sections are listed under each user permission. All users have access to the Dashboard, Resources and My account.
+                        </div>
+                    </div>
+                    
+                    <!-- Users List -->
+                    <div style="display: flex; flex-direction: column; gap: 1.5rem;">
+                        <!-- Pending Invite -->
+                        <div style="background: white; padding: 1.5rem; border-radius: 4px; border: 1px solid #e0e0e0;">
+                            <div style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.5rem;">
+                                        <span style="font-size: 18px; margin-top: 2px;">👤</span>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px; margin-bottom: 0.25rem;">Janelle Collins</div>
+                                            <div style="color: #0052cc; font-size: 13px; cursor: pointer; text-decoration: underline;">janelle.collins@email.com</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 2.25rem; margin-bottom: 0.5rem;">
+                                        <div style="font-size: 12px; color: #666; margin-bottom: 0.25rem;">
+                                            <span style="margin-right: 0.5rem;">👥</span>Cases, Users
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">
+                                            <span style="margin-right: 0.5rem;">📅</span>2021.30.Release, channel team testfouredge123, channel team emailtest22222
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem;">
+                                    <button onclick="editUser('Janelle Collins', 'janelle.collins@email.com')" style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">✏️ Edit</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 User log</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #d0d0d0; background: #f5f5f5; color: #999; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">🗑️ Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Amar Nanappagol -->
+                        <div style="background: white; padding: 1.5rem; border-radius: 4px; border: 1px solid #e0e0e0;">
+                            <div style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.5rem;">
+                                        <span style="font-size: 18px; margin-top: 2px;">👤</span>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px; margin-bottom: 0.25rem;">Amar Nanappagol</div>
+                                            <div style="color: #0052cc; font-size: 13px; cursor: pointer; text-decoration: underline;">amar.nanappagol@navex.com</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 2.25rem; margin-bottom: 0.5rem;">
+                                        <div style="font-size: 12px; color: #666; margin-bottom: 0.25rem;">
+                                            <span style="margin-right: 0.5rem;">👥</span>Statistics, Cases, Settings, Users, System Admin
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">
+                                            <span style="margin-right: 0.5rem;">📅</span>Team 0L02, Team GL02 New, 2021.30.Release, Corona, channel team testfouredge123, channel team emailtest22222, channel team servertest2222, 19 nov, lucy2025.25.2
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem;">
+                                    <button onclick="editUser('Amar Nanappagol', 'amar.nanappagol@navex.com')" style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">✏️ Edit</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 User log</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #d0d0d0; background: white; color: #666; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">🗑️ Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Chandni Kumari -->
+                        <div style="background: white; padding: 1.5rem; border-radius: 4px; border: 1px solid #e0e0e0;">
+                            <div style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.5rem;">
+                                        <span style="font-size: 18px; margin-top: 2px;">👤</span>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px; margin-bottom: 0.25rem;">Chandni Kumari</div>
+                                            <div style="color: #0052cc; font-size: 13px; cursor: pointer; text-decoration: underline;">chandni.kumari@navex.com</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 2.25rem; margin-bottom: 0.5rem;">
+                                        <div style="font-size: 12px; color: #666; margin-bottom: 0.25rem;">
+                                            <span style="margin-right: 0.5rem;">👥</span>Statistics, Cases, Settings, Users, System Admin
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">
+                                            <span style="margin-right: 0.5rem;">📅</span>Team 0L02, Team GL02 New, 2021.30.Release, Corona, channel team testfouredge123, channel team emailtest22222, channel team servertest2222, 19 nov, 26.35 team, team 26.38
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem;">
+                                    <button onclick="editUser('Chandni Kumari', 'chandni.kumari@navex.com')" style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">✏️ Edit</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 User log</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #d0d0d0; background: white; color: #666; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">🗑️ Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Gautam Srivastava -->
+                        <div style="background: white; padding: 1.5rem; border-radius: 4px; border: 1px solid #e0e0e0;">
+                            <div style="display: flex; gap: 1.5rem; justify-content: space-between; align-items: flex-start;">
+                                <div style="flex: 1;">
+                                    <div style="display: flex; gap: 0.75rem; align-items: flex-start; margin-bottom: 0.5rem;">
+                                        <span style="font-size: 18px; margin-top: 2px;">👤</span>
+                                        <div>
+                                            <div style="font-weight: 600; font-size: 14px; margin-bottom: 0.25rem;">Gautam Srivastava</div>
+                                            <div style="color: #0052cc; font-size: 13px; cursor: pointer; text-decoration: underline;">gautam.srivastava@navex.com</div>
+                                        </div>
+                                    </div>
+                                    <div style="margin-left: 2.25rem; margin-bottom: 0.5rem;">
+                                        <div style="font-size: 12px; color: #666; margin-bottom: 0.25rem;">
+                                            <span style="margin-right: 0.5rem;">👥</span>Statistics, Cases, Settings, Users
+                                        </div>
+                                        <div style="font-size: 12px; color: #999;">
+                                            <span style="margin-right: 0.5rem;">📅</span>Team 0L02, channel team emailtest22222
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="display: flex; gap: 0.75rem;">
+                                    <button onclick="editUser('Gautam Srivastava', 'gautam.srivastava@navex.com')" style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">✏️ Edit</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #0052cc; background: white; color: #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">📋 User log</button>
+                                    <button style="padding: 0.5rem 1rem; border: 1px solid #d0d0d0; background: white; color: #666; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">🗑️ Delete</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Manage Users Detail Page (Edit User) -->
+                <div id="manage-users-page" class="page">
+                    <div style="padding: 2rem; display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem; font-size: 13px; margin-bottom: 0.5rem;">
+                                <a href="javascript:void(0)" onclick="navigateTo('users-list')" style="color: #0052cc; text-decoration: none; cursor: pointer;">Users</a>
+                                <span style="color: #999;">&gt;</span>
+                                <span style="color: #666;" id="breadcrumb-user-name">Manage User</span>
+                            </div>
+                            <div class="page-title" style="margin: 0; font-size: 28px; font-weight: 600;">Manage Users</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button onclick="navigateTo('users-list')" style="padding: 0.75rem 1.5rem; background: white; color: #0052cc; border: 1px solid #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">Cancel</button>
+                            <button onclick="saveUserChanges()" style="padding: 0.75rem 1.5rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">Save</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Success Toast Notification -->
+                    <div id="toast-notification" style="position: fixed; top: 20px; right: 20px; background: #4caf50; color: white; padding: 1rem 1.5rem; border-radius: 4px; box-shadow: 0 2px 8px rgba(0,0,0,0.15); display: none; z-index: 1000; font-size: 13px; font-weight: 500;">
+                        ✓ Role added successfully
+                    </div>
+                    
+                    <div style="padding: 0 2rem;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; background: white; padding: 2rem; border-radius: 4px; margin-bottom: 2rem;">
+                        <!-- Left Column: User Details -->
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 1.5rem; font-size: 14px;">User Details</div>
+                            <div class="form-group">
+                                <label class="form-label">Name <span class="required">*</span></label>
+                                <input type="text" class="form-input" id="user-name" value="Janelle Collins">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Email Address <span class="required">*</span></label>
+                                <input type="email" class="form-input" id="user-email" value="janelle.collins@email.com">
+                                <div class="badge-pending">Pending Invite</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Right Column: Teams -->
+                        <div>
+                            <div style="font-weight: 600; margin-bottom: 1.5rem; font-size: 14px;">Teams</div>
+                            <div class="form-group">
+                                <label class="form-label">Search to add <span class="required">*</span></label>
+                                <div style="position: relative; margin-bottom: 1rem;">
+                                    <span style="position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #999; font-size: 16px;">🔍</span>
+                                    <input type="text" id="team-search" placeholder="Search for teams..." style="width: 100%; padding: 0.75rem 0.75rem 0.75rem 2.5rem; border: 1px solid #d0d0d0; border-radius: 4px; font-size: 13px;" list="team-options" onchange="addTeamFromSearch(this)">
+                                    <datalist id="team-options">
+                                        <option value="Channel Team 3"></option>
+                                        <option value="Channel Team 4"></option>
+                                        <option value="Channel Team 5"></option>
+                                        <option value="Assignment Team 1"></option>
+                                        <option value="Assignment Team 2"></option>
+                                        <option value="Assignment Team 3"></option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            
+                            <!-- Teams Chips -->
+                            <div id="teams-list" style="display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 1rem; background: white; border: 1px solid #d0d0d0; border-radius: 4px; min-height: 60px; align-content: flex-start;">
+                                <span style="background: #e3f2fd; color: #0052cc; padding: 0.5rem 0.75rem; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 0.5rem;">Channel Team 1 <span style="cursor: pointer; font-weight: bold;" onclick="removeTeamChip(this)">×</span></span>
+                                <span style="background: #e3f2fd; color: #0052cc; padding: 0.5rem 0.75rem; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 0.5rem;">Channel Team 2 <span style="cursor: pointer; font-weight: bold;" onclick="removeTeamChip(this)">×</span></span>
+                                <span style="background: #e3f2fd; color: #0052cc; padding: 0.5rem 0.75rem; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 0.5rem;">Finance Reviewers <span style="cursor: pointer; font-weight: bold;" onclick="removeTeamChip(this)">×</span></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-between; align-items: center; padding: 0 2rem; margin-top: 2rem; margin-bottom: 1rem;">
+                        <div class="section-title" style="padding: 0; margin: 0;">User Roles</div>
+                        <a href="javascript:void(0)" onclick="clearAllRoles()" style="color: #0052cc; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">Clear All</a>
+                    </div>
+                    
+                    <!-- Settings Section -->
+                    <div class="permissions-section">
+                        <div class="permissions-header" style="display: flex; justify-content: space-between; align-items: center;" onclick="toggleSection(this)">
+                            <span>Settings</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <a href="javascript:void(0)" onclick="clearSectionPermissions(event, 'settings-role')" style="color: #0052cc; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">Clear</a>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        <div class="permissions-body open">
+                            <div class="permission-item">
+                                <input type="radio" name="settings-role" class="permission-radio" value="Settings Admin">
+                                <div class="permission-info">
+                                    <div class="permission-name">Settings Admin</div>
+                                    <div class="permission-desc">This user can create categories, create default messages, create and edit workflows, and set reminder</div>
+                                </div>
+                            </div>
+                            <div class="permission-item">
+                                <input type="radio" name="settings-role" class="permission-radio" value="Settings User">
+                                <div class="permission-info">
+                                    <div class="permission-name">Settings User</div>
+                                    <div class="permission-desc">This user can view all settings, but can not make edits</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Users Section -->
+                    <div class="permissions-section">
+                        <div class="permissions-header" style="display: flex; justify-content: space-between; align-items: center;" onclick="toggleSection(this)">
+                            <span>Users</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <a href="javascript:void(0)" onclick="clearSectionPermissions(event, 'users-role')" style="color: #0052cc; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">Clear</a>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        <div class="permissions-body open">
+                            <div class="permission-item">
+                                <input type="radio" name="users-role" class="permission-radio" value="Users Admin">
+                                <div class="permission-info">
+                                    <div class="permission-name">Users Admin</div>
+                                    <div class="permission-desc">This user can invite and remove users to channels and teams and determine roles and permissions</div>
+                                </div>
+                            </div>
+                            <div class="permission-item">
+                                <input type="radio" name="users-role" class="permission-radio" value="User Manager">
+                                <div class="permission-info">
+                                    <div class="permission-name">User Manager</div>
+                                    <div class="permission-desc">This user can invite users, but can not edit permissions</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- System Admin Section -->
+                    <div class="permissions-section">
+                        <div class="permissions-header" style="display: flex; justify-content: space-between; align-items: center;" onclick="toggleSection(this)">
+                            <span>System Admin</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <a href="javascript:void(0)" onclick="clearSectionPermissions(event, 'systemadmin-role')" style="color: #0052cc; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">Clear</a>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        <div class="permissions-body open">
+                            <div class="permission-item">
+                                <input type="radio" name="systemadmin-role" class="permission-radio" value="System Admin">
+                                <div class="permission-info">
+                                    <div class="permission-name">System Admin</div>
+                                    <div class="permission-desc">This gives access to all system administration settings and configurations.</div>
+                                </div>
+                            </div>
+                            <div class="permission-item">
+                                <input type="radio" name="systemadmin-role" class="permission-radio" value="System Viewer">
+                                <div class="permission-info">
+                                    <div class="permission-name">System Viewer</div>
+                                    <div class="permission-desc">This user can view system admin settings, but can not make edits</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Channel-specific sections -->
+                    <div style="margin-top: 3rem;">
+                        <div class="channel-tabs" id="channel-tabs-container" style="display: flex; gap: 0; border-bottom: 2px solid #d0d0d0; margin-bottom: 2rem;">
+                            <!-- Tabs will be dynamically inserted here -->
+                        </div>
+                        
+                        <!-- Channel Content Container -->
+                        <div id="channel-content-container">
+                            <!-- Channel content will be dynamically inserted here -->
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                
+                <!-- Roles and Permissions Page -->
+                <div id="roles-permissions-page" class="page active">
+                    <div class="page-title">Roles and permissions</div>
+                    
+                    <!-- Statistics Permissions Table -->
+                    <div class="permission-table">
+                        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="table-title">Statistics Permissions</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button onclick="openManageRolePage('statistics', null)" style="padding: 0.5rem 1rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">+ Create Role</button>
+                                <span class="table-toggle" onclick="toggleTable(this)">▼</span>
+                            </div>
+                        </div>
+                        <div class="table-content open">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="permission-col">Permission</th>
+                                        <th class="role-col">Statistics Admin <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('statistics', {name: 'Statistics Admin', permissions: ['View published dashboards', 'Filter charts', 'Export data as CSV/PDF', 'View advanced statistics']})">✎</span></th>
+                                        <th class="role-col">Statistics User <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('statistics', {name: 'Statistics User', permissions: ['View published dashboards', 'Filter charts', 'Export data as CSV/PDF', 'View advanced statistics']})">✎</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>View published dashboards</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Filter charts</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Export data as CSV/PDF</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>View advanced statistics</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Create advanced statistics views and visuals</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Cases Permissions Table -->
+                    <div class="permission-table">
+                        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="table-title">Cases Permissions</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button onclick="openManageRolePage('cases', null)" style="padding: 0.5rem 1rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">+ Create Role</button>
+                                <span class="table-toggle" onclick="toggleTable(this)">▼</span>
+                            </div>
+                        </div>
+                        <div class="table-content open">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="permission-col">Permission</th>
+                                        <th class="role-col">Case Admin <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('cases', {name: 'Case Admin', permissions: ['View assigned cases', 'View all cases', 'Edit issue type', 'Edit case details', 'Add to case discussions', 'Upload files', 'Reply to reporter', 'Close Case', 'Delete cases', 'Perform PII Redaction', 'Move case to another channel', 'Assign cases (to teams and individuals)']})">✎</span></th>
+                                        <th class="role-col">Case Investigator <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('cases', {name: 'Case Investigator', permissions: ['View assigned cases', 'View all cases', 'Edit issue type', 'Edit case details', 'Add to case discussions', 'Upload files', 'Reply to reporter', 'Close Case', 'Perform PII Redaction']})">✎</span></th>
+                                        <th class="role-col">Case Viewer <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('cases', {name: 'Case Viewer', permissions: ['View assigned cases', 'View all cases']})">✎</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>View assigned cases</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>View all cases</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Edit issue type</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Edit case details</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Add to case discussions</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Upload files</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Reply to reporter</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Close Case</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Delete cases</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Perform PII Redaction</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Request a professional translation</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Move case to another channel</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Assign cases (to teams and individuals)</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Settings Permissions Table -->
+                    <div class="permission-table">
+                        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="table-title">Settings Permissions</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button onclick="openManageRolePage('settings', null)" style="padding: 0.5rem 1rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">+ Create Role</button>
+                                <span class="table-toggle" onclick="toggleTable(this)">▼</span>
+                            </div>
+                        </div>
+                        <div class="table-content open">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="permission-col">Permission</th>
+                                        <th class="role-col">Settings Admin <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('settings', {name: 'Settings Admin', permissions: ['View Organization Details', 'Manage Organization Details', 'Create and Edit Landing Pages', 'Create and Edit Reporting Channels', 'Manage Notification Rules', 'Manage Multi-Language Settings', 'Manage Intranet Network Addresses']})">✎</span></th>
+                                        <th class="role-col">Settings User <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('settings', {name: 'Settings User', permissions: ['View Organization Details']})">✎</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>View Organization Details</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>View categories</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>View group categories</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>View use default messages</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Receive reminders for assigned cases</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Organization Details</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Enforce two factor authentication</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage categories</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage group categories</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage default messages</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage reminders for case managers</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Intranet Network Addresses</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Intranet Network Addresses</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- Users Permissions Table -->
+                    <div class="permission-table">
+                        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="table-title">Users Permissions</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button onclick="openManageRolePage('users', null)" style="padding: 0.5rem 1rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">+ Create Role</button>
+                                <span class="table-toggle" onclick="toggleTable(this)">▼</span>
+                            </div>
+                        </div>
+                        <div class="table-content open">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="permission-col">Permission</th>
+                                        <th class="role-col">Users Admin <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('users', {name: 'Users Admin', permissions: ['View user list', 'Add users to teams', 'Add users to account', 'Create and assign roles', 'View user activity logs']})">✎</span></th>
+                                        <th class="role-col">User <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('users', {name: 'User', permissions: ['View user list']})">✎</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>View user list</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Add users to teams</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Add users to account</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Create and assign roles</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>View user activity logs</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <!-- System Admin Permissions Table -->
+                    <div class="permission-table">
+                        <div class="table-header" style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="table-title">System Admin Permissions</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <button onclick="openManageRolePage('system-admin', null)" style="padding: 0.5rem 1rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">+ Create Role</button>
+                                <span class="table-toggle" onclick="toggleTable(this)">▼</span>
+                            </div>
+                        </div>
+                        <div class="table-content open">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th class="permission-col">Permission</th>
+                                        <th class="role-col">System Admin <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('system-admin', {name: 'System Admin', permissions: ['View Landing Pages and Reporting Channels', 'View Workflows', 'Manage Secondary Password', 'Manage Encryption Key', 'Manage Landing Pages and Reporting Channels', 'Manage Workflows', 'Manage advanced routing', 'Manage APIs']})">✎</span></th>
+                                        <th class="role-col">System Viewer <span style="font-size: 16px; cursor: pointer; color: #0052cc; width: 16px; height: 16px; display: inline-block; line-height: 1;" onclick="openManageRolePage('system-admin', {name: 'System Viewer', permissions: ['View Landing Pages and Reporting Channels', 'View Workflows']})">✎</span></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>View Landing Pages and Reporting Channels</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>View Workflows</td>
+                                        <td class="checkmark">✓</td>
+                                        <td class="checkmark">✓</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Secondary Password</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Encryption Key</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Landing Pages and Reporting Channels</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage SSO Configuration</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Roles and Permissions</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage Workflows</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage advanced routing</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Manage APIs</td>
+                                        <td class="checkmark">✓</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add Role Page -->
+                <div id="add-role-page" class="page">
+                    <div style="padding: 2rem; display: flex; justify-content: space-between; align-items: flex-start;">
+                        <div>
+                            <div style="color: #666; font-size: 13px; margin-bottom: 0.5rem;"><span style="color: #0052cc; cursor: pointer; text-decoration: none;" onclick="goBackToRoles()">Roles and permissions</span> > <span style="font-weight: 500; color: #333;" id="breadcrumb-title">Manage Role</span></div>
+                            <div class="page-title" id="manage-role-title" style="margin: 0; font-size: 28px; font-weight: 600;">Manage Role</div>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button onclick="goBackToRoles()" style="padding: 0.75rem 1.5rem; background: white; color: #0052cc; border: 1px solid #0052cc; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">Cancel</button>
+                            <button onclick="saveNewRole()" style="padding: 0.75rem 1.5rem; background: #0052cc; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500;">Save</button>
+                            <button id="delete-role-btn" onclick="deleteRole()" style="padding: 0.75rem 1.5rem; background: white; color: #d32f2f; border: 1px solid #d32f2f; border-radius: 4px; cursor: pointer; font-size: 13px; font-weight: 500; display: none;">Delete</button>
+                        </div>
+                    </div>
+                    
+                    <div style="padding: 0 2rem;">
+                        <div class="form-group">
+                            <label class="form-label">Role Name <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="role-name" placeholder="" style="font-size: 14px; padding: 0.75rem;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Role Description <span class="required">*</span></label>
+                            <input type="text" class="form-input" id="role-description" placeholder="" style="font-size: 14px; padding: 0.75rem;">
+                        </div>
+                        
+                        <div style="margin-top: 2rem;">
+                            <div class="section-title" style="padding: 0; margin-bottom: 1rem;">Select Permissions</div>
+                            <div id="permissions-container" style="background: #f5f5f5; padding: 1.5rem; border-radius: 4px;">
+                                <!-- Permissions will be dynamically inserted here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function toggleNavSection(element) {
+            const nextSection = element.nextElementSibling;
+            if (nextSection && nextSection.classList.contains('nav-section')) {
+                const isHidden = nextSection.style.display === 'none';
+                nextSection.style.display = isHidden ? 'block' : 'none';
+                
+                // Update chevron direction
+                const chevron = element.querySelector('span:last-child');
+                if (chevron) {
+                    chevron.textContent = isHidden ? '▲' : '▼';
+                }
+            }
+        }
+        
+        function navigateTo(page, userId) {
+            const pages = {
+                'users-list': 'users-list-page',
+                'users': 'manage-users-page',
+                'roles': 'roles-permissions-page'
+            };
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item-nested').forEach(n => n.style.background = '');
+            
+            if (pages[page]) {
+                document.getElementById(pages[page]).classList.add('active');
+            }
+            
+            if (event && event.target) {
+                const navItem = event.target.closest('.nav-item');
+                if (navItem) {
+                    if (page === 'roles') {
+                        document.getElementById('roles-nav-item').style.background = '#e8f0fe';
+                    } else if (navItem.classList.contains('nav-item-nested')) {
+                        navItem.style.background = '#e8f0fe';
+                    }
+                }
+            }
+        }
+        
+        function editUser(userName, userEmail) {
+            document.getElementById('user-name').value = userName;
+            document.getElementById('user-email').value = userEmail;
+            
+            // Update breadcrumb with user name
+            document.getElementById('breadcrumb-user-name').textContent = userName;
+            
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('manage-users-page').classList.add('active');
+            
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.querySelector('[onclick="navigateTo(\'users-list\')"]').classList.add('active');
+            
+            // Initialize channel tabs based on current teams
+            initializeChannelTabs();
+        }
+        
+        function saveUserChanges() {
+            const userName = document.getElementById('user-name').value.trim();
+            if (!userName) {
+                alert('Please enter a user name');
+                return;
+            }
+            
+            // Collect all selected roles
+            const selectedRoles = {
+                settings: document.querySelector('input[name="settings-role"]:checked')?.value,
+                users: document.querySelector('input[name="users-role"]:checked')?.value,
+                systemadmin: document.querySelector('input[name="systemadmin-role"]:checked')?.value,
+                channels: {}
+            };
+            
+            // Collect channel-specific roles
+            document.querySelectorAll('[id$="-content"]').forEach(content => {
+                const channelId = content.id.replace('-content', '');
+                selectedRoles.channels[channelId] = {
+                    statistics: content.querySelector(`input[name="${channelId}-statistics-role"]:checked`)?.value,
+                    cases: content.querySelector(`input[name="${channelId}-cases-role"]:checked`)?.value
+                };
+            });
+            
+            // Here you would typically save the data to a server
+            console.log('Saving user changes:', selectedRoles);
+            
+            // Navigate back to users list
+            navigateTo('users-list');
+        }
+        
+        function initializeChannelTabs() {
+            const tabsContainer = document.getElementById('channel-tabs-container');
+            const contentContainer = document.getElementById('channel-content-container');
+            
+            // Clear existing tabs and content
+            tabsContainer.innerHTML = '';
+            contentContainer.innerHTML = '';
+            
+            // Get all current teams from the chips
+            const teamsList = document.getElementById('teams-list');
+            const teamSpans = teamsList.querySelectorAll('span');
+            const teams = [];
+            
+            teamSpans.forEach(span => {
+                const teamName = span.textContent.replace('×', '').trim();
+                if (teamName) {
+                    teams.push(teamName);
+                }
+            });
+            
+            // Create tabs and content for each team
+            teams.forEach((teamName, index) => {
+                const tabId = teamName.toLowerCase().replace(/\s+/g, '-');
+                
+                // Create tab
+                const newTab = document.createElement('div');
+                newTab.className = 'channel-tab';
+                newTab.style.cssText = 'padding: 1rem 1.5rem; cursor: pointer; border-bottom: 3px solid transparent; font-weight: 500; font-size: 13px;';
+                if (index === 0) {
+                    newTab.classList.add('active');
+                    newTab.style.borderBottomColor = '#0052cc';
+                }
+                newTab.textContent = teamName;
+                newTab.onclick = function() { switchChannel(this, tabId + '-content'); };
+                tabsContainer.appendChild(newTab);
+                
+                // Create content section
+                const newContent = document.createElement('div');
+                newContent.id = tabId + '-content';
+                newContent.className = 'channel-content';
+                if (index === 0) newContent.classList.add('active');
+                newContent.style.cssText = 'display: none;';
+                newContent.innerHTML = `
+                    <!-- Statistics Section -->
+                    <div class="permissions-section">
+                        <div class="permissions-header" style="display: flex; justify-content: space-between; align-items: center;" onclick="toggleSection(this)">
+                            <span>Statistics</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <a href="javascript:void(0)" onclick="clearSectionPermissions(event, '${tabId}-statistics-role')" style="color: #0052cc; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">Clear</a>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        <div class="permissions-body open">
+                            <div class="permission-item">
+                                <input type="radio" name="${tabId}-statistics-role" class="permission-radio" value="Statistics Admin">
+                                <div class="permission-info">
+                                    <div class="permission-name">Statistics Admin</div>
+                                    <div class="permission-desc">This gives access to all statistics and allows for creating Advanced Statistics views and visuals.</div>
+                                </div>
+                            </div>
+                            <div class="permission-item">
+                                <input type="radio" name="${tabId}-statistics-role" class="permission-radio" value="Statistics User">
+                                <div class="permission-info">
+                                    <div class="permission-name">Statistics User</div>
+                                    <div class="permission-desc">This user can view all Statistics with the ability to filter</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Cases Section -->
+                    <div class="permissions-section">
+                        <div class="permissions-header" style="display: flex; justify-content: space-between; align-items: center;" onclick="toggleSection(this)">
+                            <span>Cases</span>
+                            <div style="display: flex; gap: 1rem; align-items: center;">
+                                <a href="javascript:void(0)" onclick="clearSectionPermissions(event, '${tabId}-cases-role')" style="color: #0052cc; text-decoration: none; font-size: 13px; font-weight: 500; cursor: pointer;">Clear</a>
+                                <span class="toggle-icon">▼</span>
+                            </div>
+                        </div>
+                        <div class="permissions-body open">
+                            <div class="permission-item">
+                                <input type="radio" name="${tabId}-cases-role" class="permission-radio" value="Cases Admin">
+                                <div class="permission-info">
+                                    <div class="permission-name">Cases Admin</div>
+                                    <div class="permission-desc">This user can create workflows to assign cases, handle cases as the investigator, and close and delete cases</div>
+                                </div>
+                            </div>
+                            <div class="permission-item">
+                                <input type="radio" name="${tabId}-cases-role" class="permission-radio" value="Case Investigator">
+                                <div class="permission-info">
+                                    <div class="permission-name">Case Investigator</div>
+                                    <div class="permission-desc">This user can be assigned to cases, handle cases as the investigator, complete PII redaction, and close and delete cases</div>
+                                </div>
+                            </div>
+                            <div class="permission-item">
+                                <input type="radio" name="${tabId}-cases-role" class="permission-radio" value="Case Viewer">
+                                <div class="permission-info">
+                                    <div class="permission-name">Case Viewer</div>
+                                    <div class="permission-desc">This user can view all cases but can not make edits</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                if (index === 0) newContent.style.display = 'block';
+                contentContainer.appendChild(newContent);
+            });
+            
+            // Set up toast notification for newly created radio buttons
+            setupRoleToastListeners();
+        }
+        
+        function switchChannel(tab, contentId) {
+            // Remove active from all tabs and remove border color
+            document.querySelectorAll('.channel-tab').forEach(t => {
+                t.classList.remove('active');
+                t.style.borderBottomColor = 'transparent';
+            });
+            
+            // Hide all channel content
+            document.querySelectorAll('.channel-content').forEach(c => {
+                c.style.display = 'none';
+            });
+            
+            // Add active to clicked tab and show corresponding content
+            tab.classList.add('active');
+            tab.style.borderBottomColor = '#0052cc';
+            document.getElementById(contentId).style.display = 'block';
+        }
+        
+        function addTeamFromSearch(element) {
+            const teamName = element.value.trim();
+            if (!teamName) return;
+            
+            const teamsList = document.getElementById('teams-list');
+            
+            // Check if team already exists
+            const existingTeams = Array.from(teamsList.querySelectorAll('span')).map(el => el.textContent.replace('×', '').trim());
+            if (existingTeams.includes(teamName)) {
+                alert('This team is already added');
+                element.value = '';
+                return;
+            }
+            
+            // Create new team chip
+            const newTeamChip = document.createElement('span');
+            newTeamChip.style.cssText = 'background: #e3f2fd; color: #0052cc; padding: 0.5rem 0.75rem; border-radius: 16px; font-size: 13px; display: flex; align-items: center; gap: 0.5rem;';
+            newTeamChip.innerHTML = `${teamName} <span style="cursor: pointer; font-weight: bold;" onclick="removeTeamChip(this)">×</span>`;
+            
+            // Add to teams list
+            teamsList.appendChild(newTeamChip);
+            
+            // Reset search field
+            element.value = '';
+        }
+        
+        function removeTeamChip(element) {
+            element.closest('span').remove();
+        }
+        
+        function addTeam(selectElement) {
+            const selectedValue = selectElement.value;
+            if (!selectedValue) return;
+            
+            const teamsList = document.getElementById('teams-list');
+            
+            // Check if team already exists
+            const existingTeams = Array.from(teamsList.querySelectorAll('.team-name')).map(el => el.textContent.replace('👥 ', ''));
+            if (existingTeams.includes(selectedValue)) {
+                alert('This team is already added');
+                selectElement.value = '';
+                return;
+            }
+            
+            // Create new team item
+            const newTeamItem = document.createElement('div');
+            newTeamItem.className = 'team-item';
+            newTeamItem.innerHTML = `
+                <span class="team-name">👥 ${selectedValue}</span>
+                <span class="remove-link" onclick="removeTeam(this)">Remove</span>
+            `;
+            
+            // Add to teams list
+            teamsList.appendChild(newTeamItem);
+            
+            // Add corresponding tab and content
+            addChannelTab(selectedValue);
+            
+            // Reset dropdown
+            selectElement.value = '';
+        }
+        
+        function removeTeam(removeLink) {
+            const teamName = removeLink.closest('.team-item').querySelector('.team-name').textContent.replace('👥 ', '');
+            removeLink.closest('.team-item').remove();
+            
+            // Remove corresponding tab and content
+            removeChannelTab(teamName);
+        }
+        
+        function addChannelTab(teamName) {
+            const tabsContainer = document.getElementById('channel-tabs-container');
+            const contentContainer = document.getElementById('channel-content-container');
+            
+            // Create safe ID from team name
+            const tabId = teamName.toLowerCase().replace(/\s+/g, '-');
+            
+            // Create tab
+            const newTab = document.createElement('div');
+            newTab.className = 'channel-tab';
+            newTab.textContent = teamName;
+            newTab.onclick = function() { switchChannel(this, tabId + '-content'); };
+            tabsContainer.appendChild(newTab);
+            
+            // Create content section
+            const newContent = document.createElement('div');
+            newContent.id = tabId + '-content';
+            newContent.className = 'channel-content';
+            newContent.innerHTML = `
+                <!-- Statistics Section -->
+                <div class="permissions-section">
+                    <div class="permissions-header" onclick="toggleSection(this)">
+                        <span>Statistics</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="permissions-body open">
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox">
+                            <div class="permission-info">
+                                <div class="permission-name">Statistics Admin</div>
+                                <div class="permission-desc">This gives access to all statistics and allows for creating Advanced Statistics views and visuals.</div>
+                            </div>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox">
+                            <div class="permission-info">
+                                <div class="permission-name">Statistics User</div>
+                                <div class="permission-desc">This user can view all Statistics with the ability to filter</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cases Section -->
+                <div class="permissions-section">
+                    <div class="permissions-header" onclick="toggleSection(this)">
+                        <span>Cases</span>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="permissions-body open">
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox">
+                            <div class="permission-info">
+                                <div class="permission-name">Cases Admin</div>
+                                <div class="permission-desc">This user can create workflows to assign cases, handle cases as the investigator, and close and delete cases</div>
+                            </div>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox">
+                            <div class="permission-info">
+                                <div class="permission-name">Case Investigator</div>
+                                <div class="permission-desc">This user can be assigned to cases, handle cases as the investigator, complete PII redaction, and close and delete cases</div>
+                            </div>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" class="permission-checkbox">
+                            <div class="permission-info">
+                                <div class="permission-name">Case Viewer</div>
+                                <div class="permission-desc">This user can view all cases but can not make edits</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            contentContainer.appendChild(newContent);
+            
+            // Make this new tab active
+            document.querySelectorAll('.channel-tab').forEach(t => t.classList.remove('active'));
+            newTab.classList.add('active');
+            document.querySelectorAll('.channel-content').forEach(c => c.classList.remove('active'));
+            newContent.classList.add('active');
+        }
+        
+        function removeChannelTab(teamName) {
+            const tabId = teamName.toLowerCase().replace(/\s+/g, '-');
+            
+            // Remove tab
+            const tabs = document.querySelectorAll('.channel-tab');
+            tabs.forEach(tab => {
+                if (tab.textContent === teamName) {
+                    tab.remove();
+                }
+            });
+            
+            // Remove content
+            const content = document.getElementById(tabId + '-content');
+            if (content) {
+                content.remove();
+            }
+            
+            // If there are remaining tabs, make the first one active
+            const remainingTabs = document.querySelectorAll('.channel-tab');
+            if (remainingTabs.length > 0) {
+                remainingTabs[0].classList.add('active');
+                const firstContentId = remainingTabs[0].textContent.toLowerCase().replace(/\s+/g, '-') + '-content';
+                const firstContent = document.getElementById(firstContentId);
+                if (firstContent) {
+                    firstContent.classList.add('active');
+                }
+            }
+        }
+        
+        // Initialize - set Roles and Permissions as active on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelector('[onclick="navigateTo(\'roles\')"]').classList.add('active');
+            
+            // Initialize channel tabs on manage users page load
+            initializeChannelTabs();
+        });
+        
+        function toggleSection(header) {
+            const body = header.nextElementSibling;
+            body.classList.toggle('open');
+            const icon = header.querySelector('.toggle-icon');
+            icon.textContent = body.classList.contains('open') ? '▼' : '▶';
+        }
+        
+        function toggleTable(toggle) {
+            const parent = toggle.closest('.permission-table');
+            const content = parent.querySelector('.table-content');
+            content.classList.toggle('open');
+            toggle.textContent = content.classList.contains('open') ? '▼' : '▶';
+        }
+        
+        function clearSectionPermissions(event, sectionName) {
+            event.stopPropagation();
+            document.querySelectorAll(`input[name="${sectionName}"]`).forEach(radio => {
+                radio.checked = false;
+            });
+        }
+        
+        function clearAllRoles() {
+            // Clear all radio buttons across all sections
+            document.querySelectorAll('.permission-radio').forEach(radio => {
+                radio.checked = false;
+            });
+        }
+        
+        function showToastNotification() {
+            const toast = document.getElementById('toast-notification');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+        
+        function setupRoleToastListeners() {
+            // Add event listeners to all radio buttons to show toast on selection
+            document.querySelectorAll('.permission-radio').forEach(radio => {
+                // Remove any existing listeners by cloning and replacing
+                const newRadio = radio.cloneNode(true);
+                radio.parentNode.replaceChild(newRadio, radio);
+                
+                newRadio.addEventListener('change', function() {
+                    if (this.checked) {
+                        showToastNotification();
+                    }
+                });
+            });
+        }
+        
+        function openManageRolePage(section, roleData) {
+            // Define permissions for each section
+            const permissionsMap = {
+                'statistics': [
+                    'View published dashboards',
+                    'Filter charts',
+                    'Export data as CSV/PDF',
+                    'View advanced statistics',
+                    'Create advanced statistics views and visuals'
+                ],
+                'cases': [
+                    'View assigned cases',
+                    'View all cases',
+                    'Edit issue type',
+                    'Edit case details',
+                    'Add to case discussions',
+                    'Upload files',
+                    'Reply to reporter',
+                    'Close Case',
+                    'Delete cases',
+                    'Perform PII Redaction',
+                    'Move case to another channel',
+                    'Assign cases (to teams and individuals)'
+                ],
+                'settings': [
+                    'View Organization Details',
+                    'Manage Organization Details',
+                    'Create and Edit Landing Pages',
+                    'Create and Edit Reporting Channels',
+                    'Manage Notification Rules',
+                    'Manage Multi-Language Settings',
+                    'Manage Intranet Network Addresses'
+                ],
+                'users': [
+                    'View user list',
+                    'Add users to teams',
+                    'Add users to account',
+                    'Create and assign roles',
+                    'View user activity logs'
+                ],
+                'system-admin': [
+                    'View Landing Pages and Reporting Channels',
+                    'View Workflows',
+                    'Manage Secondary Password',
+                    'Manage Encryption Key',
+                    'Manage Landing Pages and Reporting Channels',
+                    'Manage Workflows',
+                    'Manage advanced routing',
+                    'Manage APIs'
+                ]
+            };
+            
+            // Map section to display names
+            const sectionTitleMap = {
+                'statistics': 'Statistics',
+                'cases': 'Cases',
+                'settings': 'Settings',
+                'users': 'Users',
+                'system-admin': 'System Admin'
+            };
+            
+            // Update dynamic page title
+            const sectionTitle = sectionTitleMap[section] || 'Role';
+            document.getElementById('manage-role-title').textContent = `Manage ${sectionTitle} Role`;
+            document.getElementById('breadcrumb-title').textContent = `Manage ${sectionTitle} Role`;
+            
+            // Store current section and role data in data attributes
+            document.getElementById('add-role-page').dataset.section = section;
+            document.getElementById('add-role-page').dataset.roleData = roleData ? JSON.stringify(roleData) : null;
+            
+            // Clear the form
+            document.getElementById('role-name').value = roleData ? roleData.name : '';
+            document.getElementById('role-description').value = roleData ? (roleData.description || '') : '';
+            
+            // Generate permission checkboxes
+            const permissionsContainer = document.getElementById('permissions-container');
+            permissionsContainer.innerHTML = '';
+            
+            const permissions = permissionsMap[section] || [];
+            permissions.forEach((permission, index) => {
+                const permDiv = document.createElement('div');
+                permDiv.style.cssText = 'display: flex; align-items: center; gap: 0.75rem; padding: 0.5rem 0; margin-bottom: 0.5rem;';
+                
+                // Check if this permission is in the roleData's selected permissions
+                const isChecked = roleData && roleData.permissions && roleData.permissions.includes(permission);
+                
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.style.cssText = 'width: 18px; height: 18px; cursor: pointer;';
+                checkbox.checked = isChecked;
+                
+                const label = document.createElement('label');
+                label.style.cssText = 'cursor: pointer; font-size: 13px; margin: 0;';
+                label.textContent = permission;
+                
+                permDiv.appendChild(checkbox);
+                permDiv.appendChild(label);
+                permissionsContainer.appendChild(permDiv);
+            });
+            
+            // Show the manage role page
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('add-role-page').classList.add('active');
+            
+            // Highlight Roles and Permissions in sidebar
+            document.querySelectorAll('.nav-item-nested').forEach(n => n.style.background = '');
+            document.getElementById('roles-nav-item').style.background = '#e8f0fe';
+            
+            // Show/hide delete button based on whether this is a custom role
+            const deleteBtn = document.getElementById('delete-role-btn');
+            const isDefaultRole = isDefaultRoleCheck(roleData ? roleData.name : '');
+            deleteBtn.style.display = (roleData && !isDefaultRole) ? 'block' : 'none';
+        }
+        
+        function isDefaultRoleCheck(roleName) {
+            const defaultRoles = [
+                'Statistics Admin', 'Statistics User',
+                'Cases Admin', 'Case Investigator', 'Case Viewer',
+                'Settings Admin', 'Settings User',
+                'Users Admin', 'User Manager',
+                'System Admin', 'System Viewer'
+            ];
+            return defaultRoles.includes(roleName);
+        }
+        
+        function deleteRole() {
+            const roleName = document.getElementById('role-name').value.trim();
+            if (confirm(`Are you sure you want to delete the role "${roleName}"?`)) {
+                // Here you would typically make an API call to delete the role
+                console.log('Deleting role:', roleName);
+                goBackToRoles();
+            }
+        }
+        
+        function goBackToRoles() {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById('roles-permissions-page').classList.add('active');
+            
+            // Highlight Roles and Permissions in sidebar
+            document.querySelectorAll('.nav-item-nested').forEach(n => n.style.background = '');
+            document.getElementById('roles-nav-item').style.background = '#e8f0fe';
+        }
+        
+        function saveNewRole() {
+            const roleName = document.getElementById('role-name').value.trim();
+            const roleDescription = document.getElementById('role-description').value.trim();
+            const section = document.getElementById('add-role-page').dataset.section;
+            const roleDataStr = document.getElementById('add-role-page').dataset.roleData;
+            const isEditing = roleDataStr !== 'null' && roleDataStr !== null && roleDataStr !== undefined;
+            
+            if (!roleName) {
+                alert('Please enter a role name');
+                return;
+            }
+            
+            if (!roleDescription) {
+                alert('Please enter a role description');
+                return;
+            }
+            
+            // Get selected permissions
+            const selectedPermissions = [];
+            document.querySelectorAll('#add-role-page input[type="checkbox"]:checked').forEach(cb => {
+                const label = cb.nextElementSibling;
+                if (label) {
+                    selectedPermissions.push(label.textContent);
+                }
+            });
+            
+            if (selectedPermissions.length === 0) {
+                alert('Please select at least one permission');
+                return;
+            }
+            
+            // Here you would typically save to backend
+            if (isEditing) {
+                const roleData = JSON.parse(roleDataStr);
+                console.log('Role updated:', {
+                    section: section,
+                    name: roleName,
+                    description: roleDescription,
+                    permissions: selectedPermissions
+                });
+                alert(`Role "${roleName}" updated successfully with ${selectedPermissions.length} permission(s)!`);
+            } else {
+                console.log('New role created:', {
+                    section: section,
+                    name: roleName,
+                    description: roleDescription,
+                    permissions: selectedPermissions
+                });
+                alert(`Role "${roleName}" created successfully with ${selectedPermissions.length} permission(s)!`);
+            }
+            
+            // Go back to roles page
+            goBackToRoles();
+        }
+    </script>
+</body>
+</html>
