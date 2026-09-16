@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<!--[CDATA[
+<sc-helmet-->
+  <link rel="stylesheet" href="_ds/test-navex-atomic-design-system-019dd487-527f-7c0b-992a-94f60b6c7a3f/colors_and_type.css">
+  <style>
+    body{margin:0;background:#F8FAFD;}
+    a{color:#3265D7;text-decoration:none;}
+    a:hover{color:#054BC5;text-decoration:underline;}
+    @keyframes wb-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+    @keyframes wb-shimmer{0%{background-position:-400px 0}100%{background-position:400px 0}}
+    @keyframes wb-stripe{from{background-position:0 0}to{background-position:56px 0}}
+    @keyframes wb-toast-in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+
+
+<div style="display:flex;flex-direction:column;height:100vh;font-family:'Barlow','Open Sans',system-ui,sans-serif;color:#333333;background:#F8FAFD;overflow:hidden;">
+
+  <!-- Top header -->
+  <div style="height:56px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:#ffffff;border-bottom:1px solid #E5EAF1;">
+    <div style="display:flex;align-items:baseline;gap:8px;">
+      <span style="font-size:20px;font-weight:700;color:#1A1B1B;">WhistleB<sup style="font-size:9px;font-weight:700;color:#595D66;margin-left:2px;">NAVEX</sup></span>
+      <span style="font-size:12px;font-weight:700;letter-spacing:.04em;color:#333333;">NAVEX INDIA TRIAL</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:14px;">
+      <button onClick="{{ restartDemo }}" style="font-size:12px;color:#6D7280;background:none;border:1px solid #E5EAF1;border-radius:6px;padding:6px 10px;cursor:pointer;">Restart demo</button>
+      <div style="width:28px;height:28px;border-radius:100px;background:#F0F5FB;display:flex;align-items:center;justify-content:center;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#595D66" stroke-width="1.6"></circle><path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" stroke="#595D66" stroke-width="1.6"></path></svg>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex;flex:1;min-height:0;">
+
+    <!-- Sidebar -->
+    <div style="{{ sidebarStyle }}">
+      <div style="flex:1;overflow-y:auto;padding:12px 12px 0;">
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#595D66" stroke-width="1.6"></circle><path d="M3 12h18M12 3c2.5 2.5 3.5 6 3.5 9s-1 6.5-3.5 9c-2.5-2.5-3.5-6-3.5-9s1-6.5 3.5-9z" stroke="#595D66" stroke-width="1.4"></path></svg>
+          Dashboard
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 19V10M10 19V5M16 19v-7M22 19V3" stroke="#595D66" stroke-width="1.6" stroke-linecap="round"></path></svg>
+          Statistics
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M3 8a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8z" stroke="#595D66" stroke-width="1.5"></path></svg>
+          Cases
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 3h9l3 3v15H6z" stroke="#595D66" stroke-width="1.5"></path><path d="M9 12h6M9 16h6" stroke="#595D66" stroke-width="1.4"></path></svg>
+          Export Reports
+        </div>
+
+        <div style="margin-top:6px;border:1px solid #E5EAF1;border-radius:8px;padding:2px;">
+          <div style="display:flex;align-items:center;gap:10px;padding:9px 8px;color:#1A1B1B;font-size:14px;font-weight:500;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="5" y="10" width="14" height="10" rx="1.5" stroke="#1A1B1B" stroke-width="1.5"></rect><path d="M8 10V7a4 4 0 0 1 8 0v3" stroke="#1A1B1B" stroke-width="1.5"></path></svg>
+            System Admin
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" style="margin-left:auto;"><path d="M6 15l6-6 6 6" stroke="#1A1B1B" stroke-width="2" stroke-linecap="round"></path></svg>
+          </div>
+          <div style="padding:0 10px 6px 30px;display:flex;flex-direction:column;">
+            <div style="padding:7px 0;font-size:13.5px;color:#595D66;">Security information</div>
+            <div style="padding:7px 0;font-size:13.5px;color:#595D66;">Secondary Password</div>
+            <div style="padding:7px 0;font-size:13.5px;color:#595D66;">Encryption Key</div>
+            <div style="padding:7px 0;font-size:13.5px;color:#595D66;">Reporting Channels</div>
+            <div style="padding:7px 0;font-size:13.5px;color:#595D66;">Single Sign-On (SSO)</div>
+            <div style="margin:2px -10px 2px -30px;padding:8px 10px 8px 30px;background:#F0F5FB;color:#054BC5;font-size:13.5px;font-weight:600;border-radius:6px;display:flex;align-items:center;gap:6px;">
+              HRIS Integration
+              <span style="font-size:9px;font-weight:700;letter-spacing:.03em;color:#054BC5;background:#E1F0FF;padding:1px 5px;border-radius:4px;">NEW</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;margin-top:6px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="3" stroke="#595D66" stroke-width="1.5"></circle><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="#595D66" stroke-width="1.4" stroke-linecap="round"></path></svg>
+          Settings
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="3.2" stroke="#595D66" stroke-width="1.5"></circle><path d="M5 20c0-3 3-5.4 7-5.4s7 2.4 7 5.4" stroke="#595D66" stroke-width="1.5"></path></svg>
+          Users
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="9" r="2.6" stroke="#595D66" stroke-width="1.4"></circle><circle cx="17" cy="10" r="2.2" stroke="#595D66" stroke-width="1.4"></circle><path d="M3.5 19c0-2.6 2.5-4.6 5.5-4.6s5.5 2 5.5 4.6M14.5 19c0-1.9 1.8-3.4 4-3.4" stroke="#595D66" stroke-width="1.3"></path></svg>
+          Teams
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:6px;color:#595D66;font-size:14px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 3h9l3 3v15H6z" stroke="#595D66" stroke-width="1.5"></path></svg>
+          Resources
+        </div>
+      </div>
+      <div style="flex:none;padding:14px 16px;border-top:1px solid #E5EAF1;">
+        <span style="font-size:15px;font-weight:800;color:#FF4500;letter-spacing:.02em;">NAVEX</span>
+      </div>
+    </div>
+
+    <!-- Main content -->
+    <div style="flex:1;min-width:0;overflow-y:auto;position:relative;background:#F8FAFD;">
+
+      <sc-if value="{{ isEmpty }}" hint-placeholder-val="{{ true }}">
+        <div style="max-width:1040px;margin:0 auto;padding:32px 32px 60px;">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:22px;">
+            <div>
+              <h1 style="font-size:26px;font-weight:700;color:#1A1B1B;margin:0 0 6px;">HRIS Integration</h1>
+              <p style="font-size:14px;color:#6D7280;margin:0;max-width:560px;">Connect your HR information system so employee data stays current in WhistleB automatically.</p>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:#6D7280;">
+              Demo state:
+              <select value="{{ emptyDemo }}" onChange="{{ setEmptyDemo }}" style="font-size:12px;color:#333;border:1px solid #E5EAF1;border-radius:6px;padding:5px 6px;">
+                <option value="notConnected">Not connected</option>
+                <option value="loading">Loading</option>
+                <option value="error">Error</option>
+                <option value="connectedPreview">Already connected</option>
+              </select>
+            </div>
+          </div>
+
+          <sc-if value="{{ emptyDemo_loading }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:28px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);">
+              <div style="width:160px;height:16px;border-radius:4px;background:linear-gradient(90deg,#eef1f6 25%,#f7f9fb 37%,#eef1f6 63%);background-size:400px 100%;animation:wb-shimmer 1.3s infinite linear;margin-bottom:14px;"></div>
+              <div style="width:70%;height:12px;border-radius:4px;background:linear-gradient(90deg,#eef1f6 25%,#f7f9fb 37%,#eef1f6 63%);background-size:400px 100%;animation:wb-shimmer 1.3s infinite linear;margin-bottom:24px;"></div>
+              <div style="width:100%;height:130px;border-radius:8px;background:linear-gradient(90deg,#eef1f6 25%,#f7f9fb 37%,#eef1f6 63%);background-size:400px 100%;animation:wb-shimmer 1.3s infinite linear;"></div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ emptyDemo_error }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:28px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);text-align:center;">
+              <div style="width:56px;height:56px;border-radius:100px;background:#FDAEC7;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16.5h.01" stroke="#5F0925" stroke-width="2" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#5F0925" stroke-width="1.6"></circle></svg>
+              </div>
+              <h3 style="margin:0 0 6px;font-size:16px;font-weight:600;color:#1A1B1B;">Unable to load HRIS status</h3>
+              <p style="margin:0 0 16px;font-size:13.5px;color:#6D7280;">Something went wrong while checking your connection. Try again.</p>
+              <button onClick="{{ retryEmpty }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Retry</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ emptyDemo_connectedPreview }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:24px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);display:flex;align-items:center;justify-content:space-between;">
+              <div style="display:flex;align-items:center;gap:14px;">
+                <div style="width:44px;height:44px;border-radius:100px;background:#D4F5F8;display:flex;align-items:center;justify-content:center;">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#03707D" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <div>
+                  <div style="font-size:15px;font-weight:600;color:#1A1B1B;">Workday is connected</div>
+                  <div style="font-size:13px;color:#6D7280;">2,480 employees synced · last sync today at 2:00 AM</div>
+                </div>
+              </div>
+              <button onClick="{{ goDashboard }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:14px;font-weight:600;cursor:pointer;">View Dashboard</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ emptyDemo_notConnected }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:28px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+                <span style="width:8px;height:8px;border-radius:100px;background:#929090;"></span>
+                <span style="font-size:13px;font-weight:600;color:#595D66;">Not Connected</span>
+              </div>
+
+              <div style="display:flex;align-items:center;justify-content:center;gap:28px;padding:26px 0 30px;">
+                <div style="width:120px;height:84px;border:1.5px solid #E5EAF1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#1A1B1B;background:#F8FAFD;">WhistleB</div>
+                <div style="width:70px;height:0;border-top:2px dashed #E3094C;position:relative;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="position:absolute;left:50%;top:-9px;transform:translateX(-50%);"><path d="M12 3v6M12 15v6M7 9l10 6M17 9L7 15" stroke="#E3094C" stroke-width="1.8" stroke-linecap="round"></path></svg>
+                </div>
+                <div style="width:120px;height:84px;border:1.5px solid #E5EAF1;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#1A1B1B;background:#F8FAFD;">Your HRIS</div>
+              </div>
+
+              <p style="text-align:center;font-size:14px;color:#333333;max-width:460px;margin:0 auto 22px;">Connect your HRIS to automatically synchronize employee information into WhistleB.</p>
+
+              <div style="display:flex;justify-content:center;gap:12px;">
+                <button onClick="{{ startConnect }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:11px 22px;font-size:14px;font-weight:600;cursor:pointer;">Connect HRIS</button>
+                
+              </div>
+            </div>
+          </sc-if>
+
+          <div style="margin-top:26px;">
+            <h3 style="font-size:14px;font-weight:600;color:#1A1B1B;margin:0 0 12px;">Supported providers</h3>
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;">
+              <sc-for list="{{ providers }}" as="p" hint-placeholder-count="5">
+                <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:8px;">
+                  <div style="width:32px;height:32px;border-radius:8px;background:#F0F5FB;color:#054BC5;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ p.initials }}</div>
+                  <div style="font-size:13px;font-weight:600;color:#1A1B1B;">{{ p.name }}</div>
+                  <div style="font-size:11.5px;color:#6D7280;line-height:1.35;">{{ p.desc }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isProvider }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:900px;margin:0 auto;padding:32px 32px 60px;">
+          <div style="{{ stepBarStyle }}">Step 1 of 4 · Choose provider</div>
+          <h1 style="font-size:24px;font-weight:700;color:#1A1B1B;margin:0 0 6px;">Choose your HRIS provider</h1>
+          <p style="font-size:14px;color:#6D7280;margin:0 0 24px;">Select the system employee records currently live in.</p>
+
+          <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;">
+            <sc-for list="{{ providers }}" as="p" hint-placeholder-count="5">
+              <div onClick="{{ p.onSelect }}" style="cursor:pointer;background:{{ p.bg }};border:1.5px solid {{ p.border }};border-radius:10px;padding:16px;display:flex;gap:12px;align-items:flex-start;">
+                <div style="width:36px;height:36px;flex:none;border-radius:8px;background:#fff;border:1px solid #E5EAF1;color:#054BC5;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ p.initials }}</div>
+                <div style="flex:1;">
+                  <div style="font-size:14.5px;font-weight:600;color:#1A1B1B;">{{ p.name }}</div>
+                  <div style="font-size:12.5px;color:#6D7280;margin-top:2px;">{{ p.desc }}</div>
+                </div>
+                <div style="width:18px;height:18px;border-radius:100px;border:1.5px solid {{ p.radioBorder }};background:{{ p.radioBg }};flex:none;margin-top:2px;"></div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;margin-top:28px;">
+            <button onClick="{{ goEmpty }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Back</button>
+            <button onClick="{{ continueToAuth }}" disabled="{{ noProviderSelected }}" style="{{ continueBtnStyle }}">Continue</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isAuth }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:640px;margin:0 auto;padding:32px 32px 60px;">
+          <div style="{{ stepBarStyle }}">Step 2 of 4 · Authenticate</div>
+
+          <sc-if value="{{ authIdle }}" hint-placeholder-val="{{ true }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:32px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);text-align:center;">
+              <h1 style="font-size:22px;font-weight:700;color:#1A1B1B;margin:0 0 8px;">Connect to {{ selectedProvider.name }}</h1>
+              <p style="font-size:14px;color:#6D7280;margin:0 0 24px;">You will be securely redirected to {{ selectedProvider.name }} to authenticate.</p>
+              <button onClick="{{ authenticate }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:13px 32px;font-size:15px;font-weight:600;cursor:pointer;">Authenticate</button>
+              <div style="margin-top:20px;font-size:12px;color:#6D7280;display:flex;align-items:center;justify-content:center;gap:6px;">
+                Simulate result:
+                <select value="{{ authDemo }}" onChange="{{ setAuthDemo }}" style="font-size:12px;color:#333;border:1px solid #E5EAF1;border-radius:6px;padding:4px 6px;">
+                  <option value="success">Success</option>
+                  <option value="failed">Authentication failed</option>
+                  <option value="cancelled">Cancelled</option>
+                  <option value="invalid">Invalid credentials</option>
+                  <option value="timeout">Connection timeout</option>
+                  <option value="expired">Expired login</option>
+                </select>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ authLoading }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:48px 32px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);text-align:center;">
+              <div style="width:36px;height:36px;border-radius:100px;border:3px solid #E5EAF1;border-top-color:#054BC5;margin:0 auto 20px;animation:wb-spin 0.8s linear infinite;"></div>
+              <div style="font-size:14px;color:#333;font-weight:500;">Redirecting to {{ selectedProvider.name }}…</div>
+              <div style="font-size:12.5px;color:#6D7280;margin-top:6px;">Verifying credentials</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ authResultSuccess }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:36px 32px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);text-align:center;">
+              <div style="width:56px;height:56px;border-radius:100px;background:#D4F5F8;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#03707D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <h3 style="margin:0 0 6px;font-size:17px;font-weight:600;color:#1A1B1B;">Authentication successful</h3>
+              <p style="margin:0 0 18px;font-size:13.5px;color:#6D7280;">You're connected to {{ selectedProvider.name }}. Next, configure what gets imported.</p>
+              <button onClick="{{ continueToConfigure }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:11px 24px;font-size:14px;font-weight:600;cursor:pointer;">Continue</button>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ authResultError }}" hint-placeholder-val="{{ false }}">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:36px 32px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);text-align:center;">
+              <div style="width:56px;height:56px;border-radius:100px;background:#FDAEC7;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16.5h.01" stroke="#5F0925" stroke-width="2" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#5F0925" stroke-width="1.6"></circle></svg>
+              </div>
+              <h3 style="margin:0 0 6px;font-size:17px;font-weight:600;color:#1A1B1B;">{{ authErrorTitle }}</h3>
+              <p style="margin:0 0 18px;font-size:13.5px;color:#6D7280;max-width:420px;margin-left:auto;margin-right:auto;">{{ authErrorMessage }}</p>
+              <div style="display:flex;justify-content:center;gap:10px;">
+                <button onClick="{{ goProvider }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Change provider</button>
+                <button onClick="{{ retryAuth }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Retry</button>
+              </div>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isConfigure }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:1040px;margin:0 auto;padding:32px 32px 60px;">
+          <div style="{{ stepBarStyle }}">Step 3 of 4 · Configure import</div>
+          <h1 style="font-size:24px;font-weight:700;color:#1A1B1B;margin:0 0 6px;">Configure Employee Import</h1>
+          <p style="font-size:14px;color:#6D7280;margin:0 0 22px;">Choose what syncs from {{ selectedProvider.name }} into WhistleB.</p>
+
+          <div style="display:grid;grid-template-columns:1.3fr 1fr;gap:16px;">
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:20px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+                <h3 style="font-size:15px;font-weight:600;color:#1A1B1B;margin:0;">Employee fields</h3>
+                <div style="display:flex;gap:14px;">
+                  <span onClick="{{ selectAllFields }}" style="font-size:12.5px;font-weight:600;color:#054BC5;cursor:pointer;">Select All</span>
+                  <span onClick="{{ clearAllFields }}" style="font-size:12.5px;font-weight:600;color:#054BC5;cursor:pointer;">Clear All</span>
+                </div>
+              </div>
+              <input value="{{ fieldSearch }}" onChange="{{ setFieldSearch }}" placeholder="Search fields" style="width:100%;box-sizing:border-box;border:1px solid #595D66;border-radius:6px;padding:8px 10px;font-size:13.5px;margin-bottom:12px;">
+              <div style="max-height:380px;overflow-y:auto;display:flex;flex-direction:column;gap:2px;">
+                <sc-for list="{{ fieldItems }}" as="it" hint-placeholder-count="10">
+                  <sc-if value="{{ it.isHeader }}" hint-placeholder-val="{{ false }}">
+                    <div style="font-size:11px;font-weight:700;color:#6D7280;letter-spacing:.03em;text-transform:uppercase;padding:12px 4px 4px;">{{ it.groupLabel }}</div>
+                  </sc-if>
+                  <sc-if value="{{ it.isField }}" hint-placeholder-val="{{ false }}">
+                    <label style="display:flex;align-items:center;gap:10px;padding:7px 4px;border-radius:6px;cursor:pointer;">
+                      <input type="checkbox" checked="{{ it.checked }}" onChange="{{ it.onToggle }}" style="width:15px;height:15px;accent-color:#054BC5;">
+                      <span style="font-size:13.5px;color:#1A1B1B;flex:1;">{{ it.label }}</span>
+                      <sc-if value="{{ it.custom }}" hint-placeholder-val="{{ false }}">
+                        <span onClick="{{ it.onEdit }}" style="font-size:12px;font-weight:600;color:#054BC5;cursor:pointer;margin-right:10px;">Edit</span>
+                        <span onClick="{{ it.onDelete }}" style="font-size:12px;font-weight:600;color:#E3094C;cursor:pointer;">Delete</span>
+                      </sc-if>
+                    </label>
+                  </sc-if>
+                </sc-for>
+              </div>
+              <div onClick="{{ openAddFieldModal }}" style="margin-top:10px;padding-top:10px;border-top:1px solid #E5EAF1;font-size:13px;font-weight:600;color:#054BC5;cursor:pointer;">+ Add Custom Field</div>
+              <sc-if value="{{ noFieldsSelected }}" hint-placeholder-val="{{ false }}">
+                <div style="margin-top:12px;background:#FFF8EC;border:1px solid #FFE8C3;border-radius:8px;padding:10px 12px;font-size:12.5px;color:#8A5300;">No employee fields selected. Select at least one field before running the initial import.</div>
+              </sc-if>
+            </div>
+
+            <div style="display:flex;flex-direction:column;gap:16px;">
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:20px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);">
+                <div style="display:flex;align-items:center;gap:6px;margin-bottom:10px;">
+                  <h3 style="font-size:15px;font-weight:600;color:#1A1B1B;margin:0;">Former employees</h3>
+                  <span title="Only imports former employees whose termination date falls within the selected window." style="width:15px;height:15px;border-radius:100px;background:#F0F5FB;color:#6D7280;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;cursor:help;">?</span>
+                </div>
+                <select value="{{ formerEmpOption }}" onChange="{{ setFormerEmp }}" style="width:100%;box-sizing:border-box;border:1px solid #595D66;border-radius:6px;padding:9px 10px;font-size:13.5px;">
+                  <option value="none">Do not import</option>
+                  <option value="1m">1 Month</option>
+                  <option value="3m">3 Months</option>
+                  <option value="6m">6 Months</option>
+                  <option value="12m">12 Months</option>
+                  <option value="custom">Custom</option>
+                </select>
+                <sc-if value="{{ formerEmpIsCustom }}" hint-placeholder-val="{{ false }}">
+                  <input value="{{ formerEmpCustomDays }}" onChange="{{ setFormerEmpCustomDays }}" placeholder="Number of days" style="width:100%;box-sizing:border-box;border:1px solid #595D66;border-radius:6px;padding:8px 10px;font-size:13.5px;margin-top:8px;">
+                </sc-if>
+              </div>
+
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:20px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);">
+                <h3 style="font-size:15px;font-weight:600;color:#1A1B1B;margin:0 0 12px;">Sync frequency</h3>
+                <div style="display:flex;flex-direction:column;gap:8px;">
+                  <sc-for list="{{ syncOptions }}" as="s" hint-placeholder-count="4">
+                    <label style="display:flex;align-items:center;gap:10px;font-size:13.5px;color:#1A1B1B;cursor:pointer;">
+                      <input type="radio" name="syncfreq" checked="{{ s.checked }}" onChange="{{ s.onSelect }}" style="width:15px;height:15px;accent-color:#054BC5;">
+                      {{ s.label }}
+                    </label>
+                  </sc-for>
+                </div>
+                <sc-if value="{{ syncIsCustom }}" hint-placeholder-val="{{ false }}">
+                  <div style="margin-top:12px;padding-top:12px;border-top:1px solid #E5EAF1;display:flex;gap:8px;">
+                    <select value="{{ customTime }}" onChange="{{ setCustomTime }}" style="flex:1;border:1px solid #595D66;border-radius:6px;padding:8px;font-size:13px;">
+                      <option>12:00 AM</option><option>2:00 AM</option><option>6:00 AM</option><option>12:00 PM</option>
+                    </select>
+                    <select value="{{ customDay }}" onChange="{{ setCustomDay }}" style="flex:1;border:1px solid #595D66;border-radius:6px;padding:8px;font-size:13px;">
+                      <option>Every day</option><option>Weekdays only</option><option>Sundays</option>
+                    </select>
+                  </div>
+                </sc-if>
+              </div>
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;margin-top:24px;">
+            <button onClick="{{ configBackHandler }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">{{ configBackLabel }}</button>
+            <div style="display:flex;gap:10px;">
+              <sc-if value="{{ configFromDashboard }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ saveConfigFromDashboard }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Save Changes</button>
+              </sc-if>
+              <sc-if value="{{ notConfigFromDashboard }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ saveConfig }}" style="background:#fff;color:#054BC5;border:1px solid #E5EAF1;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Save Configuration</button>
+                <button onClick="{{ runInitialImport }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Run Initial Import</button>
+              </sc-if>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isImport }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width:600px;margin:60px auto 0;padding:0 32px 60px;">
+
+          <sc-if value="{{ importInProgress }}" hint-placeholder-val="{{ true }}">
+            <div style="{{ importCardStyle }}">
+              <div style="font-size:12px;color:#6D7280;margin-bottom:6px;">Simulate:
+                <select value="{{ importDemo }}" onChange="{{ setImportDemo }}" style="font-size:12px;color:#333;border:1px solid #E5EAF1;border-radius:6px;padding:4px 6px;">
+                  <option value="success">Success</option>
+                  <option value="partial">Partial import warning</option>
+                  <option value="failed">Import failed</option>
+                  <option value="network">Network failure</option>
+                </select>
+              </div>
+              <h1 style="font-size:20px;font-weight:700;color:#1A1B1B;margin:20px 0 4px;">Importing employee records</h1>
+              <div style="font-size:14px;color:#6D7280;margin-bottom:20px;">{{ importCount }} / 2480</div>
+              <div style="width:100%;height:10px;border-radius:100px;background:#E9ECF4;overflow:hidden;">
+                <div style="height:100%;border-radius:100px;background:#054BC5;transition:width .2s linear;width:{{ importPct }}%;"></div>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:10px;font-size:12.5px;color:#6D7280;">
+                <span>{{ importPct }}% complete</span>
+                <span>Estimated time remaining: {{ importEta }}s</span>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ importSuccess }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ importCardStyle }}text-align:center;">
+              <div style="width:56px;height:56px;border-radius:100px;background:#D4F5F8;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#03707D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+              </div>
+              <h3 style="margin:0 0 6px;font-size:18px;font-weight:700;color:#1A1B1B;">Import Completed</h3>
+              <p style="margin:0 0 6px;font-size:14px;color:#333;">2480 employees imported successfully</p>
+              <p style="margin:0 0 20px;font-size:13px;color:#6D7280;">Next scheduled sync: Tomorrow at 2:00 AM</p>
+              <div style="display:flex;justify-content:center;gap:10px;">
+                <button onClick="{{ finishImport }}" style="background:#fff;color:#054BC5;border:1px solid #E5EAF1;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Done</button>
+                <button onClick="{{ goDashboard }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">View Dashboard</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ importPartial }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ importCardStyle }}text-align:center;">
+              <div style="width:56px;height:56px;border-radius:100px;background:#FFE8C3;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 16.5h.01" stroke="#8A5300" stroke-width="2" stroke-linecap="round"></path><path d="M10.9 4.6a1.3 1.3 0 0 1 2.2 0l7.6 13a1.3 1.3 0 0 1-1.1 2H4.4a1.3 1.3 0 0 1-1.1-2z" stroke="#8A5300" stroke-width="1.5"></path></svg>
+              </div>
+              <h3 style="margin:0 0 6px;font-size:18px;font-weight:700;color:#1A1B1B;">Import completed with warnings</h3>
+              <p style="margin:0 0 6px;font-size:14px;color:#333;">2402 of 2480 employees imported</p>
+              <p style="margin:0 0 20px;font-size:13px;color:#6D7280;">78 records were skipped due to missing required fields.</p>
+              <div style="display:flex;justify-content:center;gap:10px;">
+                <button style="background:#fff;color:#054BC5;border:1px solid #E5EAF1;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">View Details</button>
+                <button onClick="{{ goDashboard }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 20px;font-size:14px;font-weight:600;cursor:pointer;">Continue</button>
+              </div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ importFailedOrNetwork }}" hint-placeholder-val="{{ false }}">
+            <div style="{{ importCardStyle }}text-align:center;">
+              <div style="width:56px;height:56px;border-radius:100px;background:#FDAEC7;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;">
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16.5h.01" stroke="#5F0925" stroke-width="2" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#5F0925" stroke-width="1.6"></circle></svg>
+              </div>
+              <h3 style="margin:0 0 6px;font-size:18px;font-weight:700;color:#1A1B1B;">{{ importErrorTitle }}</h3>
+              <p style="margin:0 0 20px;font-size:13.5px;color:#6D7280;">{{ importErrorMessage }}</p>
+              <button onClick="{{ retryImport }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:14px;font-weight:600;cursor:pointer;">Retry Import</button>
+            </div>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ isDashboard }}" hint-placeholder-val="{{ false }}">
+        <div style="max-width: 1240px; margin: 0 auto; padding: 32px 32px 24px; height: 100%; display: flex; flex-direction: column; min-height: 0; box-sizing: border-box; padding-bottom: 16px">
+          <h1 style="font-size:24px;font-weight:700;color:#1A1B1B;margin:0 0 16px;flex:none;">HRIS Integration</h1>
+
+          <div style="display:flex;gap:4px;border-bottom:1px solid #E5EAF1;margin-bottom:22px;flex:none;">
+            <sc-for list="{{ dashboardTabs }}" as="tb" hint-placeholder-count="3">
+              <div onClick="{{ tb.onSelect }}" style="cursor:pointer;padding:10px 14px;font-size:13.5px;font-weight:600;color:{{ tb.color }};border-bottom:2px solid {{ tb.border }};">{{ tb.label }}</div>
+            </sc-for>
+          </div>
+
+          <sc-if value="{{ tabOverview }}" hint-placeholder-val="{{ true }}">
+            <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px;">
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <div style="font-size:11.5px;color:#6D7280;margin-bottom:6px;">Connection Status</div>
+                <div style="display:flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#03707D;"><span style="width:7px;height:7px;border-radius:100px;background:#03C7DC;"></span>Connected</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <div style="font-size:11.5px;color:#6D7280;margin-bottom:6px;">Provider</div>
+                <div style="font-size:14px;font-weight:600;color:#1A1B1B;">{{ selectedProvider.name }}</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <div style="font-size:11.5px;color:#6D7280;margin-bottom:6px;">Employees Imported</div>
+                <div style="font-size:14px;font-weight:600;color:#1A1B1B;">2,480</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <div style="font-size:11.5px;color:#6D7280;margin-bottom:6px;">Last Successful Sync</div>
+                <div style="font-size:14px;font-weight:600;color:#1A1B1B;">{{ lastSyncLabel }}</div>
+              </div>
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <div style="font-size:11.5px;color:#6D7280;margin-bottom:6px;">Next Scheduled Sync</div>
+                <div style="font-size:14px;font-weight:600;color:#1A1B1B;">Tomorrow, 2:00 AM</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:10px;margin-bottom:24px;">
+              <button onClick="{{ openRunImportModal }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:10px 18px;font-size:13.5px;font-weight:600;cursor:pointer;">Run Import</button>
+              <button onClick="{{ goConfigureFromDashboard }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:10px 18px;font-size:13.5px;font-weight:600;cursor:pointer;">Edit Configuration</button>
+              <button onClick="{{ openDisconnect }}" style="background:#fff;color:#E3094C;border:1px solid #FDAEC7;border-radius:8px;padding:10px 18px;font-size:13.5px;font-weight:600;cursor:pointer;">Disconnect</button>
+              <button onClick="{{ openDelete }}" style="background:#fff;color:#E3094C;border:1px solid #FDAEC7;border-radius:8px;padding:10px 18px;font-size:13.5px;font-weight:600;cursor:pointer;">Delete Employee Data</button>
+            </div>
+
+            <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;overflow:hidden;">
+              <div style="padding:14px 16px;border-bottom:1px solid #E5EAF1;display:flex;justify-content:space-between;align-items:center;">
+                <span style="font-size:14px;font-weight:600;color:#1A1B1B;">Recent Sync Activity</span>
+                <span onClick="{{ goSyncHistoryTab }}" style="font-size:12.5px;font-weight:600;color:#3265D7;cursor:pointer;">View all</span>
+              </div>
+              <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                <thead>
+                  <tr style="background:#F8FAFD;">
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Date</th>
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Status</th>
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Duration</th>
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Added</th>
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Updated</th>
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Removed</th>
+                    <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Triggered By</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <sc-for list="{{ syncActivity }}" as="row" hint-placeholder-count="4">
+                    <tr>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.date }}</td>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;">
+                        <span style="font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:100px;background:{{ row.badgeBg }};color:{{ row.badgeFg }};">{{ row.status }}</span>
+                      </td>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.duration }}</td>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.added }}</td>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.updated }}</td>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.removed }}</td>
+                      <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#6D7280;">{{ row.by }}</td>
+                    </tr>
+                  </sc-for>
+                </tbody>
+              </table>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ tabEmployees }}" hint-placeholder-val="{{ false }}">
+          <div style="display:flex;flex-direction:column;flex:1;min-height:0;">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;flex:none;">
+              <input value="{{ empSearch }}" onChange="{{ setEmpSearch }}" placeholder="{{ empSearchPlaceholder }}" style="flex:1;min-width:180px;border:1px solid #595D66;border-radius:6px;padding:8px 10px;font-size:13px;">
+              <select value="{{ empDeptFilter }}" onChange="{{ setEmpDeptFilter }}" style="border:1px solid #595D66;border-radius:6px;padding:8px 8px;font-size:13px;">
+                <option value="">All departments</option>
+                <sc-for list="{{ empDeptOptions }}" as="d" hint-placeholder-count="4"><option value="{{ d }}">{{ d }}</option></sc-for>
+              </select>
+              <select value="{{ empStatusFilter }}" onChange="{{ setEmpStatusFilter }}" style="border:1px solid #595D66;border-radius:6px;padding:8px 8px;font-size:13px;">
+                <option value="">All statuses</option>
+                <sc-for list="{{ empStatusOptions }}" as="st" hint-placeholder-count="3"><option value="{{ st }}">{{ st }}</option></sc-for>
+              </select>
+              <select value="{{ empManagerFilter }}" onChange="{{ setEmpManagerFilter }}" style="border:1px solid #595D66;border-radius:6px;padding:8px 8px;font-size:13px;">
+                <option value="">All managers</option>
+                <sc-for list="{{ empManagerOptions }}" as="m" hint-placeholder-count="4"><option value="{{ m }}">{{ m }}</option></sc-for>
+              </select>
+              <button onClick="{{ exportEmployeesCsv }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;">Export CSV</button>
+              <button onClick="{{ refreshEmployees }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;">Refresh</button>
+              <select value="{{ empCondition }}" onChange="{{ setEmpCondition }}" style="margin-left:auto;font-size:12px;color:#6D7280;border:1px solid #E5EAF1;border-radius:6px;padding:6px 6px;">
+                <option value="normal">Demo: Normal</option>
+                <option value="loading">Demo: Loading</option>
+                <option value="noEmployees">Demo: No employees</option>
+                <option value="connectionError">Demo: Connection error</option>
+                <option value="authExpired">Demo: Authentication expired</option>
+                <option value="rateLimit">Demo: Rate limit</option>
+                <option value="permissionError">Demo: Permission error</option>
+                <option value="networkError">Demo: Network error</option>
+              </select>
+            </div>
+
+            <sc-if value="{{ empShowLoading }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <sc-for list="{{ skeletonRows }}" as="sk" hint-placeholder-count="6">
+                  <div style="height:16px;border-radius:4px;background:linear-gradient(90deg,#eef1f6 25%,#f7f9fb 37%,#eef1f6 63%);background-size:400px 100%;animation:wb-shimmer 1.3s infinite linear;margin-bottom:12px;"></div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ empShowErrorBanner }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ errorBannerStyle }}">
+                <h3 style="margin:0 0 4px;font-size:15px;font-weight:600;color:#1A1B1B;">{{ empErrorInfo.title }}</h3>
+                <p style="margin:0 0 4px;font-size:13.5px;color:#333;">{{ empErrorInfo.problem }}</p>
+                <p style="margin:0 0 14px;font-size:13px;color:#6D7280;">{{ empErrorInfo.action }}</p>
+                <button onClick="{{ retryEmployees }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;">Retry</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ empShowNoEmployees }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ emptyStateStyle }}">
+                <h3 style="margin:0 0 4px;font-size:15px;font-weight:600;color:#1A1B1B;">No employees yet</h3>
+                <p style="margin:0;font-size:13.5px;color:#6D7280;">Run an import to bring employee records into WhistleB.</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ empShowNoResults }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ emptyStateStyle }}">
+                <h3 style="margin:0 0 4px;font-size:15px;font-weight:600;color:#1A1B1B;">No search results</h3>
+                <p style="margin:0;font-size:13.5px;color:#6D7280;">No employees match your search and filters.</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ empShowTable }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;overflow:hidden;flex:1;display:flex;flex-direction:column;min-height:0;">
+                <div style="overflow:auto;flex:1;min-height:0;">
+                <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                  <thead>
+                    <tr style="background:#F8FAFD;position:sticky;top:0;">
+                      <th style="padding:10px 12px;border-bottom:1px solid #E9ECF4;width:32px;"><input type="checkbox" checked="{{ empAllSelected }}" onChange="{{ toggleSelectAllEmp }}" style="accent-color:#054BC5;"></th>
+                      <th onClick="{{ sortById }}" style="cursor:pointer;text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Employee ID</th>
+                      <th onClick="{{ sortByName }}" style="cursor:pointer;text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Employee Name</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Work Division</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Job Title</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Supervisor</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Status</th>
+                      <th onClick="{{ sortByUpdated }}" style="cursor:pointer;text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Last Updated</th>
+                      <th style="width:28px;border-bottom:1px solid #E9ECF4;"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ pagedEmployees }}" as="e" hint-placeholder-count="6">
+                      <tr onClick="{{ e.onOpenDrawer }}" style="cursor:pointer;transition:background .15s ease;" style-hover="background:#F0F5FB;">
+                        <td onClick="{{ stopProp }}" style="padding:10px 12px;border-bottom:1px solid #E9ECF4;"><input type="checkbox" checked="{{ e.selected }}" onChange="{{ e.onToggleSelect }}" style="accent-color:#054BC5;"></td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ e.id }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#1A1B1B;font-weight:500;">{{ e.name }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ e.division }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ e.jobTitle }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ e.supervisorFullName }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;"><span style="font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:100px;background:{{ e.statusBg }};color:{{ e.statusFg }};">{{ e.status }}</span></td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#6D7280;">{{ e.updated }}</td>
+                        <td style="padding: 10px 14px; border-bottom: 1px solid #E9ECF4; color: #222; text-align: center; font-size: 15px">›</td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; border-top: 1px solid #E5EAF1; flex: none; flex-wrap: wrap; gap: 10px">
+                  <div style="display:flex;align-items:center;gap:16px;">
+                    <span style="font-size:12.5px;color:#6D7280;">{{ empPageLabel }}</span>
+                    <div style="display:flex;align-items:center;gap:6px;">
+                      <span style="font-size:12.5px;color:#6D7280;">Rows per page:</span>
+                      <select value="{{ empPageSize }}" onChange="{{ setEmpPageSize }}" style="border:1px solid #E5EAF1;border-radius:6px;padding:4px 8px;font-size:12.5px;">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:center;gap:4px;">
+                    <button onClick="{{ empPagePrev }}" disabled="{{ empOnFirstPage }}" style="background:#fff;border:1px solid #E5EAF1;border-radius:6px;padding:6px 12px;font-size:12.5px;cursor:pointer;">Prev</button>
+                    <sc-for list="{{ empPageNumberItems }}" as="pn" hint-placeholder-count="5">
+                      <sc-if value="{{ pn.isEllipsis }}" hint-placeholder-val="{{ false }}">
+                        <span style="padding:6px 6px;font-size:12.5px;color:#929090;">…</span>
+                      </sc-if>
+                      <sc-if value="{{ pn.isPage }}" hint-placeholder-val="{{ true }}">
+                        <button onClick="{{ pn.onClick }}" style="background:{{ pn.bg }};color:{{ pn.color }};border:1px solid {{ pn.border }};border-radius:6px;padding:6px 10px;font-size:12.5px;font-weight:600;cursor:pointer;min-width:30px;">{{ pn.label }}</button>
+                      </sc-if>
+                    </sc-for>
+                    <button onClick="{{ empPageNext }}" disabled="{{ empOnLastPage }}" style="background:#fff;border:1px solid #E5EAF1;border-radius:6px;padding:6px 12px;font-size:12.5px;cursor:pointer;">Next</button>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+          </sc-if>
+
+          <sc-if value="{{ tabSyncHistory }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px;">
+              <input value="{{ shSearch }}" onChange="{{ setShSearch }}" placeholder="Search sync history" style="flex:1;min-width:180px;border:1px solid #595D66;border-radius:6px;padding:8px 10px;font-size:13px;">
+              <select value="{{ shStatusFilter }}" onChange="{{ setShStatusFilter }}" style="border:1px solid #595D66;border-radius:6px;padding:8px 8px;font-size:13px;">
+                <option value="">All statuses</option>
+                <option value="Success">Success</option>
+                <option value="Running">Running</option>
+                <option value="Failed">Failed</option>
+                <option value="Warning">Warning</option>
+              </select>
+              <input type="date" value="{{ shDateFrom }}" onChange="{{ setShDateFrom }}" style="border:1px solid #595D66;border-radius:6px;padding:7px 8px;font-size:13px;">
+              <input type="date" value="{{ shDateTo }}" onChange="{{ setShDateTo }}" style="border:1px solid #595D66;border-radius:6px;padding:7px 8px;font-size:13px;">
+              <button onClick="{{ exportSyncHistory }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer;">Export</button>
+              <select value="{{ shCondition }}" onChange="{{ setShCondition }}" style="margin-left:auto;font-size:12px;color:#6D7280;border:1px solid #E5EAF1;border-radius:6px;padding:6px 6px;">
+                <option value="normal">Demo: Normal</option>
+                <option value="loading">Demo: Loading</option>
+                <option value="noHistory">Demo: No sync history</option>
+                <option value="networkError">Demo: Network error</option>
+              </select>
+            </div>
+
+            <sc-if value="{{ shShowLoading }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:16px;">
+                <sc-for list="{{ skeletonRows }}" as="sk" hint-placeholder-count="6">
+                  <div style="height:16px;border-radius:4px;background:linear-gradient(90deg,#eef1f6 25%,#f7f9fb 37%,#eef1f6 63%);background-size:400px 100%;animation:wb-shimmer 1.3s infinite linear;margin-bottom:12px;"></div>
+                </sc-for>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ shShowErrorBanner }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ errorBannerStyle }}">
+                <h3 style="margin:0 0 4px;font-size:15px;font-weight:600;color:#1A1B1B;">Network error</h3>
+                <p style="margin:0 0 4px;font-size:13.5px;color:#333;">The request to your HRIS provider timed out.</p>
+                <p style="margin:0 0 14px;font-size:13px;color:#6D7280;">Check your network connection and retry.</p>
+                <button onClick="{{ retrySyncHistoryLoad }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:13px;font-weight:600;cursor:pointer;">Retry</button>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ shShowNoHistory }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ emptyStateStyle }}">
+                <h3 style="margin:0 0 4px;font-size:15px;font-weight:600;color:#1A1B1B;">No sync history</h3>
+                <p style="margin:0;font-size:13.5px;color:#6D7280;">Synchronizations will appear here once the integration starts running.</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ shShowNoResults }}" hint-placeholder-val="{{ false }}">
+              <div style="{{ emptyStateStyle }}">
+                <h3 style="margin:0 0 4px;font-size:15px;font-weight:600;color:#1A1B1B;">No results</h3>
+                <p style="margin:0;font-size:13.5px;color:#6D7280;">No sync records match your filters.</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ shShowTable }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#fff;border:1px solid #E5EAF1;border-radius:10px;overflow:hidden;">
+                <table style="width:100%;border-collapse:collapse;font-size:13px;">
+                  <thead>
+                    <tr style="background:#F8FAFD;">
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Sync Date</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Status</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Duration</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Triggered By</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Added</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Updated</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Removed</th>
+                      <th style="text-align:left;padding:10px 14px;font-weight:600;color:#6D7280;border-bottom:1px solid #E9ECF4;">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <sc-for list="{{ pagedSyncHistory }}" as="row" hint-placeholder-count="6">
+                      <tr>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.date }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;"><span style="font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:100px;background:{{ row.badgeBg }};color:{{ row.badgeFg }};">{{ row.status }}</span></td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.duration }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#6D7280;">{{ row.by }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.added }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.updated }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;color:#333;">{{ row.removed }}</td>
+                        <td style="padding:10px 14px;border-bottom:1px solid #E9ECF4;">
+                          <div style="display:flex;gap:10px;">
+                            <sc-if value="{{ row.canRetry }}" hint-placeholder-val="{{ false }}">
+                              <span onClick="{{ row.onRetry }}" style="font-size:12.5px;font-weight:600;color:#3265D7;cursor:pointer;">Retry</span>
+                            </sc-if>
+                            <span style="font-size:12.5px;font-weight:600;color:#3265D7;cursor:pointer;">View Log</span>
+                          </div>
+                        </td>
+                      </tr>
+                    </sc-for>
+                  </tbody>
+                </table>
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-top:1px solid #E5EAF1;">
+                  <span style="font-size:12.5px;color:#6D7280;">{{ shPageLabel }}</span>
+                  <div style="display:flex;gap:6px;">
+                    <button onClick="{{ shPagePrev }}" disabled="{{ shOnFirstPage }}" style="background:#fff;border:1px solid #E5EAF1;border-radius:6px;padding:6px 12px;font-size:12.5px;cursor:pointer;">Prev</button>
+                    <button onClick="{{ shPageNext }}" disabled="{{ shOnLastPage }}" style="background:#fff;border:1px solid #E5EAF1;border-radius:6px;padding:6px 12px;font-size:12.5px;cursor:pointer;">Next</button>
+                  </div>
+                </div>
+              </div>
+            </sc-if>
+          </sc-if>
+        </div>
+      </sc-if>
+
+      <!-- Employee details drawer -->
+      <div onClick="{{ closeDrawer }}" style="height: 864px"></div>
+      <div style="{{ drawerPanelStyle }}">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:18px;">
+          <div style="display:flex;align-items:center;gap:12px;">
+            <div style="width:48px;height:48px;flex:none;border-radius:100px;background:#F0F5FB;color:#054BC5;font-size:16px;font-weight:700;display:flex;align-items:center;justify-content:center;">{{ selectedEmployee.initials }}</div>
+            <div>
+              <div style="font-size:17px;font-weight:600;color:#1A1B1B;">{{ selectedEmployee.name }}</div>
+              <div style="display:flex;align-items:center;gap:8px;margin-top:4px;">
+                <span style="font-size:11.5px;font-weight:600;padding:3px 8px;border-radius:100px;background:{{ selectedEmployee.statusBg }};color:{{ selectedEmployee.statusFg }};">{{ selectedEmployee.status }}</span>
+                <span style="font-size:12.5px;color:#6D7280;">{{ selectedEmployee.id }}</span>
+              </div>
+            </div>
+          </div>
+          <span onClick="{{ closeDrawer }}" style="cursor:pointer;font-size:20px;color:#6D7280;line-height:1;">×</span>
+        </div>
+        <sc-for list="{{ drawerGroups }}" as="grp" hint-placeholder-count="4">
+          <div style="margin-bottom:20px;">
+            <div style="font-size:11px;font-weight:700;color:#6D7280;letter-spacing:.03em;text-transform:uppercase;margin-bottom:6px;">{{ grp.label }}</div>
+            <sc-for list="{{ grp.items }}" as="fl" hint-placeholder-count="4">
+              <div style="padding:9px 0;border-bottom:1px solid #E9ECF4;">
+                <div style="font-size:11px;color:#6D7280;margin-bottom:2px;">{{ fl.label }}</div>
+                <div style="font-size:13.5px;color:#1A1B1B;">{{ fl.value }}</div>
+              </div>
+            </sc-for>
+          </div>
+        </sc-for>
+      </div>
+
+      <!-- Run import modal -->
+      <sc-if value="{{ runImportOpen }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;background:rgba(26,27,27,0.4);display:flex;align-items:center;justify-content:center;z-index:60;">
+          <div style="background:#fff;border-radius:16px;padding:26px;width:420px;box-shadow:0 24px 48px 0 rgba(0,0,0,0.18);">
+            <sc-if value="{{ runImportConfirm }}" hint-placeholder-val="{{ true }}">
+              <h3 style="margin:0 0 8px;font-size:16px;font-weight:600;color:#1A1B1B;">Run Import Now</h3>
+              <p style="margin:0 0 14px;font-size:13.5px;color:#6D7280;">This will overwrite the existing employee directory with the latest HRIS data.</p>
+              <div style="font-size:12px;color:#6D7280;margin-bottom:16px;">Simulate:
+                <select value="{{ runImportDemo }}" onChange="{{ setRunImportDemo }}" style="font-size:12px;color:#333;border:1px solid #E5EAF1;border-radius:6px;padding:4px 6px;">
+                  <option value="success">Success</option>
+                  <option value="failed">Failed</option>
+                </select>
+              </div>
+              <div style="display:flex;justify-content:flex-end;gap:10px;">
+                <button onClick="{{ closeRunImportModal }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+                <button onClick="{{ confirmRunImport }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Run Import</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ runImportRunning }}" hint-placeholder-val="{{ false }}">
+              <h3 style="margin:0 0 4px;font-size:16px;font-weight:600;color:#1A1B1B;">Importing employee records</h3>
+              <div style="font-size:13px;color:#6D7280;margin-bottom:14px;">{{ dashImportCount }} / 2480</div>
+              <div style="width:100%;height:8px;border-radius:100px;background:#E9ECF4;overflow:hidden;">
+                <div style="height:100%;border-radius:100px;background:#054BC5;transition:width .2s linear;width:{{ dashImportPct }}%;"></div>
+              </div>
+              <div style="display:flex;justify-content:flex-end;margin-top:16px;">
+                <button disabled="{{ true }}" style="background:#CDCCCC;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;">Running…</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ runImportDone }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;">
+                <div style="width:48px;height:48px;border-radius:100px;background:#D4F5F8;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M5 12l4.5 4.5L19 7" stroke="#03707D" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                </div>
+                <h3 style="margin:0 0 6px;font-size:16px;font-weight:600;color:#1A1B1B;">Import completed</h3>
+                <p style="margin:0 0 16px;font-size:13.5px;color:#6D7280;">2,480 employee records are up to date.</p>
+                <button onClick="{{ closeRunImportModal }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13.5px;font-weight:600;cursor:pointer;">Done</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{ runImportFailedState }}" hint-placeholder-val="{{ false }}">
+              <div style="text-align:center;">
+                <div style="width:48px;height:48px;border-radius:100px;background:#FDAEC7;display:flex;align-items:center;justify-content:center;margin:0 auto 12px;">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 8v5M12 16.5h.01" stroke="#5F0925" stroke-width="2" stroke-linecap="round"></path><circle cx="12" cy="12" r="9" stroke="#5F0925" stroke-width="1.6"></circle></svg>
+                </div>
+                <h3 style="margin:0 0 6px;font-size:16px;font-weight:600;color:#1A1B1B;">Import failed</h3>
+                <p style="margin:0 0 16px;font-size:13.5px;color:#6D7280;">The import did not complete. No data was changed.</p>
+                <div style="display:flex;justify-content:center;gap:10px;">
+                  <button onClick="{{ closeRunImportModal }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+                  <button onClick="{{ confirmRunImport }}" style="background:#054BC5;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Retry</button>
+                </div>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ importIsRunning }}" hint-placeholder-val="{{ false }}">
+        <div style="position:absolute;inset:0;background:rgba(255,255,255,0);pointer-events:none;"></div>
+      </sc-if>
+
+      <!-- Toasts -->
+      <div style="position:fixed;bottom:20px;right:20px;display:flex;flex-direction:column;gap:8px;z-index:50;">
+        <sc-for list="{{ toasts }}" as="t" hint-placeholder-count="0">
+          <div style="animation:wb-toast-in .18s ease-out;background:#fff;border:1px solid #E5EAF1;border-left:3px solid {{ t.color }};border-radius:8px;padding:12px 16px;box-shadow:0 4px 16px 0 rgba(0,0,0,0.10);font-size:13.5px;color:#1A1B1B;min-width:220px;">{{ t.message }}</div>
+        </sc-for>
+      </div>
+
+      <!-- Confirm modals -->
+      <sc-if value="{{ showDisconnectModal }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;background:rgba(26,27,27,0.4);display:flex;align-items:center;justify-content:center;z-index:60;">
+          <div style="background:#fff;border-radius:16px;padding:26px;width:380px;box-shadow:0 24px 48px 0 rgba(0,0,0,0.18);">
+            <h3 style="margin:0 0 8px;font-size:16px;font-weight:600;color:#1A1B1B;">Disconnect HRIS</h3>
+            <p style="margin:0 0 20px;font-size:13.5px;color:#6D7280;">Scheduled synchronization will stop. Imported employee records will remain until deleted.</p>
+            <div style="display:flex;justify-content:flex-end;gap:10px;">
+              <button onClick="{{ closeModals }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+              <button onClick="{{ confirmDisconnect }}" style="background:#E3094C;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Disconnect</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showAddFieldModal }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;background:rgba(26,27,27,0.4);display:flex;align-items:center;justify-content:center;z-index:60;">
+          <div style="background:#fff;border-radius:16px;padding:26px;width:420px;box-shadow:0 24px 48px 0 rgba(0,0,0,0.18);">
+            <h3 style="margin:0 0 8px;font-size:16px;font-weight:600;color:#1A1B1B;">{{ addFieldModalTitle }}</h3>
+            <p style="margin:0 0 18px;font-size:13.5px;color:#6D7280;">Create an additional employee attribute to import from your HRIS.</p>
+            <label style="display:block;font-size:12.5px;font-weight:600;color:#1A1B1B;margin-bottom:6px;">Field Name</label>
+            <input value="{{ addFieldName }}" onChange="{{ setAddFieldName }}" placeholder="e.g. Office Location" style="width:100%;box-sizing:border-box;border:1px solid #595D66;border-radius:6px;padding:9px 10px;font-size:13.5px;margin-bottom:14px;">
+            <label style="display:block;font-size:12.5px;font-weight:600;color:#1A1B1B;margin-bottom:6px;">Mapping Key (optional)</label>
+            <input value="{{ addFieldMappingKey }}" onChange="{{ setAddFieldMappingKey }}" placeholder="e.g. office_location" style="width:100%;box-sizing:border-box;border:1px solid #595D66;border-radius:6px;padding:9px 10px;font-size:13.5px;margin-bottom:6px;">
+            <p style="margin:0 0 20px;font-size:12px;color:#6D7280;">Specify the corresponding field name from your HRIS if different.</p>
+            <div style="display:flex;justify-content:flex-end;gap:10px;">
+              <button onClick="{{ closeAddFieldModal }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+              <button onClick="{{ saveCustomField }}" style="{{ saveFieldBtnStyle }}">{{ addFieldSaveLabel }}</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showDeleteModal }}" hint-placeholder-val="{{ false }}">
+        <div style="position:fixed;inset:0;background:rgba(26,27,27,0.4);display:flex;align-items:center;justify-content:center;z-index:60;">
+          <div style="background:#fff;border-radius:16px;padding:26px;width:380px;box-shadow:0 24px 48px 0 rgba(0,0,0,0.18);">
+            <h3 style="margin:0 0 8px;font-size:16px;font-weight:600;color:#1A1B1B;">Delete Imported Employee Data</h3>
+            <p style="margin:0 0 14px;font-size:13.5px;color:#6D7280;">This permanently deletes every employee record imported from your HRIS.</p>
+            <div style="font-size:12.5px;color:#6D7280;margin-bottom:6px;">Type <strong style="color:#E3094C;">DELETE</strong> to confirm</div>
+            <input value="{{ deleteConfirmText }}" onChange="{{ setDeleteConfirmText }}" placeholder="DELETE" style="width:100%;box-sizing:border-box;border:1px solid #595D66;border-radius:6px;padding:8px 10px;font-size:13.5px;margin-bottom:18px;">
+            <div style="display:flex;justify-content:flex-end;gap:10px;">
+              <button onClick="{{ closeModals }}" style="background:#fff;color:#333;border:1px solid #E5EAF1;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:pointer;">Cancel</button>
+              <button onClick="{{ confirmDelete }}" disabled="{{ deleteNotEnabled }}" style="{{ deleteButtonStyle }}">Delete Data</button>
+            </div>
+          </div>
+        </div>
+      </sc-if>
+
+    </div>
+  </div>
+</div>
+]]&gt;
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+const PROVIDERS = [
+  { key: 'workday', name: 'Workday', initials: 'Wd', desc: 'Enterprise HCM & workforce management' },
+  { key: 'sap', name: 'SAP SuccessFactors', initials: 'SF', desc: 'Cloud HR and talent management suite' },
+  { key: 'personio', name: 'Personio', initials: 'Pe', desc: 'All-in-one HR software for SMBs' },
+  { key: 'hibob', name: 'HiBob', initials: 'Hi', desc: 'Modern HR platform for global teams' },
+  { key: 'adp', name: 'ADP Workforce Now', initials: 'AD', desc: 'Payroll, HR, and workforce management' },
+];
+
+const GROUP_ORDER = ['Employee Information', 'Contact Information', 'Employment Information', 'Supervisor Information', 'Custom Fields'];
+
+const FIELDS = [
+  { key: 'employeeId', label: 'Employee ID', group: 'Employee Information' },
+  { key: 'firstName', label: 'First Name', group: 'Employee Information' },
+  { key: 'middleInitial', label: 'Middle Initial', group: 'Employee Information' },
+  { key: 'lastName', label: 'Last Name', group: 'Employee Information' },
+  { key: 'familiarName', label: 'Familiar Name', group: 'Employee Information' },
+  { key: 'email', label: 'Email Address', group: 'Contact Information' },
+  { key: 'phone', label: 'Phone Number', group: 'Contact Information' },
+  { key: 'jobTitle', label: 'Job Title', group: 'Employment Information' },
+  { key: 'employmentStatus', label: 'Employment Status', group: 'Employment Information' },
+  { key: 'hireDate', label: 'Hire Date', group: 'Employment Information' },
+  { key: 'terminationDate', label: 'Termination Date', group: 'Employment Information' },
+  { key: 'workDivision', label: 'Work Division', group: 'Employment Information' },
+  { key: 'supervisorFirstName', label: 'Supervisor First Name', group: 'Supervisor Information' },
+  { key: 'supervisorMiddleInitial', label: 'Supervisor Middle Initial', group: 'Supervisor Information' },
+  { key: 'supervisorLastName', label: 'Supervisor Last Name', group: 'Supervisor Information' },
+  { key: 'supervisorEmail', label: 'Supervisor Email', group: 'Supervisor Information' },
+  { key: 'supervisorPhone', label: 'Supervisor Phone', group: 'Supervisor Information' },
+];
+const DEFAULT_CHECKED_KEYS = new Set(['employeeId', 'firstName', 'lastName', 'email', 'phone', 'jobTitle', 'employmentStatus', 'workDivision']);
+
+const AUTH_ERRORS = {
+  failed: { title: 'Authentication failed', message: "We couldn't verify your credentials with the provider. Check your account and try again." },
+  cancelled: { title: 'Authentication cancelled', message: 'You cancelled the sign-in before it completed. No changes were made.' },
+  invalid: { title: 'Invalid credentials', message: 'The username or password entered was not recognized by the provider.' },
+  timeout: { title: 'Connection timeout', message: 'The provider took too long to respond. Check your network and try again.' },
+  expired: { title: 'Login session expired', message: 'Your sign-in session expired before authentication finished. Please try again.' },
+};
+
+const IMPORT_ERRORS = {
+  failed: { title: 'Import failed', message: 'Something went wrong while importing employee records. No data was changed.' },
+  network: { title: 'Network failure', message: 'Lost connection to the provider partway through the import. Retry once your connection is stable.' },
+};
+
+const CONDITION_ERRORS = {
+  connectionError: { title: 'Connection error', problem: 'WhistleB lost its connection to your HRIS provider.', action: 'Check the provider status page or your network, then retry.' },
+  authExpired: { title: 'Authentication expired', problem: 'Your connection to the HRIS provider has expired.', action: 'Reconnect the integration from Edit Configuration.' },
+  rateLimit: { title: 'Rate limit reached', problem: 'The provider is throttling requests from WhistleB.', action: 'Wait a few minutes and retry.' },
+  permissionError: { title: 'Permission error', problem: 'WhistleB no longer has permission to read employee records.', action: 'Ask your HRIS administrator to restore API access.' },
+  networkError: { title: 'Network error', problem: 'The request to your HRIS provider timed out.', action: 'Check your network connection and retry.' },
+};
+
+const DEPARTMENTS = ['Engineering', 'Sales', 'Finance', 'Human Resources', 'Operations'];
+const MANAGERS = ['Priya Anand', 'Tom Reyes', 'Lena Fischer', 'Chidi Okafor', 'Grace Lin', 'Omar Haddad', 'Sven Berg', 'Nadia Silva', 'Marco Costa', 'Ines Dubois'];
+const STATUSES = ['Active', 'On Leave', 'Inactive'];
+const FIRST_NAMES = ['Ava','Liam','Noor','Diego','Yuki','Sofia','Ethan','Mia','Kwame','Elena','Jonas','Priti','Marco','Ines','Omar','Grace','Hassan','Wei','Fatima','Lucas','Anika','Sven','Tariq','Nadia'];
+const LAST_NAMES = ['Martinez','Chen','Haddad','Okonkwo','Tanaka','Rossi','Novak','Larsen','Singh','Vukovic','Alvarez','Kowalski','Berg','Dubois','Nakamura','Silva','Andersson','Kim','Haile','Fischer','Costa','Petrov','Yilmaz','Reyes'];
+const NICKNAMES = ['Avy','Li','Noo','Yago','Yuki','Sofi','Eth','Mimi','Kwam','Ellie','Jon','Pri','Marc','Nes','Om','Gigi','Has','Wei','Fati','Luc','Ani','Sven','Tari','Nadi'];
+const MIDDLE_INITIALS = ['A','B','C','D','E','J','K','L','M','R','S','T'];
+const UPDATED_DATES = ['07/21/2026', '07/21/2026', '07/20/2026', '07/20/2026', '07/19/2026'];
+const EMP_COUNT = 2480;
+
+const EMPLOYEES = Array.from({ length: EMP_COUNT }, (_, i) => {
+  const fn = FIRST_NAMES[i % FIRST_NAMES.length];
+  const ln = LAST_NAMES[(i * 7 + 3) % LAST_NAMES.length];
+  const dept = DEPARTMENTS[i % DEPARTMENTS.length];
+  const mgr = MANAGERS[(i * 3 + 1) % MANAGERS.length];
+  const [supFirst, ...supLastParts] = mgr.split(' ');
+  const supLast = supLastParts.join(' ');
+  const status = i % 37 === 0 ? 'Inactive' : i % 17 === 0 ? 'On Leave' : 'Active';
+  return {
+    idx: i,
+    id: `EMP-${1000 + i}`,
+    name: `${fn} ${ln}`,
+    firstName: fn,
+    middleInitial: MIDDLE_INITIALS[i % MIDDLE_INITIALS.length],
+    lastName: ln,
+    familiarName: NICKNAMES[i % NICKNAMES.length],
+    initials: `${fn[0]}${ln[0]}`,
+    department: dept,
+    division: dept + ' Division',
+    manager: mgr,
+    supervisorFirstName: supFirst,
+    supervisorMiddleInitial: MIDDLE_INITIALS[(i + 3) % MIDDLE_INITIALS.length],
+    supervisorLastName: supLast,
+    supervisorEmail: `${supFirst.toLowerCase()}.${supLast.toLowerCase().replace(/\s+/g, '')}@acmecorp.com`,
+    supervisorPhone: '+1 (555) 020-' + String(2000 + (i % 900)),
+    jobTitle: ['Analyst', 'Specialist', 'Manager', 'Coordinator', 'Lead'][i % 5],
+    status,
+    email: `${fn.toLowerCase()}.${ln.toLowerCase()}.${i}@acmecorp.com`,
+    phone: '+1 (555) ' + String(200 + Math.floor(i / 100)).padStart(3, '0') + '-' + String(1000 + (i % 1000)).padStart(4, '0'),
+    hireDate: `0${(i % 9) + 1}/1${i % 9}/20${18 + (i % 8)}`,
+    terminationDate: status === 'Inactive' ? '06/30/2026' : '\u2014',
+    updated: UPDATED_DATES[i % UPDATED_DATES.length],
+    sourceSystem: 'Workday',
+  };
+});
+
+const FIELD_ACCESSORS = {
+  employeeId: e => e.id, firstName: e => e.firstName, middleInitial: e => e.middleInitial, lastName: e => e.lastName,
+  familiarName: e => e.familiarName, email: e => e.email, phone: e => e.phone, jobTitle: e => e.jobTitle,
+  employmentStatus: e => e.status, hireDate: e => e.hireDate, terminationDate: e => e.terminationDate, workDivision: e => e.division,
+  supervisorFirstName: e => e.supervisorFirstName, supervisorMiddleInitial: e => e.supervisorMiddleInitial, supervisorLastName: e => e.supervisorLastName,
+  supervisorEmail: e => e.supervisorEmail, supervisorPhone: e => e.supervisorPhone,
+};
+const DRAWER_GROUP_LABELS = { 'Employee Information': 'Basic Information' };
+const CUSTOM_VALUE_POOLS = {
+  location: ['New York','London','Bengaluru','Singapore','Berlin'],
+  grade: ['G4','G5','G6','G7','G8'],
+  payroll: ['PR-North','PR-South','PR-EMEA','PR-APAC'],
+  unit: ['Retail Ops','Corporate','Field Sales','Shared Services'],
+  shift: ['Day Shift','Night Shift','Rotating'],
+  category: ['Full-Time','Part-Time','Contractor'],
+};
+function customFieldValue(field, idx) {
+  const l = field.label.toLowerCase();
+  if (l.includes('location') || l.includes('country')) return CUSTOM_VALUE_POOLS.location[idx % CUSTOM_VALUE_POOLS.location.length];
+  if (l.includes('grade')) return CUSTOM_VALUE_POOLS.grade[idx % CUSTOM_VALUE_POOLS.grade.length];
+  if (l.includes('cost')) return 'CC-' + (100 + idx);
+  if (l.includes('payroll')) return CUSTOM_VALUE_POOLS.payroll[idx % CUSTOM_VALUE_POOLS.payroll.length];
+  if (l.includes('unit')) return CUSTOM_VALUE_POOLS.unit[idx % CUSTOM_VALUE_POOLS.unit.length];
+  if (l.includes('shift')) return CUSTOM_VALUE_POOLS.shift[idx % CUSTOM_VALUE_POOLS.shift.length];
+  if (l.includes('category') || l.includes('type')) return CUSTOM_VALUE_POOLS.category[idx % CUSTOM_VALUE_POOLS.category.length];
+  if (l.includes('number')) return 'EN-' + (5000 + idx);
+  return field.label + ' ' + ((idx % 3) + 1);
+}
+
+const SYNC_HISTORY_FULL = [
+  { id: 1, date: '07/21/2026 02:00 AM', status: 'Success', duration: '3m 12s', added: 4, updated: 112, removed: 1, by: 'Automatic' },
+  { id: 2, date: '07/20/2026 02:00 AM', status: 'Success', duration: '2m 58s', added: 0, updated: 6, removed: 0, by: 'Automatic' },
+  { id: 3, date: '07/19/2026 02:00 AM', status: 'Failed', duration: '0m 41s', added: 0, updated: 0, removed: 0, by: 'Automatic' },
+  { id: 4, date: '07/18/2026 11:14 AM', status: 'Success', duration: '4m 05s', added: 12, updated: 340, removed: 3, by: 'Martin (manual)' },
+  { id: 5, date: '07/17/2026 02:00 AM', status: 'Warning', duration: '3m 40s', added: 2, updated: 88, removed: 0, by: 'Automatic' },
+  { id: 6, date: '07/16/2026 02:00 AM', status: 'Success', duration: '3m 02s', added: 0, updated: 14, removed: 0, by: 'Automatic' },
+  { id: 7, date: '07/15/2026 02:00 AM', status: 'Success', duration: '2m 51s', added: 1, updated: 22, removed: 0, by: 'Automatic' },
+  { id: 8, date: '07/14/2026 09:30 AM', status: 'Success', duration: '4m 20s', added: 0, updated: 5, removed: 2, by: 'Martin (manual)' },
+  { id: 9, date: '07/13/2026 02:00 AM', status: 'Failed', duration: '0m 22s', added: 0, updated: 0, removed: 0, by: 'Automatic' },
+];
+
+const STATUS_BADGE = {
+  Success: { bg: '#D4F5F8', fg: '#03707D' },
+  Running: { bg: '#E1F0FF', fg: '#054BC5' },
+  Failed: { bg: '#FDAEC7', fg: '#5F0925' },
+  Warning: { bg: '#FFE8C3', fg: '#8A5300' },
+  Active: { bg: '#D4F5F8', fg: '#03707D' },
+  'On Leave': { bg: '#FFE8C3', fg: '#8A5300' },
+  Inactive: { bg: '#EFEFEF', fg: '#595D66' },
+};
+
+class Component extends DCLogic {
+  state = {
+    step: 'empty',
+    emptyDemo: 'notConnected',
+    selectedProviderKey: 'workday',
+    pendingProviderKey: 'workday',
+    authDemo: 'success',
+    authPhase: 'idle',
+    fields: FIELDS.map(f => ({ ...f, checked: DEFAULT_CHECKED_KEYS.has(f.key) })),
+    customFields: [],
+    fieldSearch: '',
+    showAddFieldModal: false, editingFieldKey: null, addFieldName: '', addFieldMappingKey: '',
+    formerEmpOption: 'none',
+    formerEmpCustomDays: '',
+    syncFreq: 'daily',
+    customTime: '2:00 AM',
+    customDay: 'Every day',
+    importDemo: 'success',
+    importPhase: 'progress',
+    importProgress: 0,
+    toasts: [],
+    showDisconnectModal: false,
+    showDeleteModal: false,
+    deleteConfirmText: '',
+    configFromDashboard: false,
+    dashboardTab: 'overview',
+    empSearch: '', empDeptFilter: '', empStatusFilter: '', empManagerFilter: '',
+    empSortKey: 'id', empSortDir: 'asc', empPage: 0, empPageSize: 25, empSelectedIds: [], empCondition: 'normal',
+    selectedEmployeeId: null,
+    shSearch: '', shStatusFilter: '', shDateFrom: '', shDateTo: '', shPage: 0, shCondition: 'normal',
+    syncHistory: SYNC_HISTORY_FULL.map(r => ({ ...r })),
+    runImportPhase: 'closed', runImportDemo: 'success', runImportProgress: 0,
+  };
+
+  componentWillUnmount() {
+    clearInterval(this._importTimer);
+    clearInterval(this._dashImportTimer);
+  }
+
+  addToast(message, color) {
+    const id = Date.now() + Math.random();
+    this.setState(s => ({ toasts: [...s.toasts, { id, message, color: color || '#054BC5' }] }));
+    setTimeout(() => this.setState(s => ({ toasts: s.toasts.filter(t => t.id !== id) })), 3200);
+  }
+
+  startConnect = () => this.setState({ step: 'provider' });
+  goEmpty = () => this.setState({ step: 'empty' });
+  goProvider = () => this.setState({ step: 'provider' });
+  goAuth = () => this.setState({ step: 'auth' });
+  goDashboard = () => this.setState({ step: 'dashboard' });
+
+  setEmptyDemo = e => this.setState({ emptyDemo: e.target.value });
+  retryEmpty = () => this.setState({ emptyDemo: 'notConnected' });
+
+  selectProviderFor = p => () => this.setState({ pendingProviderKey: p.key });
+  continueToAuth = () => {
+    if (!this.state.pendingProviderKey) return;
+    this.setState({ selectedProviderKey: this.state.pendingProviderKey, step: 'auth', authPhase: 'idle' });
+  };
+
+  setAuthDemo = e => this.setState({ authDemo: e.target.value });
+  authenticate = () => {
+    this.setState({ authPhase: 'loading' });
+    setTimeout(() => this.setState({ authPhase: 'result' }), 1400);
+  };
+  retryAuth = () => this.setState({ authPhase: 'idle' });
+  continueToConfigure = () => this.setState({ step: 'configure' });
+
+  setFieldSearch = e => this.setState({ fieldSearch: e.target.value });
+  toggleFieldFor = f => () => {
+    if (f.custom) {
+      this.setState(s => ({ customFields: s.customFields.map(x => x.key === f.key ? { ...x, checked: !x.checked } : x) }));
+    } else {
+      this.setState(s => ({ fields: s.fields.map(x => x.key === f.key ? { ...x, checked: !x.checked } : x) }));
+    }
+  };
+  selectAllFields = () => this.setState(s => ({ fields: s.fields.map(f => ({ ...f, checked: true })), customFields: s.customFields.map(f => ({ ...f, checked: true })) }));
+  clearAllFields = () => this.setState(s => ({ fields: s.fields.map(f => ({ ...f, checked: false })), customFields: s.customFields.map(f => ({ ...f, checked: false })) }));
+
+  openAddFieldModal = () => this.setState({ showAddFieldModal: true, editingFieldKey: null, addFieldName: '', addFieldMappingKey: '' });
+  openEditFieldFor = f => () => this.setState({ showAddFieldModal: true, editingFieldKey: f.key, addFieldName: f.label, addFieldMappingKey: f.mappingKey || '' });
+  closeAddFieldModal = () => this.setState({ showAddFieldModal: false });
+  setAddFieldName = e => this.setState({ addFieldName: e.target.value });
+  setAddFieldMappingKey = e => this.setState({ addFieldMappingKey: e.target.value });
+  saveCustomField = () => {
+    const name = this.state.addFieldName.trim();
+    if (!name) return;
+    const wasEditing = !!this.state.editingFieldKey;
+    this.setState(s => {
+      if (s.editingFieldKey) {
+        return { customFields: s.customFields.map(c => c.key === s.editingFieldKey ? { ...c, label: name, mappingKey: s.addFieldMappingKey.trim() } : c), showAddFieldModal: false };
+      }
+      const key = 'custom_' + Date.now();
+      return { customFields: [...s.customFields, { key, label: name, mappingKey: s.addFieldMappingKey.trim(), checked: true, custom: true, group: 'Custom Fields' }], showAddFieldModal: false };
+    });
+    this.addToast(wasEditing ? 'Custom field updated.' : 'Custom field added.', '#03707D');
+  };
+  deleteCustomFieldFor = f => () => {
+    this.setState(s => ({ customFields: s.customFields.filter(c => c.key !== f.key) }));
+    this.addToast('Custom field removed.', '#E3094C');
+  };
+
+  setFormerEmp = e => this.setState({ formerEmpOption: e.target.value });
+  setFormerEmpCustomDays = e => this.setState({ formerEmpCustomDays: e.target.value });
+  setSyncFreqFor = s => () => this.setState({ syncFreq: s.key });
+  setCustomTime = e => this.setState({ customTime: e.target.value });
+  setCustomDay = e => this.setState({ customDay: e.target.value });
+
+  saveConfig = () => this.addToast('Configuration saved.', '#03707D');
+
+  runInitialImport = () => {
+    this.setState({ step: 'import', importPhase: 'progress', importProgress: 0 });
+    this.runImportTimer();
+  };
+
+  retryImport = () => {
+    this.setState({ importPhase: 'progress', importProgress: 0 });
+    this.runImportTimer();
+  };
+
+  runImportTimer() {
+    clearInterval(this._importTimer);
+    const demo = this.state.importDemo;
+    const stopAt = demo === 'failed' ? 620 : demo === 'network' ? 1180 : demo === 'partial' ? 2402 : 2480;
+    this._importTimer = setInterval(() => {
+      this.setState(s => {
+        const next = Math.min(stopAt, s.importProgress + 80 + Math.floor(Math.random() * 120));
+        if (next >= stopAt) {
+          clearInterval(this._importTimer);
+          return { importProgress: stopAt, importPhase: 'result' };
+        }
+        return { importProgress: next };
+      });
+    }, 160);
+  }
+
+  finishImport = () => this.setState({ step: 'dashboard' });
+
+  runImportFromDashboard = () => {
+    this.addToast('Sync started.', '#054BC5');
+    setTimeout(() => this.addToast('Sync completed successfully.', '#03707D'), 1600);
+  };
+  goConfigureFromDashboard = () => this.setState({ step: 'configure', configFromDashboard: true });
+  cancelConfigEdit = () => this.setState({ step: 'dashboard', configFromDashboard: false });
+  saveConfigFromDashboard = () => { this.setState({ step: 'dashboard', configFromDashboard: false }); this.addToast('Configuration updated.', '#03707D'); };
+  openDisconnect = () => this.setState({ showDisconnectModal: true });
+  openDelete = () => this.setState({ showDeleteModal: true, deleteConfirmText: '' });
+  closeModals = () => this.setState({ showDisconnectModal: false, showDeleteModal: false });
+  setDeleteConfirmText = e => this.setState({ deleteConfirmText: e.target.value });
+  confirmDisconnect = () => {
+    this.setState({ showDisconnectModal: false, step: 'empty', emptyDemo: 'notConnected', dashboardTab: 'overview' });
+    this.addToast('Disconnected. Scheduled synchronization has stopped.', '#E3094C');
+  };
+  confirmDelete = () => {
+    if (this.state.deleteConfirmText !== 'DELETE') return;
+    this.setState({ showDeleteModal: false, step: 'empty', emptyDemo: 'notConnected', dashboardTab: 'overview' });
+    this.addToast('Employee data deleted.', '#E3094C');
+  };
+
+  goSyncHistoryTab = () => this.setState({ dashboardTab: 'syncHistory' });
+  sortById = () => this.sortEmpByKey('id')();
+  sortByName = () => this.sortEmpByKey('name')();
+  sortByDepartment = () => this.sortEmpByKey('department')();
+  sortByUpdated = () => this.sortEmpByKey('updated')();
+
+  setEmpSearch = e => this.setState({ empSearch: e.target.value, empPage: 0 });
+  setEmpDeptFilter = e => this.setState({ empDeptFilter: e.target.value, empPage: 0 });
+  setEmpStatusFilter = e => this.setState({ empStatusFilter: e.target.value, empPage: 0 });
+  setEmpManagerFilter = e => this.setState({ empManagerFilter: e.target.value, empPage: 0 });
+  setEmpCondition = e => this.setState({ empCondition: e.target.value });
+  sortEmpByKey = key => () => this.setState(s => ({ empSortKey: key, empSortDir: s.empSortKey === key && s.empSortDir === 'asc' ? 'desc' : 'asc' }));
+  toggleEmpSelectFor = e => () => this.setState(s => ({ empSelectedIds: s.empSelectedIds.includes(e.id) ? s.empSelectedIds.filter(id => id !== e.id) : [...s.empSelectedIds, e.id] }));
+  toggleSelectAllEmp = () => {
+    const ids = this._lastPagedIds || [];
+    this.setState(s => {
+      const allSelected = ids.every(id => s.empSelectedIds.includes(id));
+      return { empSelectedIds: allSelected ? s.empSelectedIds.filter(id => !ids.includes(id)) : [...new Set([...s.empSelectedIds, ...ids])] };
+    });
+  };
+  empPagePrev = () => this.setState(s => ({ empPage: Math.max(0, s.empPage - 1) }));
+  empPageNext = () => this.setState(s => ({ empPage: s.empPage + 1 }));
+  empGoToPage = p => () => this.setState({ empPage: p });
+  setEmpPageSize = e => this.setState({ empPageSize: parseInt(e.target.value, 10), empPage: 0 });
+  exportEmployeesCsv = () => this.addToast('Exporting employees to CSV\u2026', '#054BC5');
+  refreshEmployees = () => {
+    this.setState({ empCondition: 'loading' });
+    setTimeout(() => this.setState({ empCondition: 'normal' }), 700);
+  };
+  retryEmployees = () => this.setState({ empCondition: 'normal' });
+  openEmployeeDrawerFor = e => () => this.setState({ selectedEmployeeId: e.id });
+  closeDrawer = () => this.setState({ selectedEmployeeId: null });
+  stopProp = e => { if (e && e.stopPropagation) e.stopPropagation(); };
+
+  setShSearch = e => this.setState({ shSearch: e.target.value, shPage: 0 });
+  setShStatusFilter = e => this.setState({ shStatusFilter: e.target.value, shPage: 0 });
+  setShDateFrom = e => this.setState({ shDateFrom: e.target.value, shPage: 0 });
+  setShDateTo = e => this.setState({ shDateTo: e.target.value, shPage: 0 });
+  setShCondition = e => this.setState({ shCondition: e.target.value });
+  shPagePrev = () => this.setState(s => ({ shPage: Math.max(0, s.shPage - 1) }));
+  shPageNext = () => this.setState(s => ({ shPage: s.shPage + 1 }));
+  exportSyncHistory = () => this.addToast('Exporting sync history\u2026', '#054BC5');
+  retrySyncHistoryLoad = () => this.setState({ shCondition: 'normal' });
+  retrySyncRowFor = row => () => {
+    this.setState(s => ({ syncHistory: s.syncHistory.map(r => r.id === row.id ? { ...r, status: 'Running' } : r) }));
+    this.addToast('Retrying sync\u2026', '#054BC5');
+    setTimeout(() => {
+      this.setState(s => ({ syncHistory: s.syncHistory.map(r => r.id === row.id ? { ...r, status: 'Success' } : r) }));
+      this.addToast('Sync completed successfully.', '#03707D');
+    }, 1400);
+  };
+
+  openRunImportModal = () => this.setState({ runImportPhase: 'confirm', runImportProgress: 0 });
+  closeRunImportModal = () => this.setState({ runImportPhase: 'closed' });
+  setRunImportDemo = e => this.setState({ runImportDemo: e.target.value });
+  confirmRunImport = () => {
+    this.setState({ runImportPhase: 'running', runImportProgress: 0 });
+    clearInterval(this._dashImportTimer);
+    const demo = this.state.runImportDemo;
+    const stopAt = demo === 'failed' ? 900 : 2480;
+    this._dashImportTimer = setInterval(() => {
+      this.setState(s => {
+        const next = Math.min(stopAt, s.runImportProgress + 90 + Math.floor(Math.random() * 140));
+        if (next >= stopAt) {
+          clearInterval(this._dashImportTimer);
+          const done = demo !== 'failed';
+          if (done) {
+            this.addToast('Sync completed successfully.', '#03707D');
+            const newRow = { id: Date.now(), date: 'Just now', status: 'Success', duration: '3m 05s', added: 2, updated: 40, removed: 0, by: 'Martin (manual)' };
+            return { runImportProgress: stopAt, runImportPhase: 'done', syncHistory: [newRow, ...s.syncHistory] };
+          }
+          return { runImportProgress: stopAt, runImportPhase: 'failed' };
+        }
+        return { runImportProgress: next };
+      });
+    }, 150);
+  };
+
+  setImportDemo = e => this.setState({ importDemo: e.target.value });
+
+  restartDemo = () => {
+    clearInterval(this._importTimer);
+    this.setState({
+      step: 'empty', emptyDemo: 'notConnected', selectedProviderKey: 'workday', pendingProviderKey: 'workday',
+      authDemo: 'success', authPhase: 'idle', fields: FIELDS.map(f => ({ ...f, checked: DEFAULT_CHECKED_KEYS.has(f.key) })), customFields: [], fieldSearch: '',
+      showAddFieldModal: false, editingFieldKey: null, addFieldName: '', addFieldMappingKey: '',
+      formerEmpOption: 'none', formerEmpCustomDays: '', syncFreq: 'daily', customTime: '2:00 AM', customDay: 'Every day',
+      importDemo: 'success', importPhase: 'progress', importProgress: 0, toasts: [], showDisconnectModal: false, showDeleteModal: false,
+    });
+  };
+
+  renderVals() {
+    const s = this.state;
+    const q = s.fieldSearch.trim().toLowerCase();
+    const allFields = [...s.fields, ...s.customFields];
+    const filteredFields = allFields.filter(f => f.label.toLowerCase().includes(q));
+    const fieldItems = [];
+    GROUP_ORDER.forEach(g => {
+      const groupFields = filteredFields.filter(f => f.group === g);
+      if (!groupFields.length) return;
+      fieldItems.push({ isHeader: true, isField: false, key: 'hdr_' + g, groupLabel: g });
+      groupFields.forEach(f => fieldItems.push({
+        isHeader: false, isField: true, key: f.key, label: f.label, checked: f.checked, custom: !!f.custom,
+        onToggle: this.toggleFieldFor(f), onEdit: f.custom ? this.openEditFieldFor(f) : undefined, onDelete: f.custom ? this.deleteCustomFieldFor(f) : undefined,
+      }));
+    });
+    const noFieldsSelected = !allFields.some(f => f.checked);
+    const canSaveField = !!s.addFieldName.trim();
+    const selectedProvider = PROVIDERS.find(p => p.key === s.selectedProviderKey) || PROVIDERS[0];
+
+    const providers = PROVIDERS.map(p => {
+      const sel = p.key === s.pendingProviderKey;
+      return {
+        ...p,
+        bg: sel ? '#F0F5FB' : '#fff',
+        border: sel ? '#054BC5' : '#E5EAF1',
+        radioBorder: sel ? '#054BC5' : '#929090',
+        radioBg: sel ? '#054BC5' : '#fff',
+        onSelect: () => this.setState({ pendingProviderKey: p.key }),
+      };
+    });
+
+    const syncOptions = [
+      { key: 'daily', label: 'Daily' },
+      { key: 'weekly', label: 'Weekly' },
+      { key: 'monthly', label: 'Monthly' },
+      { key: 'custom', label: 'Custom' },
+    ].map(o => ({ ...o, checked: o.key === s.syncFreq, onSelect: () => this.setState({ syncFreq: o.key }) }));
+
+    const authErr = AUTH_ERRORS[s.authDemo] || AUTH_ERRORS.failed;
+    const importErr = IMPORT_ERRORS[s.importDemo] || IMPORT_ERRORS.failed;
+
+    const importTotal = 2480;
+    const importPct = Math.round((s.importProgress / importTotal) * 100);
+    const importEta = Math.max(0, Math.round(45 * (1 - s.importProgress / importTotal)));
+
+    const syncActivity = s.syncHistory.slice(0, 4).map(r => {
+      const b = STATUS_BADGE[r.status] || STATUS_BADGE.Success;
+      return { ...r, badgeBg: b.bg, badgeFg: b.fg };
+    });
+
+    return {
+      isEmpty: s.step === 'empty', isProvider: s.step === 'provider', isAuth: s.step === 'auth',
+      isConfigure: s.step === 'configure', isImport: s.step === 'import', isDashboard: s.step === 'dashboard',
+      emptyDemo: s.emptyDemo, setEmptyDemo: this.setEmptyDemo, retryEmpty: this.retryEmpty,
+      emptyDemo_loading: s.emptyDemo === 'loading', emptyDemo_error: s.emptyDemo === 'error',
+      emptyDemo_connectedPreview: s.emptyDemo === 'connectedPreview', emptyDemo_notConnected: s.emptyDemo === 'notConnected',
+      providers, startConnect: this.startConnect, goEmpty: this.goEmpty, goProvider: this.goProvider,
+      selectProviderFor: this.selectProviderFor, continueToAuth: this.continueToAuth,
+      noProviderSelected: !s.pendingProviderKey,
+      continueBtnStyle: `background:${s.pendingProviderKey ? '#054BC5' : '#CDCCCC'};color:#fff;border:none;border-radius:8px;padding:10px 22px;font-size:14px;font-weight:600;cursor:${s.pendingProviderKey ? 'pointer' : 'not-allowed'};`,
+      stepBarStyle: 'font-size:12px;font-weight:600;color:#6D7280;letter-spacing:.02em;margin-bottom:8px;',
+      selectedProvider,
+      authIdle: s.authPhase === 'idle', authLoading: s.authPhase === 'loading',
+      authResultSuccess: s.authPhase === 'result' && s.authDemo === 'success',
+      authResultError: s.authPhase === 'result' && s.authDemo !== 'success',
+      authDemo: s.authDemo, setAuthDemo: this.setAuthDemo, authenticate: this.authenticate, retryAuth: this.retryAuth,
+      continueToConfigure: this.continueToConfigure, authErrorTitle: authErr.title, authErrorMessage: authErr.message,
+      fieldItems, noFieldsSelected, fieldSearch: s.fieldSearch, setFieldSearch: this.setFieldSearch, toggleFieldFor: this.toggleFieldFor,
+      selectAllFields: this.selectAllFields, clearAllFields: this.clearAllFields,
+      showAddFieldModal: s.showAddFieldModal, openAddFieldModal: this.openAddFieldModal, closeAddFieldModal: this.closeAddFieldModal,
+      addFieldName: s.addFieldName, setAddFieldName: this.setAddFieldName, addFieldMappingKey: s.addFieldMappingKey, setAddFieldMappingKey: this.setAddFieldMappingKey,
+      saveCustomField: this.saveCustomField, addFieldSaveLabel: s.editingFieldKey ? 'Save Field' : 'Add Field',
+      addFieldModalTitle: s.editingFieldKey ? 'Edit Custom Employee Field' : 'Add Custom Employee Field',
+      saveFieldBtnStyle: `background:${canSaveField ? '#054BC5' : '#CDCCCC'};color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:${canSaveField ? 'pointer' : 'not-allowed'};`,
+      formerEmpOption: s.formerEmpOption, setFormerEmp: this.setFormerEmp, formerEmpIsCustom: s.formerEmpOption === 'custom',
+      formerEmpCustomDays: s.formerEmpCustomDays, setFormerEmpCustomDays: this.setFormerEmpCustomDays,
+      syncOptions, setSyncFreqFor: this.setSyncFreqFor, syncIsCustom: s.syncFreq === 'custom',
+      customTime: s.customTime, setCustomTime: this.setCustomTime, customDay: s.customDay, setCustomDay: this.setCustomDay,
+      goAuth: this.goAuth, saveConfig: this.saveConfig, runInitialImport: this.runInitialImport,
+      importDemo: s.importDemo, setImportDemo: this.setImportDemo,
+      importInProgress: s.importPhase === 'progress',
+      importSuccess: s.importPhase === 'result' && s.importDemo === 'success',
+      importPartial: s.importPhase === 'result' && s.importDemo === 'partial',
+      importFailedOrNetwork: s.importPhase === 'result' && (s.importDemo === 'failed' || s.importDemo === 'network'),
+      importIsRunning: s.importPhase === 'progress',
+      importCount: s.importProgress, importPct, importEta,
+      importCardStyle: 'background:#fff;border:1px solid #E5EAF1;border-radius:12px;padding:32px;box-shadow:0 8px 16px 0 rgba(0,0,0,0.04);background-image:repeating-linear-gradient(135deg,#F8FAFD 0 28px,#ffffff 28px 56px);background-size:56px 56px;',
+      retryImport: this.retryImport, finishImport: this.finishImport, goDashboard: this.goDashboard,
+      importErrorTitle: importErr.title, importErrorMessage: importErr.message,
+      syncActivity, runImportFromDashboard: this.runImportFromDashboard, goConfigureFromDashboard: this.goConfigureFromDashboard,
+      openDisconnect: this.openDisconnect, openDelete: this.openDelete, closeModals: this.closeModals,
+      confirmDisconnect: this.confirmDisconnect, confirmDelete: this.confirmDelete,
+      showDisconnectModal: s.showDisconnectModal, showDeleteModal: s.showDeleteModal,
+      toasts: s.toasts, restartDemo: this.restartDemo,
+      sidebarStyle: `width:272px;flex:none;display:flex;flex-direction:column;background:#fff;border-right:1px solid #E5EAF1;${s.importPhase === 'progress' && s.step === 'import' ? 'opacity:0.5;pointer-events:none;' : ''}`,
+
+      configFromDashboard: s.configFromDashboard,
+      notConfigFromDashboard: !s.configFromDashboard,
+      configBackHandler: s.configFromDashboard ? this.cancelConfigEdit : this.goAuth,
+      configBackLabel: s.configFromDashboard ? 'Cancel' : 'Back',
+      saveConfigFromDashboard: this.saveConfigFromDashboard,
+      deleteConfirmText: s.deleteConfirmText, setDeleteConfirmText: this.setDeleteConfirmText,
+      deleteNotEnabled: s.deleteConfirmText !== 'DELETE',
+      deleteButtonStyle: `background:${s.deleteConfirmText === 'DELETE' ? '#E3094C' : '#EFC9D5'};color:#fff;border:none;border-radius:8px;padding:9px 16px;font-size:13.5px;font-weight:600;cursor:${s.deleteConfirmText === 'DELETE' ? 'pointer' : 'not-allowed'};`,
+
+      ...(() => {
+        const dashboardTabs = [
+          { key: 'overview', label: 'Overview' },
+          { key: 'employees', label: 'Employees' },
+          { key: 'syncHistory', label: 'Sync History' },
+        ].map(t => ({ ...t, color: s.dashboardTab === t.key ? '#054BC5' : '#6D7280', border: s.dashboardTab === t.key ? '#054BC5' : 'transparent', onSelect: () => this.setState({ dashboardTab: t.key }) }));
+
+        let filtered = EMPLOYEES.filter(e =>
+          (!s.empSearch || e.name.toLowerCase().includes(s.empSearch.toLowerCase()) || e.id.toLowerCase().includes(s.empSearch.toLowerCase())) &&
+          (!s.empDeptFilter || e.department === s.empDeptFilter) &&
+          (!s.empStatusFilter || e.status === s.empStatusFilter) &&
+          (!s.empManagerFilter || e.manager === s.empManagerFilter)
+        );
+        filtered = filtered.slice().sort((a, b) => {
+          const av = a[s.empSortKey], bv = b[s.empSortKey];
+          const cmp = av < bv ? -1 : av > bv ? 1 : 0;
+          return s.empSortDir === 'asc' ? cmp : -cmp;
+        });
+        const empPageSize = s.empPageSize;
+        const empTotalPages = Math.max(1, Math.ceil(filtered.length / empPageSize));
+        const empPage = Math.min(s.empPage, empTotalPages - 1);
+        const pageSlice = filtered.slice(empPage * empPageSize, empPage * empPageSize + empPageSize);
+
+        const empPageNumbers = [];
+        const curDisp = empPage + 1;
+        if (empTotalPages <= 7) {
+          for (let p = 1; p <= empTotalPages; p++) empPageNumbers.push(p);
+        } else {
+          empPageNumbers.push(1);
+          if (curDisp > 4) empPageNumbers.push('...');
+          for (let p = Math.max(2, curDisp - 1); p <= Math.min(empTotalPages - 1, curDisp + 1); p++) empPageNumbers.push(p);
+          if (curDisp < empTotalPages - 3) empPageNumbers.push('...');
+          empPageNumbers.push(empTotalPages);
+        }
+        const empPageNumberItems = empPageNumbers.map((p, pi) => p === '...' ? { key: 'e' + pi, isEllipsis: true, isPage: false } : {
+          key: 'p' + p, isEllipsis: false, isPage: true, label: p,
+          bg: p === curDisp ? '#054BC5' : '#fff', color: p === curDisp ? '#fff' : '#333', border: p === curDisp ? '#054BC5' : '#E5EAF1',
+          onClick: this.empGoToPage(p - 1),
+        });
+        const pagedEmployees = pageSlice.map(e => {
+          const b = STATUS_BADGE[e.status] || STATUS_BADGE.Active;
+          return { ...e, supervisorFullName: `${e.supervisorFirstName} ${e.supervisorLastName}`, selected: s.empSelectedIds.includes(e.id), statusBg: b.bg, statusFg: b.fg, onOpenDrawer: this.openEmployeeDrawerFor(e), onToggleSelect: this.toggleEmpSelectFor(e) };
+        });
+        this._lastPagedIds = pagedEmployees.map(e => e.id);
+        const empAllSelected = pagedEmployees.length > 0 && pagedEmployees.every(e => e.selected);
+
+        const selectedEmployeeRaw = s.selectedEmployeeId ? EMPLOYEES.find(e => e.id === s.selectedEmployeeId) : null;
+        const selBadge = selectedEmployeeRaw ? (STATUS_BADGE[selectedEmployeeRaw.status] || STATUS_BADGE.Active) : { bg: '', fg: '' };
+        const selectedEmployee = selectedEmployeeRaw ? { ...selectedEmployeeRaw, statusBg: selBadge.bg, statusFg: selBadge.fg } : null;
+
+        const checkedFields = [...s.fields, ...s.customFields].filter(f => f.checked);
+        const drawerGroups = [];
+        if (selectedEmployeeRaw) {
+          GROUP_ORDER.forEach(g => {
+            const groupFields = checkedFields.filter(f => f.group === g);
+            if (!groupFields.length) return;
+            const items = groupFields.map(f => {
+              const val = f.custom ? customFieldValue(f, selectedEmployeeRaw.idx) : (FIELD_ACCESSORS[f.key] ? FIELD_ACCESSORS[f.key](selectedEmployeeRaw) : '');
+              return { key: f.key, label: f.label, value: val };
+            }).filter(it => it.value !== undefined && it.value !== null && it.value !== '');
+            if (!items.length) return;
+            drawerGroups.push({ key: g, label: DRAWER_GROUP_LABELS[g] || g, items });
+          });
+        }
+
+        const empCondErr = CONDITION_ERRORS[s.empCondition];
+        const empNormal = s.empCondition === 'normal';
+
+        let shFiltered = s.syncHistory.filter(r =>
+          (!s.shSearch || r.by.toLowerCase().includes(s.shSearch.toLowerCase()) || r.date.toLowerCase().includes(s.shSearch.toLowerCase())) &&
+          (!s.shStatusFilter || r.status === s.shStatusFilter)
+        );
+        const shPageSize = 6;
+        const shTotalPages = Math.max(1, Math.ceil(shFiltered.length / shPageSize));
+        const shPage = Math.min(s.shPage, shTotalPages - 1);
+        const shSlice = shFiltered.slice(shPage * shPageSize, shPage * shPageSize + shPageSize);
+        const pagedSyncHistory = shSlice.map(r => {
+          const b = STATUS_BADGE[r.status] || STATUS_BADGE.Success;
+          return { ...r, badgeBg: b.bg, badgeFg: b.fg, canRetry: r.status === 'Failed', onRetry: this.retrySyncRowFor(r) };
+        });
+        const shNormal = s.shCondition === 'normal';
+
+        return {
+          dashboardTabs,
+          tabOverview: s.dashboardTab === 'overview', tabEmployees: s.dashboardTab === 'employees', tabSyncHistory: s.dashboardTab === 'syncHistory',
+          lastSyncLabel: s.syncHistory[0] && s.syncHistory[0].date === 'Just now' ? 'Just now' : 'Today, 2:00 AM',
+
+          empSearch: s.empSearch, setEmpSearch: this.setEmpSearch,
+          empDeptFilter: s.empDeptFilter, setEmpDeptFilter: this.setEmpDeptFilter, empDeptOptions: DEPARTMENTS,
+          empStatusFilter: s.empStatusFilter, setEmpStatusFilter: this.setEmpStatusFilter, empStatusOptions: STATUSES,
+          empManagerFilter: s.empManagerFilter, setEmpManagerFilter: this.setEmpManagerFilter, empManagerOptions: MANAGERS,
+          empCondition: s.empCondition, setEmpCondition: this.setEmpCondition,
+          exportEmployeesCsv: this.exportEmployeesCsv, refreshEmployees: this.refreshEmployees, retryEmployees: this.retryEmployees,
+          empShowLoading: s.empCondition === 'loading',
+          empShowErrorBanner: empNormal ? false : (s.empCondition !== 'noEmployees'),
+          empShowNoEmployees: s.empCondition === 'noEmployees',
+          empShowNoResults: empNormal && filtered.length === 0,
+          empShowTable: empNormal && filtered.length > 0,
+          empErrorInfo: empCondErr || { title: '', problem: '', action: '' },
+          skeletonRows: [1, 2, 3, 4, 5, 6],
+          errorBannerStyle: 'background:#fff;border:1px solid #FDAEC7;border-radius:10px;padding:22px;',
+          emptyStateStyle: 'background:#fff;border:1px solid #E5EAF1;border-radius:10px;padding:40px;text-align:center;',
+          pagedEmployees, empAllSelected, toggleSelectAllEmp: this.toggleSelectAllEmp,
+          sortEmpByKey: this.sortEmpByKey, toggleEmpSelectFor: this.toggleEmpSelectFor, openEmployeeDrawerFor: this.openEmployeeDrawerFor, stopProp: this.stopProp,
+          empPageLabel: `Showing ${filtered.length === 0 ? 0 : empPage * empPageSize + 1}\u2013${Math.min(filtered.length, empPage * empPageSize + empPageSize)} of ${filtered.length.toLocaleString()} employees`,
+          empSearchPlaceholder: `Search ${EMPLOYEES.length.toLocaleString()} employees`,
+          empOnFirstPage: empPage === 0, empOnLastPage: empPage >= empTotalPages - 1,
+          empPagePrev: this.empPagePrev, empPageNext: this.empPageNext, empPageSize: s.empPageSize, setEmpPageSize: this.setEmpPageSize,
+          empPageNumberItems,
+
+          hasSelectedEmployee: !!selectedEmployee, selectedEmployee: selectedEmployee || {}, drawerGroups, closeDrawer: this.closeDrawer,
+          drawerOverlayStyle: `position:fixed;inset:0;background:rgba(26,27,27,0.35);z-index:55;transition:opacity .2s ease;opacity:${selectedEmployee ? 1 : 0};pointer-events:${selectedEmployee ? 'auto' : 'none'};`,
+          drawerPanelStyle: `position:fixed;top:0;right:0;bottom:0;width:min(640px,max(380px,38vw));background:#fff;box-shadow:-4px 0 16px 0 rgba(0,0,0,0.10);z-index:56;padding:24px;overflow-y:auto;transition:transform .28s ease;transform:translateX(${selectedEmployee ? '0' : '100%'});`,
+
+          shSearch: s.shSearch, setShSearch: this.setShSearch,
+          shStatusFilter: s.shStatusFilter, setShStatusFilter: this.setShStatusFilter,
+          shDateFrom: s.shDateFrom, setShDateFrom: this.setShDateFrom, shDateTo: s.shDateTo, setShDateTo: this.setShDateTo,
+          shCondition: s.shCondition, setShCondition: this.setShCondition, exportSyncHistory: this.exportSyncHistory, retrySyncHistoryLoad: this.retrySyncHistoryLoad,
+          shShowLoading: s.shCondition === 'loading',
+          shShowErrorBanner: s.shCondition === 'networkError',
+          shShowNoHistory: s.shCondition === 'noHistory',
+          shShowNoResults: shNormal && shFiltered.length === 0,
+          shShowTable: shNormal && shFiltered.length > 0,
+          pagedSyncHistory, retrySyncRowFor: this.retrySyncRowFor,
+          shPageLabel: `${shFiltered.length === 0 ? 0 : shPage * shPageSize + 1}\u2013${Math.min(shFiltered.length, shPage * shPageSize + shPageSize)} of ${shFiltered.length}`,
+          shOnFirstPage: shPage === 0, shOnLastPage: shPage >= shTotalPages - 1,
+          shPagePrev: this.shPagePrev, shPageNext: this.shPageNext,
+          setDashboardTabFor: this.setDashboardTabFor, goSyncHistoryTab: this.goSyncHistoryTab,
+
+          runImportOpen: s.runImportPhase !== 'closed',
+          runImportConfirm: s.runImportPhase === 'confirm', runImportRunning: s.runImportPhase === 'running',
+          runImportDone: s.runImportPhase === 'done', runImportFailedState: s.runImportPhase === 'failed',
+          runImportDemo: s.runImportDemo, setRunImportDemo: this.setRunImportDemo,
+          openRunImportModal: this.openRunImportModal, closeRunImportModal: this.closeRunImportModal, confirmRunImport: this.confirmRunImport,
+          dashImportCount: s.runImportProgress, dashImportPct: Math.round((s.runImportProgress / 2480) * 100),
+        };
+      })(),
+    };
+  }
+}</script>
+</body>
+</html>
